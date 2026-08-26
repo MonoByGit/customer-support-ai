@@ -141,13 +141,13 @@ export const IndustryTabs: React.FC = () => {
           </div>
 
           <div className="flex justify-end">
-            <div className="bg-[#DCF8C6] text-[#111B21] rounded-xl rounded-tr-xs px-3.5 py-2 text-xs max-w-[85%] shadow-2xs">
+            <div className="bg-[var(--wa-bubble-out)] text-[var(--wa-text)] rounded-xl rounded-tr-xs px-3.5 py-2 text-xs max-w-[85%] shadow-2xs">
               {current.sampleQuestion}
             </div>
           </div>
 
           <div className="flex justify-start">
-            <div className="bg-white dark:bg-[#0F131C] text-slate-900 dark:text-white rounded-xl rounded-tl-xs px-3.5 py-2.5 text-xs max-w-[88%] shadow-2xs border border-slate-200/80 dark:border-white/[0.06] space-y-2">
+            <div className="wa-bubble-in rounded-xl rounded-tl-xs px-3.5 py-2.5 text-xs max-w-[88%] shadow-2xs border border-slate-200/80 dark:border-white/[0.06] space-y-2">
               <p>{current.sampleAnswer}</p>
               <div className="bg-[#2196F3]/10 p-2 rounded-lg border border-[#2196F3]/20 text-[11px] font-semibold text-[#2196F3] flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-[#2196F3]" />

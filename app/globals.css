@@ -68,10 +68,57 @@ h1, h2, h3, h4, .font-heading {
   }
 }
 
-/* WhatsApp wallpaper */
+
+/* ============================================================
+   WhatsApp-palet — officiële waarden, licht én donker.
+
+   De chat is een simulatie van wat de klánt van onze klant straks ziet.
+   Die zit in echte WhatsApp, dus die kleuren houden we authentiek: een
+   blauwe WhatsApp zou een verkeerd beeld geven van de eindervaring.
+   Verde's eigen merkblauw blijft voor onze eigen chrome — de pagina,
+   de frames, de knoppen eromheen.
+   ============================================================ */
+:root {
+  --wa-wallpaper:      #EFEAE2;
+  --wa-wallpaper-dot:  #D6D1C9;
+  --wa-panel:          #F0F2F5;
+  --wa-bubble-in:      #FFFFFF;
+  --wa-bubble-out:     #DCF8C6;
+  --wa-text:           #111B21;
+  --wa-text-muted:     #667781;
+  --wa-divider:        #E9EDEF;
+  --wa-tick:           #53BDEB;
+  --wa-notice:         #FFF5D6;
+  --wa-notice-text:    #5B6169;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wa-wallpaper:      #0B141A;
+    --wa-wallpaper-dot:  #16222B;
+    --wa-panel:          #202C33;
+    --wa-bubble-in:      #202C33;
+    --wa-bubble-out:     #005C4B;
+    --wa-text:           #E9EDEF;
+    --wa-text-muted:     #8696A0;
+    --wa-divider:        #2A3942;
+    --wa-tick:           #53BDEB;
+    --wa-notice:         #182229;
+    --wa-notice-text:    #8696A0;
+  }
+}
+
+.wa-surface  { background-color: var(--wa-panel); color: var(--wa-text); }
+.wa-bubble-in  { background-color: var(--wa-bubble-in);  color: var(--wa-text); }
+.wa-bubble-out { background-color: var(--wa-bubble-out); color: var(--wa-text); }
+.wa-muted    { color: var(--wa-text-muted); }
+.wa-tick     { color: var(--wa-tick); }
+.wa-notice   { background-color: var(--wa-notice); color: var(--wa-notice-text); }
+
+/* WhatsApp wallpaper — volgt nu het systeemthema */
 .whatsapp-bg {
-  background-color: #efeae2;
-  background-image: radial-gradient(#d1cdc7 1.2px, transparent 1.2px);
+  background-color: var(--wa-wallpaper);
+  background-image: radial-gradient(var(--wa-wallpaper-dot) 1.2px, transparent 1.2px);
   background-size: 18px 18px;
 }
 

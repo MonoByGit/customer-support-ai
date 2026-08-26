@@ -110,7 +110,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
         </div>
 
         {/* Content Body */}
-        <div className="p-5 space-y-4 text-[#111B21]">
+        <div className="p-5 space-y-4 text-[var(--wa-text)]">
           <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3.5 space-y-2">
             <div className="flex items-start gap-3">
               <Calendar className="w-4 h-4 text-[#2196F3] mt-0.5 shrink-0" />

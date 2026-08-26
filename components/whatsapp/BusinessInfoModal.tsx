@@ -65,7 +65,7 @@ export const BusinessInfoModal: React.FC<BusinessInfoModalProps> = ({
         </div>
 
         {/* Body Content */}
-        <div className="p-5 overflow-y-auto space-y-5 text-[#111B21] text-xs sm:text-sm">
+        <div className="p-5 overflow-y-auto space-y-5 text-[var(--wa-text)] text-xs sm:text-sm">
           {/* Tagline */}
           {profile.tagline && (
             <div className="italic text-gray-600 bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-xs">

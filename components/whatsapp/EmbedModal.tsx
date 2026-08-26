@@ -59,7 +59,7 @@ export const EmbedModal: React.FC<EmbedModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-100 animate-scale-up text-[#111B21]">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-100 animate-scale-up text-[var(--wa-text)]">
         {/* Header */}
         <div className="bg-[#0D47A1] text-white p-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -127,7 +127,7 @@ export const EmbedModal: React.FC<EmbedModalProps> = ({
             <p className="text-gray-500 text-[11px]">
               Plak deze HTML-code vlak voor de <code className="text-[#2196F3] font-bold">&lt;/body&gt;</code> tag van de website.
             </p>
-            <pre className="bg-[#111B21] text-blue-300 p-2.5 rounded-lg font-mono text-[10.5px] overflow-x-auto whitespace-pre-wrap">
+            <pre className="bg-[var(--wa-text)] text-blue-300 p-2.5 rounded-lg font-mono text-[10.5px] overflow-x-auto whitespace-pre-wrap">
               {iframeSnippet}
             </pre>
           </div>
@@ -147,7 +147,7 @@ export const EmbedModal: React.FC<EmbedModalProps> = ({
                 <span>{copiedType === "button" ? "Gekopieerd" : "Kopieer"}</span>
               </button>
             </div>
-            <pre className="bg-[#111B21] text-blue-300 p-2.5 rounded-lg font-mono text-[10.5px] overflow-x-auto whitespace-pre-wrap">
+            <pre className="bg-[var(--wa-text)] text-blue-300 p-2.5 rounded-lg font-mono text-[10.5px] overflow-x-auto whitespace-pre-wrap">
               {buttonSnippet}
             </pre>
           </div>

@@ -284,7 +284,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#EFEAE2] select-none relative overflow-hidden">
+    <div className="flex flex-col h-full w-full bg-[var(--wa-wallpaper)] select-none relative overflow-hidden">
       {/* WhatsApp iOS Top Chat Header */}
       <ChatHeader
         profile={profile}
@@ -326,7 +326,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
       {/* Expiry Banner / Input Area */}
       {isExpired ? (
-        <div className="bg-white border-t border-slate-200 p-4 shrink-0 shadow-lg text-center space-y-3 z-20 animate-fade-in">
+        <div className="wa-surface border-t border-[var(--wa-divider)] p-4 shrink-0 shadow-lg text-center space-y-3 z-20 animate-fade-in">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-slate-900">
               <Lock className="w-3.5 h-3.5 text-[#2196F3]" />

@@ -40,7 +40,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   return (
-    <div className="bg-[#F0F2F5] border-t border-[#E9EDEF] p-2 sm:p-2.5 relative z-20 flex flex-col gap-2 shrink-0">
+    <div className="bg-[var(--wa-panel)] border-t border-[var(--wa-divider)] p-2 sm:p-2.5 relative z-20 flex flex-col gap-2 shrink-0">
       {/* Quick Suggestion Chips (WhatsApp List & Flow shortcuts) */}
       {quickPrompts && quickPrompts.length > 0 && (
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs">
@@ -53,7 +53,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               key={idx}
               onClick={() => onSendMessage(prompt.replace(/^[^\w\s]+\s*/, ""))}
               disabled={disabled}
-              className="bg-white hover:bg-[#EBF7F4] text-[#111B21] hover:text-[#00A884] border border-[#E9EDEF] hover:border-[#00A884]/40 rounded-full px-3 py-1 text-[11.5px] whitespace-nowrap transition-all shadow-2xs shrink-0 disabled:opacity-50"
+              className="wa-bubble-in hover:opacity-80 border border-[var(--wa-divider)] hover:border-[#2196F3]/40 rounded-full px-3 py-1 text-[11.5px] whitespace-nowrap transition-all shadow-2xs shrink-0 disabled:opacity-50"
             >
               {prompt}
             </button>
@@ -74,7 +74,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         </button>
 
         {/* Rounded Input Field Container */}
-        <div className="flex-1 bg-white rounded-2xl border border-[#E9EDEF] shadow-2xs px-3 py-1.5 flex items-center gap-2 min-h-[38px]">
+        <div className="flex-1 wa-bubble-in rounded-2xl border border-[var(--wa-divider)] shadow-2xs px-3 py-1.5 flex items-center gap-2 min-h-[38px]">
           <textarea
             ref={textareaRef}
             rows={1}
@@ -87,12 +87,12 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             onKeyDown={handleKeyDown}
             disabled={disabled}
             placeholder="Bericht"
-            className="w-full bg-transparent text-[#111B21] placeholder:text-[#8696A0] text-[15px] outline-none resize-none max-h-[100px] leading-tight"
+            className="w-full bg-transparent text-[var(--wa-text)] placeholder:text-[#8696A0] text-[15px] outline-none resize-none max-h-[100px] leading-tight"
           />
 
           <button
             type="button"
-            className="text-[#54656F] hover:text-[#111B21] transition-colors shrink-0"
+            className="text-[#54656F] hover:text-[var(--wa-text)] transition-colors shrink-0"
             title="Emoji"
             onClick={() => {
               setText((prev) => prev + " 😊");
@@ -118,7 +118,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           <div className="flex items-center gap-1 shrink-0">
             <button
               type="button"
-              className="text-[#54656F] hover:text-[#111B21] p-1.5 rounded-full hover:bg-gray-200/60 transition-colors"
+              className="text-[#54656F] hover:text-[var(--wa-text)] p-1.5 rounded-full hover:bg-gray-200/60 transition-colors"
               title="Camera"
               onClick={() => alert("Simulatie: Camera openen")}
             >
@@ -127,7 +127,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
 
             <button
               type="button"
-              className="text-[#54656F] hover:text-[#111B21] p-1.5 rounded-full hover:bg-gray-200/60 transition-colors"
+              className="text-[#54656F] hover:text-[var(--wa-text)] p-1.5 rounded-full hover:bg-gray-200/60 transition-colors"
               title="Spraakbericht opnemen"
               onClick={() => onSendMessage("🎤 [Spraakbericht van 8 sec]")}
             >

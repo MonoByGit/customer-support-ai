@@ -37,7 +37,7 @@ export const MessageList: React.FC<MessageListProps> = ({
 
       {/* Date Divider */}
       <div className="flex justify-center my-2">
-        <span className="bg-white/90 backdrop-blur-xs text-[#54656F] text-[11px] font-semibold px-3 py-0.5 rounded-md shadow-[0_1px_0.5px_rgba(0,0,0,0.15)] uppercase tracking-wider select-none">
+        <span className="wa-notice backdrop-blur-xs text-[11px] font-semibold px-3 py-0.5 rounded-md shadow-[0_1px_0.5px_rgba(0,0,0,0.15)] uppercase tracking-wider select-none">
           Vandaag
         </span>
       </div>
@@ -54,8 +54,8 @@ export const MessageList: React.FC<MessageListProps> = ({
             <div
               className={`relative max-w-[85%] sm:max-w-[78%] rounded-2xl shadow-[0_1px_0.5px_rgba(11,20,26,0.13)] text-[14.5px] leading-relaxed transition-all ${
                 isUser
-                  ? "bg-[#DCF8C6] text-[#111B21] rounded-tr-xs"
-                  : "bg-white text-[#111B21] rounded-tl-xs"
+                  ? "bg-[var(--wa-bubble-out)] text-[var(--wa-text)] rounded-tr-xs"
+                  : "wa-bubble-in rounded-tl-xs"
               }`}
             >
               {/* Message text content */}
@@ -77,7 +77,7 @@ export const MessageList: React.FC<MessageListProps> = ({
 
               {/* Real WhatsApp Cloud API Interactive Quick Reply Buttons */}
               {msg.proposedSlots && msg.proposedSlots.length > 0 && (
-                <div className="border-t border-[#E9EDEF] divide-y divide-[#E9EDEF] bg-[#F7F8FA] rounded-b-2xl overflow-hidden">
+                <div className="border-t border-[var(--wa-divider)] divide-y divide-[var(--wa-divider)] bg-[#F7F8FA] rounded-b-2xl overflow-hidden">
                   <div className="px-3 py-1.5 text-[11px] font-semibold text-[#2196F3] uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3" />
                     <span>Kies een tijdstip (WhatsApp Interactive Button):</span>
@@ -101,7 +101,7 @@ export const MessageList: React.FC<MessageListProps> = ({
 
               {/* Booking Success Confirmation Widget Card */}
               {msg.bookingData && (
-                <div className="border-t border-[#E9EDEF] bg-gradient-to-br from-[#0D47A1] to-[#1565C0] text-white rounded-b-2xl p-3.5">
+                <div className="border-t border-[var(--wa-divider)] bg-gradient-to-br from-[#0D47A1] to-[#1565C0] text-white rounded-b-2xl p-3.5">
                   <div
                     onClick={() => onOpenBookingModal(msg.bookingData)}
                     className="cursor-pointer space-y-2 hover:opacity-95 transition-opacity"

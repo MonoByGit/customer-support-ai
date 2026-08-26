@@ -954,8 +954,8 @@ export default function AdminPage() {
                 <div
                   className={`max-w-[85%] p-3 rounded-xl text-xs ${
                     m.sender === "user"
-                      ? "bg-[#DCF8C6] text-[#111B21] rounded-tr-xs"
-                      : "bg-white text-slate-900 rounded-tl-xs shadow-2xs"
+                      ? "bg-[var(--wa-bubble-out)] text-[var(--wa-text)] rounded-tr-xs"
+                      : "wa-bubble-in rounded-tl-xs shadow-2xs"
                   }`}
                 >
                   <p className="leading-relaxed whitespace-pre-wrap">{m.text}</p>

@@ -45,7 +45,7 @@ export const HeroInteractivePhone: React.FC = () => {
           ========================================================================= */}
       <div className="relative bg-[#1A1A1A] rounded-[52px] p-2.5 border-[4px] border-[#333333] shadow-[0_25px_70px_rgba(0,0,0,0.25)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.85)] flex flex-col">
         {/* Screen Bezel */}
-        <div className="relative w-full h-[620px] sm:h-[650px] bg-[#EFEAE2] rounded-[44px] overflow-hidden flex flex-col text-[#111B21] select-none whatsapp-bg">
+        <div className="relative w-full h-[620px] sm:h-[650px] bg-[var(--wa-wallpaper)] rounded-[44px] overflow-hidden flex flex-col text-[var(--wa-text)] select-none whatsapp-bg">
           
           {/* iOS Status Bar + Dynamic Island */}
           <div className="bg-[#0A192F] text-white px-5 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold shrink-0 z-20">
@@ -103,7 +103,7 @@ export const HeroInteractivePhone: React.FC = () => {
 
             {/* Bubble 1: AI Welcome & Interactive Buttons */}
             <div className="flex flex-col items-start w-full">
-              <div className="bg-white rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px] leading-relaxed">
+              <div className="wa-bubble-in rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px] leading-relaxed">
                 <div className="p-3 pb-1.5">
                   Goedendag! Welkom bij Tandartspraktijk De Groene Gracht. 👋 Voor een <strong>Periodieke Gebitscontrole</strong> hebben wij de volgende plekken vrij:
                 </div>
@@ -143,7 +143,7 @@ export const HeroInteractivePhone: React.FC = () => {
             {/* Bubble 2: User response */}
             {step >= 2 && selectedSlot && (
               <div className="flex flex-col items-end w-full animate-fade-in">
-                <div className="bg-[#DCF8C6] text-[#111B21] rounded-2xl rounded-tr-xs px-3.5 py-2 shadow-[0_1px_1px_rgba(0,0,0,0.1)] text-[13px] max-w-[88%]">
+                <div className="bg-[var(--wa-bubble-out)] text-[var(--wa-text)] rounded-2xl rounded-tr-xs px-3.5 py-2 shadow-[0_1px_1px_rgba(0,0,0,0.1)] text-[13px] max-w-[88%]">
                   <span>Ik kies graag {selectedSlot}! Mijn naam is Mark van Leeuwen (06-12345678).</span>
                   <div className="flex items-center justify-end gap-1 text-[9.5px] text-slate-500 mt-0.5">
                     <span>09:42</span>
@@ -156,7 +156,7 @@ export const HeroInteractivePhone: React.FC = () => {
             {/* Typing Indicator */}
             {isTyping && (
               <div className="flex items-start w-full animate-fade-in">
-                <div className="bg-white rounded-2xl rounded-tl-xs px-3.5 py-2.5 shadow-xs flex items-center gap-1.5">
+                <div className="wa-bubble-in rounded-2xl rounded-tl-xs px-3.5 py-2.5 shadow-xs flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.3s]" />
                   <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.15s]" />
                   <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce" />
@@ -167,7 +167,7 @@ export const HeroInteractivePhone: React.FC = () => {
             {/* Bubble 3: AI Confirmation with Calendar Card */}
             {step >= 3 && (
               <div className="flex flex-col items-start w-full animate-scale-up">
-                <div className="bg-white rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px]">
+                <div className="wa-bubble-in rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px]">
                   <div className="p-3 pb-1.5">
                     Uitstekend de heer Van Leeuwen! Uw afspraak staat direct bevestigd in onze praktijkagenda. Tot dan!
                   </div>
@@ -192,7 +192,7 @@ export const HeroInteractivePhone: React.FC = () => {
           </div>
 
           {/* Bottom Interactive Bar */}
-          <div className="bg-[#F0F2F5] p-2.5 flex items-center gap-2 shrink-0 border-t border-[#E9EDEF]">
+          <div className="bg-[var(--wa-panel)] p-2.5 flex items-center gap-2 shrink-0 border-t border-[var(--wa-divider)]">
             <div className="flex-1 bg-white rounded-full px-4 py-2 text-xs text-slate-400 border border-slate-200 shadow-2xs flex items-center justify-between">
               <span>{step === 1 ? "Selecteer een tijdslot hierboven" : "Afspraak succesvol ingepland ✓"}</span>
             </div>
@@ -206,7 +206,7 @@ export const HeroInteractivePhone: React.FC = () => {
           </div>
 
           {/* iOS Bottom Swipe Indicator */}
-          <div className="bg-[#F0F2F5] pb-2 flex justify-center shrink-0">
+          <div className="bg-[var(--wa-panel)] pb-2 flex justify-center shrink-0">
             <div className="w-28 h-1 bg-slate-400 rounded-full" />
           </div>
         </div>

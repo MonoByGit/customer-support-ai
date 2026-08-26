@@ -210,7 +210,7 @@ export const SimulatorClient: React.FC<SimulatorClientProps> = ({
              ==================================================================== */
           <div className="relative w-full max-w-[400px] h-full max-h-[820px] bg-black rounded-[48px] p-2.5 border-[10px] border-slate-800 shadow-[0_25px_90px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.95)] flex flex-col animate-scale-up">
             {/* Screen Inner Glass Container */}
-            <div className="relative flex-1 w-full h-full bg-[#EFEAE2] rounded-[38px] overflow-hidden flex flex-col">
+            <div className="relative flex-1 w-full h-full bg-[var(--wa-wallpaper)] rounded-[38px] overflow-hidden flex flex-col">
               {/* iPhone iOS Status Bar & Dynamic Island */}
               <div className="bg-[#0A192F] text-white px-6 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold select-none shrink-0 z-30">
                 <span className="font-mono">09:41</span>
@@ -235,7 +235,7 @@ export const SimulatorClient: React.FC<SimulatorClientProps> = ({
               </div>
 
               {/* iPhone Home Swipe Bar */}
-              <div className="bg-[#F0F2F5] py-1.5 flex justify-center shrink-0 select-none">
+              <div className="bg-[var(--wa-panel)] py-1.5 flex justify-center shrink-0 select-none">
                 <div className="w-32 h-1 bg-gray-400/80 rounded-full" />
               </div>
             </div>
@@ -246,7 +246,7 @@ export const SimulatorClient: React.FC<SimulatorClientProps> = ({
              ==================================================================== */
           <div className="w-full max-w-5xl h-full max-h-[820px] bg-[#FFFFFF] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-[0_20px_80px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_80px_rgba(0,0,0,0.9)] flex overflow-hidden animate-scale-up">
             {/* Left Sidebar */}
-            <div className="hidden md:block w-80 shrink-0 border-r border-[#E9EDEF]">
+            <div className="hidden md:block w-80 shrink-0 border-r border-[var(--wa-divider)]">
               <WhatsAppSidebar currentProfile={profile} allProfiles={allProfiles} />
             </div>
 
