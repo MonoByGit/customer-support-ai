@@ -1,36 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 17, 27, 33;
-  --background-start-rgb: 240, 242, 245;
-  --background-end-rgb: 255, 255, 255;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', var(--font-sans);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: #0b141a;
+  font-family: var(--font-sans);
+  background-color: #06090e;
+  color: #f1f5f9;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-/* Custom smooth scrollbar */
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
 }
 
-.scrollbar-thin::-webkit-scrollbar-track {
+/* Custom Glass & Glow Utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.15);
+  transform: translateY(-2px);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 50px -10px rgba(0, 212, 146, 0.25);
+}
+
+.glow-subtle {
+  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.15);
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #34d399 0%, #00d492 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-silver {
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.35);
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -41,32 +87,28 @@ body {
   scrollbar-width: none;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* WhatsApp Realistic Background Wallpaper */
+.whatsapp-bg {
+  background-color: #efeae2;
+  background-image: radial-gradient(#d1cdc7 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
 }
 
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Animations */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.2s ease-out forwards;
+.animate-pulse-subtle {
+  animation: pulseSubtle 6s ease-in-out infinite;
 }
 
-.animate-scale-up {
-  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
 }
