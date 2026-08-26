@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
-import { executeChatTurn } from "@/lib/gemini";
+import { executeChatTurn } from "@/lib/deepseek";
 
 const VERIFY_TOKEN = process.env.META_WEBHOOK_VERIFY_TOKEN || "whatsapp_ai_verify_token_2026";
 
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
 /**
  * 2. Meta WhatsApp Cloud API Message Dispatcher (POST)
- * Receives incoming messages from WhatsApp users and dispatches replies via Gemini Flash & Google Calendar.
+ * Receives incoming messages from WhatsApp users and dispatches replies via DeepSeek Flash & Google Calendar.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -60,13 +60,13 @@ export async function POST(req: NextRequest) {
 
     console.log(`[webhook] Received WhatsApp message from ${fromPhoneNumber}: "${userText}"`);
 
-    // Determine target business profile (default to tandarts-demo or query by phone number ID)
-    const profile = getProfileBySlug("tandarts-demo");
+    // Bepaal het doelprofiel (standaard het referentieprofiel; later te routeren op phone_number_id)
+    const profile = getProfileBySlug(process.env.DEFAULT_PROFILE_SLUG || "tandartspraktijk-amsterdam");
     if (!profile) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
 
-    // Execute Gemini AI turn with tools
+    // Execute DeepSeek Flash turn with Google Calendar tools
     const chatResult = await executeChatTurn(
       profile,
       [],
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
         accessToken,
         phoneNumberId,
         recipientPhone: fromPhoneNumber,
-        text: chatResult.text,
+        text: chatResult.reply,
         proposedSlots: chatResult.proposedSlots,
       });
     }
@@ -90,8 +90,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       from: fromPhoneNumber,
-      reply: chatResult.text,
-      bookingData: chatResult.bookingData || null,
+      reply: chatResult.reply,
+      bookingData: chatResult.bookingDetails || null,
       proposedSlots: chatResult.proposedSlots || null,
     });
   } catch (error: any) {

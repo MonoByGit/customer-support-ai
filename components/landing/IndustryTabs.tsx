@@ -7,7 +7,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Calendar,
-  Clock,
 } from "lucide-react";
 
 export const IndustryTabs: React.FC = () => {
@@ -17,7 +16,7 @@ export const IndustryTabs: React.FC = () => {
     {
       id: "tandarts",
       title: "Tandartspraktijken",
-      slug: "tandarts-demo",
+      slug: "tandartspraktijk-amsterdam",
       badge: "Mondzorg & Klinieken",
       headline: "Optimale rust aan de balie en maximale bezettingsgraad",
       description:
@@ -125,10 +124,10 @@ export const IndustryTabs: React.FC = () => {
 
           <div className="pt-3">
             <Link
-              href={`/demo/${current.slug}`}
+              href={`/live/${current.slug}`}
               className="inline-flex items-center gap-2 bg-[#2196F3] hover:bg-[#1E88E5] active:scale-95 text-white font-semibold px-5 py-2.5 rounded-lg text-xs sm:text-sm shadow-xs transition-all"
             >
-              <span>Bekijk {current.title} Demo</span>
+              <span>Test {current.title} live</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

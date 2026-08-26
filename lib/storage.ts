@@ -2,11 +2,52 @@ import fs from "fs";
 import path from "path";
 import { BusinessProfile, BusinessProfileSchema } from "./schemas";
 
-const PROFILES_DIR = path.join(process.cwd(), "data", "profiles");
+/**
+ * Waar klantdata landt.
+ *
+ * Standaard `<project>/data` — prima lokaal, maar op Railway is de container-filesystem
+ * vluchtig: alles wat een prospect genereert is weg bij de eerstvolgende deploy.
+ * Zet DATA_DIR op het mountpad van een Railway Volume (bijv. /data) en de profielen
+ * overleven deploys. De meegeleverde voorbeeldprofielen worden dan eenmalig geseed.
+ */
+const DATA_ROOT = process.env.DATA_DIR || path.join(process.cwd(), "data");
+const PROFILES_DIR = path.join(DATA_ROOT, "profiles");
+const SEED_PROFILES_DIR = path.join(process.cwd(), "data", "profiles");
+
+/** Oude links blijven werken nadat een slug commercieel is hernoemd. */
+const SLUG_ALIASES: Record<string, string> = {
+  "tandarts-demo": "tandartspraktijk-amsterdam",
+};
+
+export function resolveSlug(slug: string): string {
+  return SLUG_ALIASES[slug] || slug;
+}
+
+let seeded = false;
 
 export function ensureStorageDir(): void {
   if (!fs.existsSync(PROFILES_DIR)) {
     fs.mkdirSync(PROFILES_DIR, { recursive: true });
+  }
+
+  // Seed de voorbeeldprofielen één keer wanneer op een leeg volume wordt gedraaid.
+  if (seeded || PROFILES_DIR === SEED_PROFILES_DIR) {
+    seeded = true;
+    return;
+  }
+  seeded = true;
+
+  try {
+    if (!fs.existsSync(SEED_PROFILES_DIR)) return;
+    for (const file of fs.readdirSync(SEED_PROFILES_DIR)) {
+      if (!file.endsWith(".json")) continue;
+      const target = path.join(PROFILES_DIR, file);
+      if (!fs.existsSync(target)) {
+        fs.copyFileSync(path.join(SEED_PROFILES_DIR, file), target);
+      }
+    }
+  } catch (error) {
+    console.warn("[storage] Kon voorbeeldprofielen niet seeden:", error);
   }
 }
 
@@ -37,12 +78,12 @@ export function getAllProfiles(): BusinessProfile[] {
   }
 }
 
-export function getProfileBySlug(slug: string): BusinessProfile | null {
+export function getProfileBySlug(rawSlug: string): BusinessProfile | null {
   ensureStorageDir();
+  const slug = resolveSlug(rawSlug);
   const filePath = path.join(PROFILES_DIR, `${slug}.json`);
   if (!fs.existsSync(filePath)) {
-    // If asking for default demo and file doesn't exist, provide fallback
-    if (slug === "tandarts-demo") {
+    if (slug === DEFAULT_TANDARTS_PROFILE.slug) {
       return DEFAULT_TANDARTS_PROFILE;
     }
     return null;
@@ -80,7 +121,7 @@ export function slugify(text: string): string {
 
 export const DEFAULT_TANDARTS_PROFILE: BusinessProfile = {
   businessName: "Tandartspraktijk De Groene Gracht",
-  slug: "tandarts-demo",
+  slug: "tandartspraktijk-amsterdam",
   industry: "dental",
   tagline: "Moderne mondzorg in het hart van de stad met persoonlijke aandacht.",
   phone: "+31 20 555 1234",

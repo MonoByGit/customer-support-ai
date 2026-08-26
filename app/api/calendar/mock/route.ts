@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const booking = await createAppointment(body, body.businessName || "Demo Bedrijf");
+    const booking = await createAppointment(body, body.businessName || "Verde AI Sandbox");
     return NextResponse.json({
       success: true,
       booking,

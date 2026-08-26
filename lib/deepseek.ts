@@ -1,6 +1,28 @@
 import { BusinessProfile } from "./schemas";
 import { checkFreeSlots, createAppointment, AvailableSlot } from "./calendar";
 
+/**
+ * Actuele datum/tijd in Europe/Amsterdam, in natuurlijk Nederlands.
+ * Nooit hardcoden: een vastgezette datum laat de assistent stilzwijgend verouderen.
+ */
+export function nowInAmsterdam(): string {
+  return new Intl.DateTimeFormat("nl-NL", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/Amsterdam",
+  }).format(new Date());
+}
+
+/** Conversatie-item zoals de API-routes het aanleveren. */
+export interface ChatMessage {
+  role: "user" | "model" | "assistant" | "system";
+  content: string;
+}
+
 export interface DeepSeekMessage {
   role: "system" | "user" | "assistant" | "tool";
   content: string;
@@ -87,7 +109,7 @@ ${scrapedText}
     console.warn("[deepseek] Extraction fallback triggered:", err.message);
     // Deterministic fallback from scraped data
     const title = (typeof input === "object" && input.title) ? input.title : "Bedrijfsprofiel";
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "bedrijf-demo";
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "nieuw-bedrijf";
     return {
       businessName: title,
       slug,
@@ -136,7 +158,7 @@ export async function processCustomerMessageWithDeepSeek(
 Je bent de virtuele receptionist en praktijkassistent van "${profile.businessName}" via WhatsApp.
 Je spreekt vloeiend, natuurlijk en warm Nederlands.
 
-HUIDIGE DATUM EN TIJD CONTEXT: Woensdag 26 augustus 2026, 14:00 uur.
+HUIDIGE DATUM EN TIJD CONTEXT: ${nowInAmsterdam()}.
 
 BEDRIJFSPROFIEL:
 - Bedrijfsnaam: ${profile.businessName}
@@ -391,4 +413,121 @@ BELANGRIJKSTE REGELS VOOR MENSELIJK, EMPATHISCH & VERTROUWENSWEKKEND CONTACT:
     console.error("[deepseek] Error calling DeepSeek API:", err);
     throw err;
   }
+}
+
+/**
+ * Deterministische fallback-receptionist.
+ *
+ * Draait wanneer DEEPSEEK_API_KEY ontbreekt of de API faalt. Geen tweede LLM-provider:
+ * de engine blijft DeepSeek-only, dit is puur een offline vangnet zodat een prospect
+ * nooit tegen een dood scherm aanloopt tijdens een live gesprek.
+ */
+export async function processCustomerMessageFallback(
+  profile: BusinessProfile,
+  conversationHistory: ChatMessage[],
+  incomingMessage: string
+): Promise<{
+  reply: string;
+  quickReplies?: string[];
+  bookingConfirmed?: boolean;
+  bookingDetails?: {
+    service: string;
+    slot: string;
+    clientName: string;
+    clientPhone: string;
+    calendarEventId?: string;
+  };
+  proposedSlots?: AvailableSlot[];
+}> {
+  const text = incomingMessage.toLowerCase();
+  const firstService = profile.services[0];
+
+  const phoneMatch = incomingMessage.match(/(\+?\d[\d\s\-]{7,})/);
+  const nameMatch = incomingMessage.match(/(?:naam is|heet|ik ben)\s+([A-Za-zÀ-ÿ' -]{2,40})/i);
+
+  // Klant levert naam + telefoon aan: definitief inboeken.
+  if (phoneMatch && nameMatch) {
+    const slots = await checkFreeSlots(new Date().toISOString().slice(0, 10));
+    const slot = slots[0];
+    const serviceTitle = firstService?.title || "Afspraak";
+
+    if (slot) {
+      const confirmation = await createAppointment(
+        {
+          customerName: nameMatch[1].trim(),
+          customerPhone: phoneMatch[1].trim(),
+          serviceTitle,
+          slotIsoString: slot.iso,
+        },
+        profile.businessName
+      );
+
+      return {
+        reply: `Helemaal geregeld, ${nameMatch[1].trim()}! ✨ Ik heb ${serviceTitle.toLowerCase()} voor u vastgelegd op ${slot.formatted}. U ontvangt een bevestiging en een herinnering via WhatsApp. Tot dan!`,
+        bookingConfirmed: true,
+        bookingDetails: {
+          service: serviceTitle,
+          slot: slot.formatted,
+          clientName: nameMatch[1].trim(),
+          clientPhone: phoneMatch[1].trim(),
+          calendarEventId: confirmation.bookingId,
+        },
+      };
+    }
+  }
+
+  // Tarieven en vergoedingen.
+  if (/tarief|tarieven|prijs|prijzen|kost|kosten|vergoed/.test(text)) {
+    const lines = profile.services
+      .slice(0, 4)
+      .map((s) => `• ${s.title} — ${s.price || "op aanvraag"} (${s.durationMinutes} min)`)
+      .join("\n");
+    return {
+      reply: `Natuurlijk, ik zet onze tarieven even voor u op een rij:\n\n${lines}\n\nZal ik meteen kijken wanneer u terecht kunt?`,
+      quickReplies: ["Ja graag, plan een afspraak", "Ik heb nog een vraag"],
+    };
+  }
+
+  // Locatie en openingstijden.
+  if (/waar|adres|locatie|open|geopend|openingstijd/.test(text)) {
+    return {
+      reply: `Wij zitten aan ${profile.address || "onze vestiging"} en zijn geopend op ${profile.openingHours || "werkdagen van 08:30 tot 17:30"}. Wilt u dat ik een moment voor u reserveer?`,
+      quickReplies: ["Ja, plan een afspraak", "Bel mij liever terug"],
+    };
+  }
+
+  // Standaard: beschikbaarheid voorstellen.
+  const slots = await checkFreeSlots(new Date().toISOString().slice(0, 10));
+  const isUrgent = /spoed|pijn|acuut|lekkage|storing|direct/.test(text);
+  const opening = isUrgent
+    ? "Wat vervelend dat u hier last van heeft! Geen zorgen, wij helpen u zo snel mogelijk."
+    : `Wat fijn dat u contact opneemt met ${profile.businessName}!`;
+
+  return {
+    reply: `${opening} Voor ${firstService?.title.toLowerCase() || "een afspraak"} hebben wij de volgende momenten vrij:\n\n${slots
+      .slice(0, 2)
+      .map((s) => `• ${s.formatted}`)
+      .join("\n")}\n\nWelk moment schikt u het beste? Laat u ook even uw naam en telefoonnummer achter?`,
+    quickReplies: slots.slice(0, 2).map((s) => s.formatted),
+    proposedSlots: slots,
+  };
+}
+
+/**
+ * Eén gespreksbeurt, provider-agnostisch aan de aanroepkant.
+ * Gebruikt DeepSeek wanneer een sleutel beschikbaar is, anders de fallback hierboven.
+ */
+export async function executeChatTurn(
+  profile: BusinessProfile,
+  conversationHistory: ChatMessage[],
+  incomingMessage: string
+) {
+  if (process.env.DEEPSEEK_API_KEY) {
+    try {
+      return await processCustomerMessageWithDeepSeek(profile, conversationHistory, incomingMessage);
+    } catch (err) {
+      console.error("[deepseek] Turn failed, falling back to deterministic receptionist:", err);
+    }
+  }
+  return processCustomerMessageFallback(profile, conversationHistory, incomingMessage);
 }

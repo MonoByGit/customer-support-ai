@@ -10,7 +10,6 @@ import {
   Filter,
   CheckCheck,
   CheckCircle2,
-  Calendar,
   Sparkles,
 } from "lucide-react";
 
@@ -108,7 +107,7 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
           return (
             <Link
               key={p.slug}
-              href={`/demo/${p.slug}`}
+              href={`/live/${p.slug}`}
               className={`flex items-center gap-3 px-3.5 py-3 transition-colors cursor-pointer ${
                 isActive ? "bg-[#F0F2F5]" : "hover:bg-[#F5F6F6] bg-white"
               }`}

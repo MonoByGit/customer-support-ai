@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-export interface DemoSession {
+export interface ClientSession {
   slug: string;
   businessName: string;
   startTime: number | null; // null if not started yet
@@ -27,7 +27,8 @@ export interface DemoSession {
   lastActive: number;
 }
 
-const SESSIONS_DIR = path.join(process.cwd(), "data", "sessions");
+const DATA_ROOT = process.env.DATA_DIR || path.join(process.cwd(), "data");
+const SESSIONS_DIR = path.join(DATA_ROOT, "sessions");
 
 function ensureSessionsDir() {
   if (!fs.existsSync(SESSIONS_DIR)) {
@@ -35,7 +36,7 @@ function ensureSessionsDir() {
   }
 }
 
-export function getSession(slug: string): DemoSession {
+export function getSession(slug: string): ClientSession {
   ensureSessionsDir();
   const filePath = path.join(SESSIONS_DIR, `${slug}.json`);
 
@@ -62,7 +63,7 @@ export function getSession(slug: string): DemoSession {
   };
 }
 
-export function saveSession(session: DemoSession): void {
+export function saveSession(session: ClientSession): void {
   ensureSessionsDir();
   const filePath = path.join(SESSIONS_DIR, `${session.slug}.json`);
   session.lastActive = Date.now();
@@ -78,10 +79,10 @@ export function saveSession(session: DemoSession): void {
   fs.writeFileSync(filePath, JSON.stringify(session, null, 2), "utf-8");
 }
 
-export function listAllSessions(): DemoSession[] {
+export function listAllSessions(): ClientSession[] {
   ensureSessionsDir();
   const files = fs.readdirSync(SESSIONS_DIR);
-  const sessions: DemoSession[] = [];
+  const sessions: ClientSession[] = [];
 
   for (const file of files) {
     if (file.endsWith(".json")) {
@@ -97,7 +98,7 @@ export function listAllSessions(): DemoSession[] {
   return sessions.sort((a, b) => b.lastActive - a.lastActive);
 }
 
-export function extendSession(slug: string, extraMinutes: number = 10, extraMessages: number = 10): DemoSession {
+export function extendSession(slug: string, extraMinutes: number = 10, extraMessages: number = 10): ClientSession {
   const session = getSession(slug);
   session.maxDurationMinutes += extraMinutes;
   session.maxMessages += extraMessages;
@@ -106,7 +107,7 @@ export function extendSession(slug: string, extraMinutes: number = 10, extraMess
   return session;
 }
 
-export function resetSession(slug: string): DemoSession {
+export function resetSession(slug: string): ClientSession {
   const session = getSession(slug);
   session.startTime = null;
   session.messageCount = 0;

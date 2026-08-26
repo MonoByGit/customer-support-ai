@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
-import { processCustomerMessage, ChatMessage } from "@/lib/gemini";
-import { processCustomerMessageWithDeepSeek } from "@/lib/deepseek";
+import { executeChatTurn, ChatMessage } from "@/lib/deepseek";
 import { getSession, saveSession } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
@@ -41,7 +40,7 @@ export async function POST(req: NextRequest) {
         {
           error: "Sessie limiet bereikt",
           isExpired: true,
-          reply: "Uw 10-minuten demo sessie is voltooid! Wilt u Verde AI live activeren voor uw praktijk of een verlenging aanvragen?",
+          reply: "Deze interactieve testsessie is voltooid. Wilt u Verde AI activeren voor uw eigen praktijk, of de sessie verlengen?",
         },
         { status: 403 }
       );
@@ -63,15 +62,7 @@ export async function POST(req: NextRequest) {
       content: h.text,
     }));
 
-    let result: any;
-
-    if (process.env.DEEPSEEK_API_KEY) {
-      console.log(`[chat] Processing message via DeepSeek Flash (${process.env.DEEPSEEK_MODEL || "deepseek-chat"})...`);
-      result = await processCustomerMessageWithDeepSeek(profile, formattedHistory, message);
-    } else {
-      console.log(`[chat] No DEEPSEEK_API_KEY set. Processing message via fallback conversational handler...`);
-      result = await processCustomerMessage(profile, formattedHistory, message);
-    }
+    const result = await executeChatTurn(profile, formattedHistory, message);
 
     // Record agent message in server transcript
     session.messages.push({

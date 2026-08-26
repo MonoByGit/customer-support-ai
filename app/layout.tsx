@@ -1,20 +1,45 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://verde-whatsapp-ai-production.up.railway.app";
 
 export const metadata: Metadata = {
-  title: "Verde • WhatsApp AI Boekingsengine & Live Demo Platform",
-  description: "Zet websitebezoekers autonoom om in bevestigde agenda-afspraken via WhatsApp met DeepSeek Flash en Google Calendar.",
+  metadataBase: new URL(APP_URL),
+  title: {
+    default: "Verde AI — WhatsApp Boekingsengine voor praktijken en salons",
+    template: "%s • Verde AI",
+  },
+  description:
+    "Verde AI zet websitebezoekers 24/7 autonoom om in bevestigde afspraken in uw Google Agenda, via WhatsApp. Aangedreven door DeepSeek Flash V4.",
+  applicationName: "Verde AI",
+  keywords: [
+    "WhatsApp AI",
+    "afspraken automatiseren",
+    "Google Agenda koppeling",
+    "AI receptionist",
+    "boekingsengine",
+  ],
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "nl_NL",
+    siteName: "Verde AI",
+    title: "Verde AI — WhatsApp Boekingsengine",
+    description:
+      "Zet websitebezoekers 24/7 om in bevestigde agenda-afspraken via WhatsApp. Binnen 2 minuten live.",
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
+    { media: "(prefers-color-scheme: dark)", color: "#07090E" },
+  ],
 };
 
 export default function RootLayout({
@@ -23,9 +48,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" suppressHydrationWarning>
-      <body className="antialiased bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] selection:bg-[#2196F3] selection:text-white transition-colors duration-200">
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="nl">
+      <body className="antialiased selection:bg-[#2196F3] selection:text-white">
+        {children}
       </body>
     </html>
   );

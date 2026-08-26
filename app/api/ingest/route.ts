@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       slug: saved.slug,
-      demoUrl: `/demo/${saved.slug}`,
+      simulatorUrl: `/live/${saved.slug}`,
       profile: saved,
     });
   } catch (error: any) {

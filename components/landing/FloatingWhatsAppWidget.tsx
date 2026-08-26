@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MessageSquare, X, ArrowRight, CheckCircle2 } from "lucide-react";
+import { MessageSquare, X, ArrowRight } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 
 interface FloatingWhatsAppWidgetProps {
@@ -20,10 +20,10 @@ export const FloatingWhatsAppWidget: React.FC<FloatingWhatsAppWidgetProps> = ({
   const whatsappUrl = `https://wa.me/${agencyPhone}?text=${defaultMessage}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end selection:bg-[#2196F3] select-none">
+    <div className="fixed bottom-24 md:bottom-6 right-5 md:right-6 z-50 flex flex-col items-end select-none">
       {/* Popover Bubble */}
       {isOpen && (
-        <div className="mb-3 w-80 bg-white dark:bg-[#0F131C] border border-slate-200/80 dark:border-white/[0.08] rounded-xl p-5 shadow-2xl animate-scale-up space-y-4">
+        <div className="mb-3 w-[min(20rem,calc(100vw-2.5rem))] bg-white dark:bg-[#0F131C] border border-slate-200/80 dark:border-white/[0.08] rounded-xl p-5 shadow-2xl animate-scale-up space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/[0.06]">
             <div className="flex items-center gap-2.5">
               <BrandLogo className="w-8 h-8 shrink-0" />
@@ -44,7 +44,7 @@ export const FloatingWhatsAppWidget: React.FC<FloatingWhatsAppWidgetProps> = ({
           </div>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-            Wilt u Verde AI inzetten voor uw praktijk of salon? Stuur ons direct een berichtje via WhatsApp voor een persoonlijke demo of advies.
+            Wilt u Verde AI inzetten voor uw praktijk of salon? Stuur ons direct een bericht via WhatsApp — u krijgt binnen een werkdag antwoord van een mens.
           </p>
 
           <a
@@ -63,8 +63,9 @@ export const FloatingWhatsAppWidget: React.FC<FloatingWhatsAppWidgetProps> = ({
       {/* Floating Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-13 h-13 p-3 rounded-full bg-[#2196F3] hover:bg-[#1E88E5] text-white flex items-center justify-center shadow-[0_8px_24px_rgba(33,150,243,0.4)] hover:scale-105 active:scale-95 transition-all group"
+        className="relative w-14 h-14 rounded-full bg-[#2196F3] hover:bg-[#1E88E5] text-white flex items-center justify-center shadow-[0_8px_24px_rgba(33,150,243,0.4)] hover:scale-105 active:scale-95 transition-all"
         title="Chat met Verde AI"
+        aria-label="Open het WhatsApp adviesvenster van Verde AI"
       >
         <BrandLogo className="w-6 h-6" />
         <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#FF9100] border-2 border-white text-[9px] font-bold flex items-center justify-center text-white">

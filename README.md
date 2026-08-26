@@ -1,140 +1,88 @@
-# 💬 WhatsApp AI Appointment Booking Engine & Live Demo Platform
+# Verde AI — WhatsApp Boekingsengine
 
-An end-to-end autonomous WhatsApp AI receptionist and appointment booking engine built with **Next.js 14 (App Router, TypeScript, Tailwind CSS)**, **Gemini Flash (Function Calling & Structured Outputs)**, **Cheerio Web Scraping**, and **Google Calendar API Integration**.
+Autonome WhatsApp-afsprakenassistent voor praktijken, salons en installatiebedrijven.
+Zet websitebezoekers 24/7 om in bevestigde afspraken in Google Agenda.
 
-Designed to instantly convert website visitors into confirmed calendar appointments, with a pixel-perfect clickable WhatsApp Web demo interface and ready-to-ship Railway configuration.
+Gebouwd met **Next.js 14** (App Router, TypeScript, Tailwind), **DeepSeek Flash V4**
+(function calling), **Cheerio** en de **Google Calendar API**.
 
----
-
-## 🚀 Key Features
-
-1. **AI Ingestion & Extraction (`/api/ingest` & `lib/scraper.ts`)**:
-   - Paste any business website URL.
-   - Strips boilerplate (scripts, nav, footer) with Cheerio.
-   - Extracts structured business profile (`businessName`, `industry`, `services`, `prices`, `openingHours`, `faqs`, `toneOfVoice`) via Gemini JSON schema with Zod validation.
-   - Instantly generates an interactive WhatsApp demo link (`/demo/[slug]`).
-
-2. **Gemini Agent Kernel & Native Tool Calling (`/api/chat` & `lib/gemini.ts`)**:
-   - Persona: Warm, concise, friendly WhatsApp receptionist (2-3 sentences max per bubble).
-   - Tool `check_availability({ startDate, serviceDurationMinutes })`: Checks free calendar slots and proposes 2 concrete times.
-   - Tool `confirm_booking({ customerName, customerPhone, serviceTitle, slotIsoString })`: Confirms appointment and creates Google Calendar event.
-   - Collects Customer Name and Phone Number before booking.
-
-3. **Pixel-Perfect WhatsApp Web UI (`components/whatsapp/*`)**:
-   - WhatsApp green `#075E54` / `#128C7E`, bubble `#DCF8C6` (user) / `#FFFFFF` (agent).
-   - Auto-welcome greeting on page open.
-   - Realistic typing simulation (`Aan het typen...`) with natural delays (1.1s).
-   - Web Audio synthesized incoming and outgoing message chimes.
-   - Interactive quick-reply service chips and time slot selector buttons.
-   - Celebration modal with confetti, Add-to-Google-Calendar link, and `.ics` file download.
-   - Reset chat, share demo link, and inspect business profile data.
-
-4. **Google Calendar Engine + Sandbox Fallback (`lib/calendar.ts`)**:
-   - Uses `googleapis` with Service Account authentication (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID`).
-   - Seamless sandbox fallback mode: if environment credentials are not provided, the demo functions 100% out of the box with realistic mock slots.
-
-5. **Production & Railway Ready**:
-   - Next.js Standalone build configuration.
-   - Multi-stage Dockerfile (`Dockerfile`).
-   - Railway manifest (`railway.json`).
+- Live: https://verde-whatsapp-ai-production.up.railway.app
+- Repo: https://github.com/MonoByGit/customer-support-ai
 
 ---
 
-## 🛠️ Project Structure
+## Architectuur
 
-```
-├── app/
-│   ├── api/
-│   │   ├── ingest/route.ts         # Scrapes site, outputs BusinessProfile JSON
-│   │   ├── chat/route.ts           # Handles WhatsApp loop, Gemini tool calls
-│   │   └── calendar/mock/route.ts  # Fallback sandbox calendar router
-│   ├── demo/
-│   │   └── [slug]/page.tsx         # Clickable WhatsApp interface for client profile
-│   ├── admin/
-│   │   └── page.tsx                # Onboarding dashboard: Paste URL -> Generate Demo
-│   ├── layout.tsx
-│   ├── globals.css
-│   └── page.tsx                    # Product showcase & demo directory
-├── components/
-│   └── whatsapp/
-│       ├── ChatWindow.tsx          # Authentic WhatsApp chat frame
-│       ├── ChatHeader.tsx          # Header with avatar, status, controls
-│       ├── MessageList.tsx         # Message bubbles, checkmarks, slot chips
-│       ├── MessageInput.tsx        # WhatsApp input bar, suggestions, mic/send
-│       ├── CalendarInviteModal.tsx # Booking confirmation modal + .ics download
-│       ├── BusinessInfoModal.tsx   # Scraped profile details viewer
-│       └── sound.ts                # Web Audio chime synthesizer
-├── lib/
-│   ├── scraper.ts                  # Cheerio web scraper
-│   ├── schemas.ts                  # Zod schemas for BusinessProfile & Tools
-│   ├── gemini.ts                   # Gemini client & tool calling engine
-│   ├── calendar.ts                 # Google Calendar connector & sandbox
-│   └── storage.ts                  # File-based profile storage (/data/profiles/)
-├── data/
-│   └── profiles/
-│       └── tandarts-demo.json      # Pre-populated demo profile
-├── Dockerfile                      # Standalone container build
-├── railway.json                    # Railway deployment settings
-├── .env.example
-└── package.json
-```
+| Route | Wat het is |
+|---|---|
+| `/` | Marketing- en conversiepagina met ROI-calculator en live QR-test |
+| `/admin` | Verde AI Command: pipeline, lead-intelligentie, outreach en bedrijfsscan |
+| `/live/[slug]` | Live WhatsApp Simulator voor één bedrijfsprofiel |
+| `/portal/[slug]` | Klantonboarding: widget, agendakoppeling, QR-code |
+| `/portal/[slug]/poster` | Printklare balieposter met QR-code |
+| `/demo/[slug]` | Permanente redirect naar `/live/[slug]` (historische links) |
+
+| API | Wat het doet |
+|---|---|
+| `POST /api/ingest` | Scrapet een website en destilleert een `BusinessProfile` via DeepSeek |
+| `POST /api/chat` | Eén gespreksbeurt inclusief agenda-tools en sessiebewaking |
+| `GET/POST /api/sessions` | Sessieoverzicht, verlengen en opnieuw starten |
+| `GET/PUT /api/profiles` | Bedrijfsprofielen lezen en bijwerken |
+| `GET /api/status` | Eerlijke koppelstatus (nooit sleutels, alleen aan/uit plus instructie) |
+| `GET/POST /api/webhook` | Meta WhatsApp Cloud API handshake en berichtafhandeling |
+
+### AI-engine
+
+DeepSeek is de enige LLM-provider. `lib/deepseek.ts` bevat de extractie, de
+gespreksbeurt met tool calling (`check_availability`, `confirm_booking`) en een
+**deterministische fallback-receptionist** die het overneemt zonder API-sleutel of
+bij een API-storing — zodat een prospect nooit tegen een dood scherm aanloopt.
+
+### Opslag
+
+Profielen en sessies staan als JSON op schijf. **Op Railway is de container-schijf
+vluchtig**: zonder volume verdwijnt elk gegenereerd klantprofiel bij de volgende
+deploy. Koppel een Railway Volume en zet `DATA_DIR` op het mountpad (bijv. `/data`);
+de meegeleverde voorbeeldprofielen worden dan eenmalig geseed.
 
 ---
 
-## ⚙️ Environment Variables
+## Lokaal draaien
 
-Create a `.env.local` file with the following variables:
+Dit project staat onder iCloud-sync. Bouw en draai altijd buiten iCloud:
 
 ```bash
-# 1. Google Gemini API (Required for AI extraction & natural WhatsApp receptionist conversation)
-# Get a key at https://aistudio.google.com/
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# 2. Google Calendar API (Optional - If omitted, automated sandbox mock mode is enabled)
-GOOGLE_CLIENT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END PRIVATE KEY-----\n"
-GOOGLE_CALENDAR_ID=your_calendar_id@group.calendar.google.com
-
-# 3. App Settings
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+mkdir -p ~/dev/customer-support-ai-work && rsync -av --exclude='.git' --exclude='node_modules' --exclude='.next' "/Users/idusty/Documents/Cosmo OS/Projects/Customer Support AI/" ~/dev/customer-support-ai-work/ && (cd ~/dev/customer-support-ai-work && npm install && npm run dev)
 ```
 
----
-
-## 🏃 Local Development
-
-Per the `dev-outside-icloud` best practices for macOS environments:
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
-3. Open [http://localhost:3000](http://localhost:3000) in your browser:
-   - **Showcase Hub**: `/`
-   - **Live Dental Demo**: `/demo/tandarts-demo`
-   - **Admin Generator**: `/admin`
+Kopieer `.env.example` naar `.env` en vul in wat je nodig hebt. Zonder sleutels
+draait alles in sandbox-modus.
 
 ---
 
-## 🚢 Deploying to Railway
+## Deployen
 
-### Option A: Via Railway GitHub Integration
-1. Push this repository to GitHub.
-2. Go to [Railway.app](https://railway.app) and click **"New Project"** -> **"Deploy from GitHub repo"**.
-3. Select this repository. Railway will automatically detect `railway.json` and build the `Dockerfile`.
-4. In Railway dashboard, add your environment variables (`GEMINI_API_KEY`, `GOOGLE_CLIENT_EMAIL`, etc.).
+Railway bouwt via de `Dockerfile` (Next standalone output) en injecteert `PORT` zelf.
 
-### Option B: Via Railway CLI
 ```bash
-railway login
-railway init
-railway up
+railway up --service verde-whatsapp-ai --detach
 ```
+
+### Environment op Railway
+
+| Variabele | Nodig voor |
+|---|---|
+| `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL` | Vrije conversatie in plaats van de fallback |
+| `DATA_DIR` | Klantprofielen die deploys overleven (Railway Volume) |
+| `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID` | Echte agendasynchronisatie |
+| `META_WHATSAPP_ACCESS_TOKEN`, `META_PHONE_NUMBER_ID`, `META_WEBHOOK_VERIFY_TOKEN` | Koppeling aan een echt WhatsApp-nummer |
+| `NEXT_PUBLIC_APP_URL` | Correcte metadata en absolute links |
+
+`/admin` toont deze status live in het blok **Actieve koppelingen**.
 
 ---
 
-## 📄 License
-MIT License.
+## Thema
+
+Er is geen handmatige licht/donker-schakelaar. De applicatie volgt de systeemvoorkeur
+via `prefers-color-scheme` (Tailwind `darkMode: "media"`).

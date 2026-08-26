@@ -8,7 +8,6 @@ import {
   Copy,
   Check,
   Smartphone,
-  ExternalLink,
   MessageSquare,
 } from "lucide-react";
 
@@ -28,7 +27,7 @@ export const EmbedModal: React.FC<EmbedModalProps> = ({
   if (!isOpen) return null;
 
   const currentUrl = typeof window !== "undefined" ? window.location.origin : "https://jouwdomein.nl";
-  const demoUrl = `${currentUrl}/demo/${profile.slug}`;
+  const demoUrl = `${currentUrl}/live/${profile.slug}`;
   const cleanPhone = (profile.phone || "+31612345678").replace(/[^0-9]/g, "");
   const waMeLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
     `Hoi ${profile.businessName}, ik wil graag een afspraak maken via WhatsApp!`

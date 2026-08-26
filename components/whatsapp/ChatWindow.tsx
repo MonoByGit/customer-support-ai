@@ -254,7 +254,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         id: `err_${Date.now()}`,
         role: "system",
         content: isExpired
-          ? "Uw 10-minuten demo sessie is voltooid."
+          ? "Deze interactieve testsessie is voltooid."
           : `Er ging even iets mis: ${err.message || "Probeer het opnieuw."}`,
         timestamp: new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" }),
       };
@@ -299,10 +299,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <Clock className={`w-3.5 h-3.5 ${remainingSeconds < 120 ? "text-red-400 animate-pulse" : "text-[#00D492]"}`} />
             <span>
               {isExpired ? (
-                <span className="text-red-400 font-bold">Demo sessie verlopen</span>
+                <span className="text-[#FF9100] font-bold">Testsessie verlopen</span>
               ) : (
                 <>
-                  Resterende demotijd: <strong className="font-mono text-[#00D492]">{formatTimer(remainingSeconds)}</strong>
+                  Resterende testtijd: <strong className="font-mono text-[#2196F3]">{formatTimer(remainingSeconds)}</strong>
                 </>
               )}
             </span>
@@ -330,7 +330,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-slate-900">
               <Lock className="w-3.5 h-3.5 text-[#2196F3]" />
-              <span>10-Minuten Demo Voltooid voor {profile.businessName}</span>
+              <span>Testsessie voltooid voor {profile.businessName}</span>
             </div>
             <p className="text-xs text-slate-600 max-w-md mx-auto">
               Al uw geteste gesprekken en afspraken blijven hierboven bewaard zodat u deze kunt teruglezen of delen.

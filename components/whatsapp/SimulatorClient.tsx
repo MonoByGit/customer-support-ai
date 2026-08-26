@@ -5,14 +5,12 @@ import { BusinessProfile } from "@/lib/schemas";
 import { ChatWindow } from "./ChatWindow";
 import { WhatsAppSidebar } from "./WhatsAppSidebar";
 import { EmbedModal } from "./EmbedModal";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import Link from "next/link";
 import {
   ArrowLeft,
   Smartphone,
   Monitor,
   PlusCircle,
-  Sparkles,
   Zap,
   Volume2,
   VolumeX,
@@ -23,16 +21,14 @@ import {
   Wifi,
   Battery,
   Signal,
-  Calendar,
-  Layers,
 } from "lucide-react";
 
-interface DemoPageClientProps {
+interface SimulatorClientProps {
   profile: BusinessProfile;
   allProfiles: BusinessProfile[];
 }
 
-export const DemoPageClient: React.FC<DemoPageClientProps> = ({
+export const SimulatorClient: React.FC<SimulatorClientProps> = ({
   profile,
   allProfiles,
 }) => {
@@ -75,7 +71,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
   };
 
   return (
-    <main className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col justify-between overflow-x-hidden selection:bg-[#2196F3] selection:text-white transition-colors duration-200">
+    <main className="h-[100dvh] min-h-[600px] bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col overflow-hidden">
       {/* Top Professional Navigation Bar */}
       <header className="w-full bg-white/90 dark:bg-[#0C0F17]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.07] px-6 sm:px-10 py-3.5 flex items-center justify-between z-30 shrink-0">
         <div className="flex items-center gap-3">
@@ -84,7 +80,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors text-xs font-semibold"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Showcase Overzicht</span>
+            <span className="hidden sm:inline">Overzicht</span>
           </Link>
           <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">/</span>
           <div className="flex items-center gap-2">
@@ -100,7 +96,6 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
 
         {/* View Switcher: Mobile Phone Mockup vs Desktop Web */}
         <div className="flex items-center gap-2.5">
-          <ThemeToggle />
 
           <div className="flex items-center bg-slate-100 dark:bg-white/[0.04] p-1 rounded-lg border border-slate-200/80 dark:border-white/[0.08]">
             <button
@@ -134,12 +129,12 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             className="bg-white hover:bg-slate-100 dark:bg-white/10 dark:hover:bg-white/15 text-slate-900 dark:text-white border border-slate-200 dark:border-white/20 px-3.5 py-1.5 rounded-lg font-semibold transition-colors flex items-center gap-1.5 text-xs hidden md:flex"
           >
             <PlusCircle className="w-3.5 h-3.5 text-[#2196F3]" />
-            <span>Nieuw Bedrijf Scrapen</span>
+            <span>Nieuwe AI Bedrijfsscan</span>
           </Link>
         </div>
       </header>
 
-      {/* Floating Demo Control & Test Toolbar */}
+      {/* Simulator-bedieningsbalk */}
       <div className="w-full bg-slate-100/90 dark:bg-[#0d141e]/90 border-b border-slate-200/80 dark:border-white/[0.06] px-6 sm:px-10 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs shrink-0 z-20 transition-colors">
         {/* Left: 1-Click Scenario Triggers */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
@@ -158,7 +153,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
           ))}
         </div>
 
-        {/* Right: Demo Inspector Actions */}
+        {/* Rechts: simulator-acties */}
         <div className="flex items-center gap-1.5 shrink-0 ml-auto">
           <button
             onClick={() => setSoundEnabled((prev) => !prev)}
@@ -194,7 +189,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
           <button
             onClick={handleShare}
             className="p-1.5 px-2.5 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] text-xs font-medium flex items-center gap-1.5 transition-all shadow-2xs"
-            title="Kopieer demo link"
+            title="Kopieer deelbare link"
           >
             {copiedLink ? <Check className="w-3.5 h-3.5 text-[#2196F3]" /> : <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />}
             <span>{copiedLink ? "Gekopieerd!" : "Deel"}</span>
@@ -203,7 +198,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
       </div>
 
       {/* Main Interactive Stage Area */}
-      <div className="flex-1 flex items-center justify-center p-2 sm:p-6 md:p-8 relative">
+      <div className="flex-1 min-h-0 flex items-center justify-center p-2 sm:p-5 md:p-6 relative overflow-hidden">
         {/* Subtle background ambient radial lighting */}
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
           <div className="w-[600px] h-[600px] bg-[#2196F3]/5 rounded-full blur-3xl" />
@@ -213,7 +208,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
           /* ====================================================================
              FLAWLESS IPHONE SMARTPHONE FRAME
              ==================================================================== */
-          <div className="relative w-full max-w-[400px] h-[calc(100vh-140px)] max-h-[820px] bg-black rounded-[48px] p-2.5 border-[10px] border-slate-800 shadow-[0_25px_90px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.95)] flex flex-col animate-scale-up">
+          <div className="relative w-full max-w-[400px] h-full max-h-[820px] bg-black rounded-[48px] p-2.5 border-[10px] border-slate-800 shadow-[0_25px_90px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.95)] flex flex-col animate-scale-up">
             {/* Screen Inner Glass Container */}
             <div className="relative flex-1 w-full h-full bg-[#EFEAE2] rounded-[38px] overflow-hidden flex flex-col">
               {/* iPhone iOS Status Bar & Dynamic Island */}
@@ -249,7 +244,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
           /* ====================================================================
              WHATSAPP WEB DESKTOP FULL SPLIT-SCREEN FRAME
              ==================================================================== */
-          <div className="w-full max-w-5xl h-[calc(100vh-140px)] max-h-[820px] bg-[#FFFFFF] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-[0_20px_80px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_80px_rgba(0,0,0,0.9)] flex overflow-hidden animate-scale-up">
+          <div className="w-full max-w-5xl h-full max-h-[820px] bg-[#FFFFFF] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-[0_20px_80px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_80px_rgba(0,0,0,0.9)] flex overflow-hidden animate-scale-up">
             {/* Left Sidebar */}
             <div className="hidden md:block w-80 shrink-0 border-r border-[#E9EDEF]">
               <WhatsAppSidebar currentProfile={profile} allProfiles={allProfiles} />

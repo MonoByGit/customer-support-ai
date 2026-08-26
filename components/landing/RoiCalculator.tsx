@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { TrendingUp, ArrowRight, CheckCircle2, Calculator } from "lucide-react";
+import { ArrowRight, CheckCircle2, Calculator } from "lucide-react";
 import Link from "next/link";
 
 export const RoiCalculator: React.FC = () => {

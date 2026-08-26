@@ -11,7 +11,6 @@ import {
   Wifi,
   Battery,
   RotateCcw,
-  Sparkles,
 } from "lucide-react";
 
 export const HeroInteractivePhone: React.FC = () => {
@@ -98,7 +97,7 @@ export const HeroInteractivePhone: React.FC = () => {
             {/* Encryption notice */}
             <div className="text-center pt-1">
               <span className="bg-[#FFEECD] text-[#54656F] text-[10px] px-3 py-1 rounded-md shadow-2xs inline-block font-medium">
-                🔒 End-to-end versleutelde demo
+                🔒 End-to-end versleuteld
               </span>
             </div>
 
@@ -200,7 +199,7 @@ export const HeroInteractivePhone: React.FC = () => {
             <button
               onClick={handleReset}
               className="w-8 h-8 rounded-full bg-[#2196F3] text-white flex items-center justify-center shadow-xs text-xs font-bold hover:bg-[#1E88E5] active:scale-95 transition-all"
-              title="Herstart demo"
+              title="Herstart simulatie"
             >
               ↻
             </button>

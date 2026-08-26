@@ -10,7 +10,7 @@ export interface AvailableSlot {
   durationMinutes: number;
 }
 
-// In-memory mock calendar store for demo sandboxing
+// In-memory sandbox-agenda: actief zolang er geen Google service account is gekoppeld
 interface MockEvent {
   id: string;
   customerName: string;

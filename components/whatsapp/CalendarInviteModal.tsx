@@ -180,7 +180,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
 
         {/* Footer info */}
         <div className="bg-gray-50 px-5 py-3 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
-          <span>{booking.isMock ? "Sandbox Demo Modus" : "Google Calendar Gesynchroniseerd"}</span>
+          <span>{booking.isMock ? "Sandbox-agenda (nog niet gekoppeld)" : "Google Agenda gesynchroniseerd"}</span>
           <button
             onClick={onClose}
             className="text-[#2196F3] hover:underline font-semibold"
