@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { scrapeWebsite } from "@/lib/scraper";
-import { extractBusinessProfileFromText } from "@/lib/gemini";
+import { extractBusinessProfileWithDeepSeek } from "@/lib/deepseek";
 import { saveProfile } from "@/lib/storage";
 
 export async function POST(req: NextRequest) {
@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
     console.log(`[api/ingest] Starting scraping for URL: ${url}`);
     const scrapedData = await scrapeWebsite(url);
 
-    console.log(`[api/ingest] Extracting business profile via Gemini AI...`);
-    const profile = await extractBusinessProfileFromText(scrapedData);
+    console.log(`[api/ingest] Extracting business profile via DeepSeek Flash AI...`);
+    const profile = await extractBusinessProfileWithDeepSeek(scrapedData);
 
     console.log(`[api/ingest] Saving generated profile: ${profile.slug}`);
     const saved = saveProfile(profile);

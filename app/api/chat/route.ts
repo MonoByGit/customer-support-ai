@@ -65,17 +65,11 @@ export async function POST(req: NextRequest) {
 
     let result: any;
 
-    // Route to DeepSeek if DEEPSEEK_API_KEY is present, otherwise fallback to Gemini
     if (process.env.DEEPSEEK_API_KEY) {
-      try {
-        console.log(`[chat] Routing message to DeepSeek API (${process.env.DEEPSEEK_MODEL || "deepseek-chat"})...`);
-        result = await processCustomerMessageWithDeepSeek(profile, formattedHistory, message);
-      } catch (deepseekErr) {
-        console.warn("[chat] DeepSeek failed, falling back to Gemini:", deepseekErr);
-        result = await processCustomerMessage(profile, formattedHistory, message);
-      }
+      console.log(`[chat] Processing message via DeepSeek Flash (${process.env.DEEPSEEK_MODEL || "deepseek-chat"})...`);
+      result = await processCustomerMessageWithDeepSeek(profile, formattedHistory, message);
     } else {
-      console.log(`[chat] Routing message to Gemini Flash API...`);
+      console.log(`[chat] No DEEPSEEK_API_KEY set. Processing message via fallback conversational handler...`);
       result = await processCustomerMessage(profile, formattedHistory, message);
     }
 

@@ -9,6 +9,109 @@ export interface DeepSeekMessage {
   tool_calls?: any[];
 }
 
+/**
+ * Extract structured BusinessProfile from raw scraped website content using DeepSeek Flash
+ */
+export async function extractBusinessProfileWithDeepSeek(input: string | any): Promise<BusinessProfile> {
+  const apiKey = process.env.DEEPSEEK_API_KEY || "";
+  const modelName = process.env.DEEPSEEK_MODEL || "deepseek-chat";
+
+  const scrapedText = typeof input === "string" 
+    ? input 
+    : `Titel: ${input.title}\nBeschrijving: ${input.metaDescription}\nKoppen: ${input.headings?.join(", ")}\nInhoud: ${input.cleanText}\nTelefoon: ${input.phoneMatches?.join(", ")}\nEmail: ${input.emailMatches?.join(", ")}\nURL: ${input.url}`;
+
+  const prompt = `
+Je bent een data-extractie expert voor Nederlandse MKB websites (tandartsen, kapsalons, loodgieters, fysiotherapeuten, klinieken).
+Analyseer de onderstaande website-inhoud en structureer alle bedrijfsinformatie in JSON volgens dit exacte schema (strikte JSON, geen markdown codeblocks):
+
+{
+  "businessName": "string",
+  "slug": "url-friendly-slug-lowercase",
+  "industry": "dental" | "salon" | "trades" | "general",
+  "tagline": "string",
+  "phone": "string",
+  "email": "string",
+  "address": "string",
+  "openingHours": "string",
+  "websiteUrl": "string",
+  "services": [
+    {
+      "id": "string",
+      "title": "string",
+      "durationMinutes": 30,
+      "price": "string",
+      "description": "string"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "string",
+      "answer": "string"
+    }
+  ],
+  "toneOfVoice": "Warm, empathisch, professioneel en behulpzaam",
+  "customGreeting": "string"
+}
+
+Hier is de website-inhoud:
+${scrapedText}
+`;
+
+  try {
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: modelName,
+        messages: [
+          { role: "system", content: "Je bent een JSON API die uitsluitend valide JSON retourneert zonder markdown backticks." },
+          { role: "user", content: prompt },
+        ],
+        temperature: 0.2,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`DeepSeek API extraction failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let rawContent = data.choices?.[0]?.message?.content || "{}";
+    rawContent = rawContent.replace(/```json/g, "").replace(/```/g, "").trim();
+
+    return JSON.parse(rawContent);
+  } catch (err: any) {
+    console.warn("[deepseek] Extraction fallback triggered:", err.message);
+    // Deterministic fallback from scraped data
+    const title = (typeof input === "object" && input.title) ? input.title : "Bedrijfsprofiel";
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "bedrijf-demo";
+    return {
+      businessName: title,
+      slug,
+      industry: "general",
+      tagline: "Professionele dienstverlening & afsprakenbeheer",
+      phone: (typeof input === "object" && input.phoneMatches?.[0]) || "+31 20 123 4567",
+      email: (typeof input === "object" && input.emailMatches?.[0]) || "info@bedrijf.nl",
+      address: "Nederland",
+      openingHours: "Ma-Vr: 08:30 - 17:30",
+      websiteUrl: typeof input === "object" ? input.url : "",
+      services: [
+        { id: "srv-1", title: "Consult / Adviesgesprek", durationMinutes: 30, price: "Gratis" },
+        { id: "srv-2", title: "Standaard Behandeling / Afspraak", durationMinutes: 45, price: "€65" },
+        { id: "srv-3", title: "Spoedafspraak / Intake", durationMinutes: 30, price: "Op aanvraag" },
+      ],
+      faqs: [
+        { question: "Hoe kan ik een afspraak verzetten?", answer: "Stuur ons simpelweg een WhatsApp berichtje om een nieuw tijdstip te kiezen." },
+      ],
+      toneOfVoice: "Warm, empathisch, professioneel en behulpzaam",
+      customGreeting: `Goedendag! Welkom bij ${title}. Ik help u graag bij het inplannen van uw afspraak.`,
+    };
+  }
+}
+
 export async function processCustomerMessageWithDeepSeek(
   profile: BusinessProfile,
   conversationHistory: Array<{ role: "user" | "model" | "assistant" | "system"; content: string }>,
