@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,6 +10,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        verde: {
+          50: "#ECFDF5",
+          100: "#D1FAE5",
+          200: "#A7F3D0",
+          300: "#6EE7B7",
+          400: "#34D399",
+          500: "#10B981",
+          600: "#059669",
+          700: "#047857",
+          800: "#065F46",
+          900: "#064E3B",
+          accent: "#00D492",
+        },
         wa: {
           teal: "#075E54",
           tealDark: "#054c44",
@@ -16,21 +30,13 @@ const config: Config = {
           green: "#25D366",
           greenDark: "#1EBE5D",
           userBubble: "#DCF8C6",
-          userBubbleDark: "#E1FFC7",
           agentBubble: "#FFFFFF",
           bg: "#EFEAE2",
-          bgDark: "#ECE5DD",
-          chatBar: "#F0F2F5",
-          header: "#075E54",
-          textPrimary: "#111B21",
-          textSecondary: "#667781",
-          border: "#E9EDEF",
-          blueCheck: "#53BDEB",
-          grayCheck: "#8696A0",
         },
       },
-      backgroundImage: {
-        "whatsapp-pattern": "url('/whatsapp-pattern.png')",
+      fontFamily: {
+        sans: ["var(--font-sans)", "Inter", "sans-serif"],
+        heading: ["var(--font-heading)", "Plus Jakarta Sans", "sans-serif"],
       },
     },
   },
