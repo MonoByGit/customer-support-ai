@@ -30,9 +30,9 @@ export const FaqAccordion: React.FC = () => {
   ];
 
   return (
-    <section className="max-w-3xl mx-auto space-y-6 px-4 sm:px-6">
+    <section className="max-w-3xl mx-auto space-y-6 px-6 sm:px-10">
       <div className="text-center space-y-2">
-        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#2196F3] uppercase tracking-wider">
           Veelgestelde Vragen
         </span>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -47,16 +47,16 @@ export const FaqAccordion: React.FC = () => {
           return (
             <div
               key={idx}
-              className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0F141C] overflow-hidden transition-all shadow-2xs"
+              className="pro-card rounded-xl overflow-hidden transition-all shadow-2xs"
             >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-bold text-sm text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-semibold text-sm text-slate-900 dark:text-white hover:text-[#2196F3] dark:hover:text-[#2196F3] transition-colors"
               >
                 <span>{faq.q}</span>
                 <ChevronDown
                   className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                    isOpen ? "rotate-180 text-emerald-500" : ""
+                    isOpen ? "rotate-180 text-[#2196F3]" : ""
                   }`}
                 />
               </button>

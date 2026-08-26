@@ -38,8 +38,8 @@ export const HeroInteractivePhone: React.FC = () => {
 
   return (
     <div className="relative w-full max-w-[340px] sm:max-w-[355px] mx-auto py-2">
-      {/* Subtle Glow Backdrop */}
-      <div className="absolute -inset-1 bg-gradient-to-b from-emerald-500/20 to-teal-500/10 rounded-[56px] blur-2xl opacity-60 -z-10" />
+      {/* Subtle Blue Glow Backdrop */}
+      <div className="absolute -inset-1 bg-gradient-to-b from-[#2196F3]/20 to-[#0D47A1]/10 rounded-[56px] blur-2xl opacity-60 -z-10" />
 
       {/* =========================================================================
           AUTHENTIC IPHONE 16 PRO SMARTPHONE CHASSIS (19.5:9 RATIO)
@@ -49,13 +49,13 @@ export const HeroInteractivePhone: React.FC = () => {
         <div className="relative w-full h-[620px] sm:h-[650px] bg-[#EFEAE2] rounded-[44px] overflow-hidden flex flex-col text-[#111B21] select-none whatsapp-bg">
           
           {/* iOS Status Bar + Dynamic Island */}
-          <div className="bg-[#075E54] text-white px-5 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold shrink-0 z-20">
+          <div className="bg-[#0A192F] text-white px-5 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold shrink-0 z-20">
             <span className="font-mono">09:41</span>
             
             {/* Dynamic Island */}
             <div className="w-24 h-4.5 bg-black rounded-full shadow-inner flex items-center justify-end px-2 gap-1">
               <div className="w-2 h-2 rounded-full bg-[#1A1A1A]" />
-              <div className="w-1.5 h-1.5 rounded-full bg-[#00D492]/80" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#2196F3]/80" />
             </div>
 
             <div className="flex items-center gap-1 text-white/90">
@@ -66,9 +66,9 @@ export const HeroInteractivePhone: React.FC = () => {
           </div>
 
           {/* WhatsApp Chat Header */}
-          <div className="bg-[#075E54] text-white px-3.5 py-2.5 flex items-center justify-between shadow-xs shrink-0 z-20">
+          <div className="bg-[#0D47A1] text-white px-3.5 py-2.5 flex items-center justify-between shadow-xs shrink-0 z-20">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#00D492] to-[#128C7E] text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#2196F3] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
                 TG
               </div>
               <div className="min-w-0">
@@ -76,9 +76,9 @@ export const HeroInteractivePhone: React.FC = () => {
                   <span className="font-bold text-xs text-white truncate">
                     Tandartspraktijk De Groene Gracht
                   </span>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366] stroke-white shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2196F3] fill-[#2196F3] stroke-white shrink-0" />
                 </div>
-                <p className="text-[10.5px] text-emerald-100 font-normal">
+                <p className="text-[10.5px] text-blue-100 font-normal">
                   {isTyping ? "aan het typen..." : "Online • WhatsApp AI"}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export const HeroInteractivePhone: React.FC = () => {
 
             <button
               onClick={handleReset}
-              className="text-emerald-100 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors"
+              className="text-blue-100 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors"
               title="Herstart gesprek"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -117,25 +117,25 @@ export const HeroInteractivePhone: React.FC = () => {
                   <button
                     onClick={() => handleSelectSlot("Donderdag 27 aug om 14:00 uur")}
                     disabled={step > 1}
-                    className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#00A884] hover:bg-emerald-50 active:bg-emerald-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
+                    className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#2196F3] hover:bg-blue-50 active:bg-blue-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
                   >
                     <span className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5 text-[#00A884]" />
+                      <Clock className="w-3.5 h-3.5 text-[#2196F3]" />
                       Donderdag 27 aug om 14:00 uur
                     </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#00A884] group-hover/btn:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-[#2196F3] group-hover/btn:translate-x-0.5 transition-transform" />
                   </button>
 
                   <button
                     onClick={() => handleSelectSlot("Vrijdag 28 aug om 10:00 uur")}
                     disabled={step > 1}
-                    className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#00A884] hover:bg-emerald-50 active:bg-emerald-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
+                    className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#2196F3] hover:bg-blue-50 active:bg-blue-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
                   >
                     <span className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5 text-[#00A884]" />
+                      <Clock className="w-3.5 h-3.5 text-[#2196F3]" />
                       Vrijdag 28 aug om 10:00 uur
                     </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#00A884] group-hover/btn:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-[#2196F3] group-hover/btn:translate-x-0.5 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -146,9 +146,9 @@ export const HeroInteractivePhone: React.FC = () => {
               <div className="flex flex-col items-end w-full animate-fade-in">
                 <div className="bg-[#DCF8C6] text-[#111B21] rounded-2xl rounded-tr-xs px-3.5 py-2 shadow-[0_1px_1px_rgba(0,0,0,0.1)] text-[13px] max-w-[88%]">
                   <span>Ik kies graag {selectedSlot}! Mijn naam is Mark van Leeuwen (06-12345678).</span>
-                  <div className="flex items-center justify-end gap-1 text-[9.5px] text-emerald-800/80 mt-0.5">
+                  <div className="flex items-center justify-end gap-1 text-[9.5px] text-slate-500 mt-0.5">
                     <span>09:42</span>
-                    <CheckCheck className="w-3 h-3 text-[#53BDEB]" />
+                    <CheckCheck className="w-3 h-3 text-[#2196F3]" />
                   </div>
                 </div>
               </div>
@@ -158,9 +158,9 @@ export const HeroInteractivePhone: React.FC = () => {
             {isTyping && (
               <div className="flex items-start w-full animate-fade-in">
                 <div className="bg-white rounded-2xl rounded-tl-xs px-3.5 py-2.5 shadow-xs flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce [animation-delay:-0.3s]" />
-                  <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce [animation-delay:-0.15s]" />
-                  <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce" />
+                  <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.3s]" />
+                  <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.15s]" />
+                  <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce" />
                 </div>
               </div>
             )}
@@ -174,16 +174,16 @@ export const HeroInteractivePhone: React.FC = () => {
                   </div>
 
                   {/* Confirmed Calendar Card */}
-                  <div className="bg-gradient-to-br from-[#075E54] to-[#128C7E] text-white p-3 m-2.5 rounded-xl text-xs space-y-1.5 shadow-xs">
+                  <div className="bg-gradient-to-br from-[#0D47A1] to-[#1565C0] text-white p-3 m-2.5 rounded-xl text-xs space-y-1.5 shadow-xs">
                     <div className="flex items-center justify-between font-bold text-[11px] pb-1 border-b border-white/20">
                       <span className="flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-[#25D366]" /> Afspraak Bevestigd
+                        <Calendar className="w-3.5 h-3.5 text-[#FF9100]" /> Afspraak Bevestigd
                       </span>
                       <span className="font-mono text-[9px] bg-white/20 px-1.5 py-0.5 rounded font-bold">WA-8842</span>
                     </div>
                     <div className="text-[12px] font-bold pt-0.5">Periodieke Gebitscontrole</div>
-                    <div className="text-[11px] text-emerald-100">{selectedSlot}</div>
-                    <div className="mt-1.5 text-center bg-white text-[#075E54] text-[10.5px] font-bold py-1.5 rounded-lg shadow-2xs">
+                    <div className="text-[11px] text-blue-100">{selectedSlot}</div>
+                    <div className="mt-1.5 text-center bg-white text-[#0D47A1] text-[10.5px] font-bold py-1.5 rounded-lg shadow-2xs">
                       ✓ Gesynchroniseerd met Google Agenda
                     </div>
                   </div>
@@ -199,7 +199,7 @@ export const HeroInteractivePhone: React.FC = () => {
             </div>
             <button
               onClick={handleReset}
-              className="w-8 h-8 rounded-full bg-[#00D492] text-slate-950 flex items-center justify-center shadow-xs text-xs font-bold hover:bg-[#00be82] active:scale-95 transition-all"
+              className="w-8 h-8 rounded-full bg-[#2196F3] text-white flex items-center justify-center shadow-xs text-xs font-bold hover:bg-[#1E88E5] active:scale-95 transition-all"
               title="Herstart demo"
             >
               ↻

@@ -67,9 +67,9 @@ export const IndustryTabs: React.FC = () => {
   const current = industries[activeTab];
 
   return (
-    <section className="max-w-6xl mx-auto space-y-8 px-4 sm:px-6">
+    <section className="max-w-6xl mx-auto space-y-8 px-6 sm:px-10">
       <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#2196F3] uppercase tracking-wider">
           Branches & Toepassingen
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -82,14 +82,14 @@ export const IndustryTabs: React.FC = () => {
 
       {/* Tabs */}
       <div className="flex justify-center">
-        <div className="inline-flex bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-xs gap-1 overflow-x-auto max-w-full">
+        <div className="inline-flex bg-slate-100 dark:bg-white/[0.04] p-1 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xs gap-1 overflow-x-auto max-w-full">
           {industries.map((ind, idx) => (
             <button
               key={ind.id}
               onClick={() => setActiveTab(idx)}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+              className={`px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
                 activeTab === idx
-                  ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-white/10"
+                  ? "bg-white dark:bg-[#0F131C] text-slate-900 dark:text-white shadow-xs border border-slate-200/80 dark:border-white/10"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
@@ -100,10 +100,10 @@ export const IndustryTabs: React.FC = () => {
       </div>
 
       {/* Card */}
-      <div className="rounded-3xl p-6 sm:p-10 premium-card grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in">
+      <div className="pro-card p-6 sm:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in">
         <div className="space-y-5">
           <div className="space-y-2">
-            <span className="text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 uppercase">
+            <span className="text-xs font-mono font-semibold bg-[#2196F3]/10 text-[#2196F3] px-3 py-1 rounded-md border border-[#2196F3]/20 uppercase">
               {current.badge}
             </span>
             <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight pt-1">
@@ -117,7 +117,7 @@ export const IndustryTabs: React.FC = () => {
           <div className="space-y-2.5 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
             {current.benefits.map((b, i) => (
               <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-[#2196F3] shrink-0 mt-0.5" />
                 <span>{b}</span>
               </div>
             ))}
@@ -126,7 +126,7 @@ export const IndustryTabs: React.FC = () => {
           <div className="pt-3">
             <Link
               href={`/demo/${current.slug}`}
-              className="inline-flex items-center gap-2 bg-[#00D492] hover:bg-[#00be82] active:scale-95 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs sm:text-sm shadow-sm transition-all"
+              className="inline-flex items-center gap-2 bg-[#2196F3] hover:bg-[#1E88E5] active:scale-95 text-white font-semibold px-5 py-2.5 rounded-lg text-xs sm:text-sm shadow-xs transition-all"
             >
               <span>Bekijk {current.title} Demo</span>
               <ArrowRight className="w-4 h-4" />
@@ -135,23 +135,23 @@ export const IndustryTabs: React.FC = () => {
         </div>
 
         {/* WhatsApp Preview Box */}
-        <div className="bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200 dark:border-white/[0.08] space-y-3">
-          <div className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 pb-2 border-b border-slate-200 dark:border-white/[0.06]">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+        <div className="bg-slate-50 dark:bg-white/[0.03] p-5 rounded-xl border border-slate-200/80 dark:border-white/[0.08] space-y-3">
+          <div className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 pb-2 border-b border-slate-200/80 dark:border-white/[0.06]">
+            <Sparkles className="w-3.5 h-3.5 text-[#2196F3]" />
             <span>Voorbeeld WhatsApp Gespreksverloop</span>
           </div>
 
           <div className="flex justify-end">
-            <div className="bg-[#DCF8C6] text-[#111B21] rounded-2xl rounded-tr-xs px-3.5 py-2 text-xs max-w-[85%] shadow-2xs">
+            <div className="bg-[#DCF8C6] text-[#111B21] rounded-xl rounded-tr-xs px-3.5 py-2 text-xs max-w-[85%] shadow-2xs">
               {current.sampleQuestion}
             </div>
           </div>
 
           <div className="flex justify-start">
-            <div className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-2xl rounded-tl-xs px-3.5 py-2.5 text-xs max-w-[88%] shadow-2xs border border-slate-200 dark:border-white/[0.06] space-y-2">
+            <div className="bg-white dark:bg-[#0F131C] text-slate-900 dark:text-white rounded-xl rounded-tl-xs px-3.5 py-2.5 text-xs max-w-[88%] shadow-2xs border border-slate-200/80 dark:border-white/[0.06] space-y-2">
               <p>{current.sampleAnswer}</p>
-              <div className="bg-emerald-50 dark:bg-emerald-950/40 p-2 rounded-lg border border-emerald-200 dark:border-emerald-500/30 text-[11px] font-semibold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-emerald-500" />
+              <div className="bg-[#2196F3]/10 p-2 rounded-lg border border-[#2196F3]/20 text-[11px] font-semibold text-[#2196F3] flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-[#2196F3]" />
                 <span>Gesynchroniseerd met Google Agenda</span>
               </div>
             </div>

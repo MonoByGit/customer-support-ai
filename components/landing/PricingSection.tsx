@@ -60,9 +60,9 @@ export const PricingSection: React.FC = () => {
   ];
 
   return (
-    <section className="space-y-8 max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="space-y-8 max-w-6xl mx-auto px-6 sm:px-10">
       <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#2196F3] uppercase tracking-wider">
           Tarieven
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -74,12 +74,12 @@ export const PricingSection: React.FC = () => {
 
         {/* Switcher */}
         <div className="pt-2">
-          <div className="inline-flex items-center bg-slate-100 dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-xs">
+          <div className="inline-flex items-center bg-slate-100 dark:bg-white/[0.04] p-1 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xs">
             <button
               onClick={() => setIsAnnual(false)}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 !isAnnual
-                  ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs"
+                  ? "bg-white dark:bg-[#0F131C] text-slate-900 dark:text-white shadow-xs"
                   : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
@@ -87,14 +87,14 @@ export const PricingSection: React.FC = () => {
             </button>
             <button
               onClick={() => setIsAnnual(true)}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 isAnnual
-                  ? "bg-[#00D492] text-slate-950 shadow-xs font-bold"
+                  ? "bg-[#2196F3] text-white shadow-xs font-semibold"
                   : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
               <span>Jaarlijks</span>
-              <span className="text-[10px] bg-slate-950/20 text-slate-950 px-1.5 py-0.5 rounded-md font-mono font-bold">
+              <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded-md font-mono font-bold">
                 2 MND GRATIS
               </span>
             </button>
@@ -110,14 +110,14 @@ export const PricingSection: React.FC = () => {
           return (
             <div
               key={idx}
-              className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all relative premium-card ${
+              className={`pro-card p-6 sm:p-8 flex flex-col justify-between transition-all relative ${
                 tier.popular
-                  ? "border-2 border-emerald-500 shadow-xl md:-translate-y-2"
-                  : "hover:border-slate-300 dark:hover:border-white/20"
+                  ? "border-2 border-[#2196F3] shadow-lg md:-translate-y-2"
+                  : ""
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#00D492] text-slate-950 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase shadow-md flex items-center gap-1">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FF9100] text-white px-3 py-0.5 rounded-full text-[10.5px] font-bold tracking-wider uppercase shadow-sm flex items-center gap-1">
                   <Sparkles className="w-3 h-3" />
                   <span>Meest Gekozen</span>
                 </div>
@@ -125,7 +125,7 @@ export const PricingSection: React.FC = () => {
 
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-bold text-xl text-slate-900 dark:text-white">
+                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">
                     {tier.name}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
@@ -149,7 +149,7 @@ export const PricingSection: React.FC = () => {
                 <div className="pt-4 border-t border-slate-100 dark:border-white/[0.06] space-y-2.5">
                   {tier.features.map((feat, fIdx) => (
                     <div key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
-                      <div className="w-4 h-4 rounded-full bg-emerald-500/15 text-[#00D492] flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                      <div className="w-4 h-4 rounded-full bg-[#2196F3]/15 text-[#2196F3] flex items-center justify-center shrink-0 mt-0.5 font-bold">
                         <Check className="w-3 h-3 stroke-[3]" />
                       </div>
                       <span>{feat}</span>
@@ -161,10 +161,10 @@ export const PricingSection: React.FC = () => {
               <div className="pt-6">
                 <Link
                   href="/admin"
-                  className={`w-full py-3 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs ${
+                  className={`w-full py-2.5 px-4 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                     tier.popular
-                      ? "bg-[#00D492] hover:bg-[#00be82] active:scale-95 text-slate-950 shadow-md"
-                      : "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-white/[0.08]"
+                      ? "bg-[#2196F3] hover:bg-[#1E88E5] text-white shadow-xs"
+                      : "bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-slate-900 dark:text-white border border-slate-200/80 dark:border-white/[0.08]"
                   }`}
                 >
                   <span>{tier.cta}</span>
