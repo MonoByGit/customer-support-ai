@@ -189,13 +189,27 @@ BELANGRIJKSTE REGELS VOOR MENSELIJK, EMPATHISCH & VERTROUWENSWEKKEND CONTACT:
     tools,
   });
 
-  const formattedHistory = conversationHistory.map((m) => ({
-    role: m.role === "user" ? "user" : "model",
+  // Google Generative AI SDK requires history to start with 'user' role and alternate
+  let rawHistory = conversationHistory.map((m) => ({
+    role: (m.role === "user" ? "user" : "model") as "user" | "model",
     parts: [{ text: m.content }],
   }));
 
+  // Drop leading model greeting if present
+  while (rawHistory.length > 0 && rawHistory[0].role === "model") {
+    rawHistory.shift();
+  }
+
+  // Ensure alternating turns
+  const cleanHistory: typeof rawHistory = [];
+  for (const item of rawHistory) {
+    if (cleanHistory.length === 0 || cleanHistory[cleanHistory.length - 1].role !== item.role) {
+      cleanHistory.push(item);
+    }
+  }
+
   const chat = model.startChat({
-    history: formattedHistory,
+    history: cleanHistory,
   });
 
   let response = await chat.sendMessage(incomingMessage);

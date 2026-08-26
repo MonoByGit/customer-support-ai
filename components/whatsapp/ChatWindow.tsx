@@ -28,7 +28,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState<number>(600); // 10 minutes
   const [messageCount, setMessageCount] = useState<number>(0);
-  const [maxMessages, setMaxMessages] = useState<number>(15);
+  const [maxMessages, setMaxMessages] = useState<number>(30);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [selectedBooking, setSelectedBooking] = useState<BookingConfirmation | null>(null);
   const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
@@ -84,7 +84,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             const elapsed = Math.round((Date.now() - sess.startTime) / 1000);
             const left = Math.max(0, 600 - elapsed);
             setRemainingSeconds(left);
-            if (left <= 0 || sess.messageCount >= 15) {
+            if (left <= 0 || sess.messageCount >= 30) {
               setIsExpired(true);
             }
           }

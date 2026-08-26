@@ -55,7 +55,7 @@ export function getSession(slug: string): DemoSession {
     startTime: null,
     maxDurationMinutes: 10,
     messageCount: 0,
-    maxMessages: 15,
+    maxMessages: 30,
     isExpired: false,
     messages: [],
     lastActive: Date.now(),

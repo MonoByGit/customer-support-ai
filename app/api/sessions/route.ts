@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
         startTime: null,
         maxDurationMinutes: 10,
         messageCount: 0,
-        maxMessages: 15,
+        maxMessages: 30,
         isExpired: false,
         messages: [],
         lastActive: Date.now(),
