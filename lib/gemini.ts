@@ -15,7 +15,7 @@ export interface ChatMessage {
  */
 export async function extractBusinessProfileFromText(input: string | any): Promise<BusinessProfile> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: process.env.GEMINI_MODEL || "gemini-2.0-flash",
     generationConfig: {
       responseMimeType: "application/json",
     },
@@ -184,7 +184,7 @@ BELANGRIJKSTE REGELS VOOR MENSELIJK, EMPATHISCH & VERTROUWENSWEKKEND CONTACT:
 `;
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: process.env.GEMINI_MODEL || "gemini-2.0-flash",
     systemInstruction,
     tools,
   });
