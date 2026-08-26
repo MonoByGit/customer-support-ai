@@ -471,14 +471,24 @@ export default function AdminPage() {
 
                       {/* Action Controls */}
                       <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
-                        {/* Outreach Toolkit Button */}
-                        <button
-                          onClick={() => setSelectedOutreach(item)}
-                          className="w-full bg-[#18A0FB]/10 hover:bg-[#18A0FB]/20 text-[#18A0FB] border border-[#18A0FB]/30 text-xs font-bold py-2 rounded-xl transition-all flex items-center justify-center gap-1.5"
-                        >
-                          <Send className="w-3.5 h-3.5" />
-                          <span>1-Klik Outreach Toolkit</span>
-                        </button>
+                        {/* Outreach & Portal Buttons */}
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            onClick={() => setSelectedOutreach(item)}
+                            className="bg-[#18A0FB]/10 hover:bg-[#18A0FB]/20 text-[#18A0FB] border border-[#18A0FB]/30 text-xs font-bold py-2 rounded-xl transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <Send className="w-3.5 h-3.5" />
+                            <span>Outreach Kit</span>
+                          </button>
+
+                          <Link
+                            href={`/portal/${item.profile.slug}`}
+                            className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/30 text-xs font-bold py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 text-center"
+                          >
+                            <Layers className="w-3.5 h-3.5" />
+                            <span>Klant Portaal</span>
+                          </Link>
+                        </div>
 
                         <div className="grid grid-cols-2 gap-2">
                           <button
