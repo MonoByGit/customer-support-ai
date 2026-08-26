@@ -10,20 +10,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        figma: {
-          teal: "#0ACF83",
-          blue: "#18A0FB",
-          purple: "#A259FF",
-          coral: "#F24E1E",
-          yellow: "#FFC700",
-          black: "#1E1E1E",
-          darkBg: "#18181B",
-          darkPanel: "#27272A",
-          darkBorder: "rgba(255, 255, 255, 0.12)",
-          lightBg: "#F8F9FA",
-          lightPanel: "#FFFFFF",
-          lightBorder: "#E4E4E7",
-        },
         verde: {
           50: "#ECFDF5",
           100: "#D1FAE5",
@@ -35,7 +21,7 @@ const config: Config = {
           700: "#047857",
           800: "#065F46",
           900: "#064E3B",
-          accent: "#0ACF83",
+          accent: "#00D492",
         },
         wa: {
           teal: "#075E54",
@@ -51,11 +37,6 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "Inter", "sans-serif"],
         heading: ["var(--font-heading)", "Plus Jakarta Sans", "sans-serif"],
-      },
-      borderRadius: {
-        "3xl": "1.5rem",
-        "4xl": "2rem",
-        "5xl": "2.5rem",
       },
     },
   },

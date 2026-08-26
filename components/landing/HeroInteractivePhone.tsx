@@ -12,7 +12,6 @@ import {
   Battery,
   RotateCcw,
   Sparkles,
-  MousePointer2,
 } from "lucide-react";
 
 export const HeroInteractivePhone: React.FC = () => {
@@ -38,37 +37,25 @@ export const HeroInteractivePhone: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full max-w-[340px] sm:max-w-[360px] mx-auto py-2">
-      {/* Figma Collaborative Cursor Sticker 1 (Top Left/Right) */}
-      <div className="absolute -top-4 -right-4 sm:-right-8 z-30 animate-float-cursor hidden sm:flex items-center gap-1.5 bg-[#A259FF] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
-        <MousePointer2 className="w-3.5 h-3.5 fill-white" />
-        <span>Mark (Klant): "Past 14:00 uur?" ✨</span>
-      </div>
-
-      {/* Figma Collaborative Cursor Sticker 2 (Bottom Left) */}
-      <div className="absolute -bottom-5 -left-4 sm:-left-8 z-30 animate-float-cursor [animation-delay:2s] hidden sm:flex items-center gap-1.5 bg-[#0ACF83] text-slate-950 px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
-        <MousePointer2 className="w-3.5 h-3.5 fill-slate-950" />
-        <span>Dr. Lisa 🦷: "Agenda direct gesynchroniseerd!"</span>
-      </div>
-
+    <div className="relative w-full max-w-[340px] sm:max-w-[355px] mx-auto py-2">
       {/* Subtle Glow Backdrop */}
-      <div className="absolute -inset-2 bg-gradient-to-tr from-[#0ACF83]/25 via-[#18A0FB]/20 to-[#A259FF]/20 rounded-[56px] blur-2xl opacity-70 -z-10" />
+      <div className="absolute -inset-1 bg-gradient-to-b from-emerald-500/20 to-teal-500/10 rounded-[56px] blur-2xl opacity-60 -z-10" />
 
       {/* =========================================================================
-          AUTHENTIC IPHONE 16 PRO SMARTPHONE CHASSIS (19.5:9 SLENDER RATIO)
+          AUTHENTIC IPHONE 16 PRO SMARTPHONE CHASSIS (19.5:9 RATIO)
           ========================================================================= */}
-      <div className="relative bg-[#1A1A1A] rounded-[52px] p-2.5 border-[4px] border-[#383838] shadow-[0_20px_70px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.85)] flex flex-col">
+      <div className="relative bg-[#1A1A1A] rounded-[52px] p-2.5 border-[4px] border-[#333333] shadow-[0_25px_70px_rgba(0,0,0,0.25)] dark:shadow-[0_25px_80px_rgba(0,0,0,0.85)] flex flex-col">
         {/* Screen Bezel */}
-        <div className="relative w-full h-[620px] sm:h-[660px] bg-[#EFEAE2] rounded-[44px] overflow-hidden flex flex-col text-[#111B21] select-none whatsapp-bg">
+        <div className="relative w-full h-[620px] sm:h-[650px] bg-[#EFEAE2] rounded-[44px] overflow-hidden flex flex-col text-[#111B21] select-none whatsapp-bg">
           
           {/* iOS Status Bar + Dynamic Island */}
           <div className="bg-[#075E54] text-white px-5 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold shrink-0 z-20">
             <span className="font-mono">09:41</span>
             
-            {/* Realistic Dynamic Island Pill */}
-            <div className="w-24 h-5 bg-black rounded-full shadow-inner flex items-center justify-end px-2 gap-1">
+            {/* Dynamic Island */}
+            <div className="w-24 h-4.5 bg-black rounded-full shadow-inner flex items-center justify-end px-2 gap-1">
               <div className="w-2 h-2 rounded-full bg-[#1A1A1A]" />
-              <div className="w-1.5 h-1.5 rounded-full bg-[#0ACF83]/80" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00D492]/80" />
             </div>
 
             <div className="flex items-center gap-1 text-white/90">
@@ -81,7 +68,7 @@ export const HeroInteractivePhone: React.FC = () => {
           {/* WhatsApp Chat Header */}
           <div className="bg-[#075E54] text-white px-3.5 py-2.5 flex items-center justify-between shadow-xs shrink-0 z-20">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#0ACF83] to-[#128C7E] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#00D492] to-[#128C7E] text-slate-950 flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
                 TG
               </div>
               <div className="min-w-0">
@@ -111,7 +98,7 @@ export const HeroInteractivePhone: React.FC = () => {
             {/* Encryption notice */}
             <div className="text-center pt-1">
               <span className="bg-[#FFEECD] text-[#54656F] text-[10px] px-3 py-1 rounded-md shadow-2xs inline-block font-medium">
-                🔒 End-to-end versleutelde live demo
+                🔒 End-to-end versleutelde demo
               </span>
             </div>
 
@@ -119,7 +106,7 @@ export const HeroInteractivePhone: React.FC = () => {
             <div className="flex flex-col items-start w-full">
               <div className="bg-white rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px] leading-relaxed">
                 <div className="p-3 pb-1.5">
-                  Hoi! Welkom bij Tandartspraktijk De Groene Gracht. 👋 Voor een <strong>Periodieke Controle</strong> heb ik deze plekken vrij:
+                  Goedendag! Welkom bij Tandartspraktijk De Groene Gracht. 👋 Voor een <strong>Periodieke Gebitscontrole</strong> hebben wij de volgende plekken vrij:
                 </div>
                 <div className="text-[10px] text-slate-400 text-right px-3 pb-1.5">
                   09:41
@@ -128,7 +115,7 @@ export const HeroInteractivePhone: React.FC = () => {
                 {/* WhatsApp Interactive Quick Reply Buttons */}
                 <div className="border-t border-slate-100 divide-y divide-slate-100 bg-slate-50/90">
                   <button
-                    onClick={() => handleSelectSlot("Donderdag om 14:00 uur")}
+                    onClick={() => handleSelectSlot("Donderdag 27 aug om 14:00 uur")}
                     disabled={step > 1}
                     className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#00A884] hover:bg-emerald-50 active:bg-emerald-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
                   >
@@ -140,7 +127,7 @@ export const HeroInteractivePhone: React.FC = () => {
                   </button>
 
                   <button
-                    onClick={() => handleSelectSlot("Vrijdag om 10:00 uur")}
+                    onClick={() => handleSelectSlot("Vrijdag 28 aug om 10:00 uur")}
                     disabled={step > 1}
                     className="w-full text-left px-3.5 py-2.5 text-xs font-semibold text-[#00A884] hover:bg-emerald-50 active:bg-emerald-100 transition-colors flex items-center justify-between group/btn disabled:opacity-60"
                   >
@@ -183,7 +170,7 @@ export const HeroInteractivePhone: React.FC = () => {
               <div className="flex flex-col items-start w-full animate-scale-up">
                 <div className="bg-white rounded-2xl rounded-tl-xs shadow-[0_1px_1px_rgba(0,0,0,0.1)] max-w-[92%] overflow-hidden text-[13px]">
                   <div className="p-3 pb-1.5">
-                    Super Mark! 🎉 Je afspraak staat direct bevestigd in onze praktijkagenda. Tot dan!
+                    Uitstekend de heer Van Leeuwen! Uw afspraak staat direct bevestigd in onze praktijkagenda. Tot dan!
                   </div>
 
                   {/* Confirmed Calendar Card */}
@@ -208,12 +195,12 @@ export const HeroInteractivePhone: React.FC = () => {
           {/* Bottom Interactive Bar */}
           <div className="bg-[#F0F2F5] p-2.5 flex items-center gap-2 shrink-0 border-t border-[#E9EDEF]">
             <div className="flex-1 bg-white rounded-full px-4 py-2 text-xs text-slate-400 border border-slate-200 shadow-2xs flex items-center justify-between">
-              <span>{step === 1 ? "👆 Klik op een tijdslot hierboven" : "Afspraak bevestigd ✓"}</span>
+              <span>{step === 1 ? "Selecteer een tijdslot hierboven" : "Afspraak succesvol ingepland ✓"}</span>
             </div>
             <button
               onClick={handleReset}
-              className="w-8 h-8 rounded-full bg-[#0ACF83] text-slate-950 flex items-center justify-center shadow-xs text-xs font-bold hover:bg-[#00be82] active:scale-95 transition-all"
-              title="Herstart"
+              className="w-8 h-8 rounded-full bg-[#00D492] text-slate-950 flex items-center justify-center shadow-xs text-xs font-bold hover:bg-[#00be82] active:scale-95 transition-all"
+              title="Herstart demo"
             >
               ↻
             </button>

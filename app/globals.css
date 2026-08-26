@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,96 +12,40 @@
 body {
   font-family: var(--font-sans);
   background-color: #FAFAFA;
-  color: #18181B;
+  color: #0F172A;
   min-height: 100vh;
   overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
 html.dark body {
-  background-color: #18181B;
-  color: #F4F4F5;
+  background-color: #090D11;
+  color: #F1F5F9;
 }
 
 h1, h2, h3, h4, .font-heading {
   font-family: var(--font-heading);
+  letter-spacing: -0.03em;
 }
 
-/* Figma Card & Panel Utilities */
-.figma-card {
+/* Premium Card & Panel Utilities */
+.premium-card {
   background-color: #FFFFFF;
-  border: 1px solid #E4E4E7;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 24px -4px rgba(0, 0, 0, 0.04);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.dark .figma-card {
-  background-color: #27272A;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+html.dark .premium-card {
+  background-color: #0F141C;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
 }
 
-.figma-card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 32px -8px rgba(10, 207, 131, 0.18);
-  border-color: #0ACF83;
-}
-
-/* Figma Cursors */
-.figma-cursor {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 700;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: floatCursor 5s ease-in-out infinite;
-  user-select: none;
-  pointer-events: none;
-}
-
-.figma-cursor::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: -2px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 8px solid currentColor;
-  transform: rotate(-35deg);
-}
-
-@keyframes floatCursor {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(2deg); }
-}
-
-.animate-float-cursor {
-  animation: floatCursor 4s ease-in-out infinite;
-}
-
-/* Playful Sticker Badge */
-.playful-sticker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: 1.5px solid currentColor;
-  transform: rotate(-1.5deg);
-  transition: transform 0.2s ease;
-}
-
-.playful-sticker:hover {
-  transform: rotate(0deg) scale(1.04);
+.premium-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: #00D492;
+  box-shadow: 0 12px 32px -8px rgba(0, 212, 146, 0.15);
 }
 
 /* WhatsApp Realistic Background Wallpaper */
