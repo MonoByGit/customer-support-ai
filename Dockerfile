@@ -27,6 +27,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+# su-exec laat de entrypoint root-rechten laten vallen na het voorbereiden van het volume
+RUN apk add --no-cache su-exec
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -41,8 +43,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 
-USER nextjs
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
+# Bewust géén USER-instructie: de entrypoint start als root om het gemounte
+# volume schrijfbaar te maken en draait de server daarna als nextjs.
 EXPOSE 3000
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["node", "server.js"]
