@@ -326,7 +326,7 @@ export default function AdminPage() {
   const blockingIntegrations = integrations.filter((i) => i.state !== "live");
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col">
+    <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col">
       {/* Header */}
       <header className="border-b border-slate-200/80 dark:border-white/[0.07] bg-white/90 dark:bg-[#0C0F17]/90 backdrop-blur-xl px-6 sm:px-10 py-4 sticky top-0 z-30 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3.5 shrink-0">

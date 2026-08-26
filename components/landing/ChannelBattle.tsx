@@ -70,24 +70,21 @@ const LANES: Lane[] = [
   },
 ];
 
-const TONE: Record<Lane["tone"], { dot: string; bar: string; text: string; glow: string }> = {
+const TONE: Record<Lane["tone"], { dot: string; bar: string; text: string }> = {
   verde: {
     dot: "#2196F3",
-    bar: "linear-gradient(90deg, #2196F3, rgba(33,150,243,0))",
+    bar: "#2196F3",
     text: "#7FC0F7",
-    glow: "0 0 22px rgba(33,150,243,.65)",
   },
   phone: {
     dot: "#94A3B8",
-    bar: "linear-gradient(90deg, rgba(148,163,184,.55), rgba(148,163,184,0))",
+    bar: "#64748B",
     text: "#B6C2D1",
-    glow: "0 0 14px rgba(148,163,184,.35)",
   },
   mail: {
     dot: "#FF9100",
-    bar: "linear-gradient(90deg, rgba(255,145,0,.5), rgba(255,145,0,0))",
+    bar: "#FF9100",
     text: "#FFB65C",
-    glow: "0 0 18px rgba(255,145,0,.5)",
   },
 };
 
@@ -125,16 +122,6 @@ export const ChannelBattle: React.FC = () => {
       ref={ref}
       className="relative overflow-hidden bg-[#050B16] text-[#EAF1FA] py-20 sm:py-28 px-6 sm:px-10"
     >
-      {/* Sfeerlaag: subtiele diepte achter het toneel */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          background:
-            "radial-gradient(90% 60% at 12% 0%, rgba(33,150,243,.16), transparent 60%), radial-gradient(70% 50% at 96% 100%, rgba(255,145,0,.10), transparent 62%)",
-        }}
-      />
-
       <div className="relative max-w-6xl mx-auto">
         <div className="max-w-2xl space-y-4 mb-14 sm:mb-20">
           <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#FF9100]">
@@ -217,7 +204,7 @@ export const ChannelBattle: React.FC = () => {
                       width: `${end}%`,
                       background: tone.bar,
                       transform: armed ? "scaleX(1)" : "scaleX(0)",
-                      transition: `transform 1.5s cubic-bezier(.16,1,.3,1) ${idx * 0.22 + 0.1}s`,
+                      transition: `transform 1.5s ease-out ${idx * 0.22 + 0.1}s`,
                     }}
                   />
 
@@ -228,14 +215,14 @@ export const ChannelBattle: React.FC = () => {
                       left: `${end}%`,
                       opacity: armed ? 1 : 0,
                       transform: armed ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(.4)",
-                      transition: `opacity .5s ease ${idx * 0.22 + 1.15}s, transform .6s cubic-bezier(.16,1,.3,1) ${
+                      transition: `opacity .5s ease ${idx * 0.22 + 1.15}s, transform .6s ease-out ${
                         idx * 0.22 + 1.15
                       }s`,
                     }}
                   >
                     <span
                       className="block w-3.5 h-3.5 rounded-full"
-                      style={{ background: tone.dot, boxShadow: tone.glow }}
+                      style={{ background: tone.dot }}
                     />
                   </div>
                 </div>
@@ -255,11 +242,11 @@ export const ChannelBattle: React.FC = () => {
           {[CLAIMS.respondWithinFive, CLAIMS.qualifyOdds, CLAIMS.neverRespond].map((c, i) => (
             <div
               key={c.id}
-              className="rounded-xl border border-white/[0.09] bg-white/[0.03] p-5 backdrop-blur-sm"
+              className="rounded-xl border border-white/[0.09] bg-white/[0.03] p-5"
               style={{
                 opacity: armed ? 1 : 0,
                 transform: armed ? "translateY(0)" : "translateY(14px)",
-                transition: `opacity .6s ease ${1.5 + i * 0.13}s, transform .6s cubic-bezier(.16,1,.3,1) ${
+                transition: `opacity .6s ease ${1.5 + i * 0.13}s, transform .6s ease-out ${
                   1.5 + i * 0.13
                 }s`,
               }}

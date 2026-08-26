@@ -23,7 +23,7 @@ export default function SimulatorPage({ params }: SimulatorPageProps) {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="w-14 h-14 rounded-2xl bg-[#2196F3]/10 border border-[#2196F3]/25 flex items-center justify-center mb-5 text-[#2196F3]">
           <MessageSquare className="w-7 h-7" />
         </div>

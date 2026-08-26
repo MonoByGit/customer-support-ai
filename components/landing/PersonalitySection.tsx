@@ -131,7 +131,7 @@ export const PersonalitySection: React.FC = () => {
               style={{
                 opacity: armed ? 1 : 0,
                 transform: armed ? "translateY(0)" : "translateY(8px)",
-                transition: `opacity .45s ease ${0.5 + i * 0.06}s, transform .45s cubic-bezier(.16,1,.3,1) ${
+                transition: `opacity .45s ease ${0.5 + i * 0.06}s, transform .45s ease-out ${
                   0.5 + i * 0.06
                 }s`,
               }}
@@ -192,7 +192,7 @@ function Answer({
       style={{
         opacity: armed ? 1 : 0,
         transform: armed ? "translateY(0)" : "translateY(16px)",
-        transition: `opacity .6s ease ${delay}s, transform .6s cubic-bezier(.16,1,.3,1) ${delay}s`,
+        transition: `opacity .6s ease ${delay}s, transform .6s ease-out ${delay}s`,
       }}
     >
       <div className="flex items-baseline justify-between gap-3 border-b border-slate-100 px-4 py-3 dark:border-white/[0.06]">

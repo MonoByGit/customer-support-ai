@@ -30,7 +30,7 @@ export default function PosterPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-xs text-slate-500 font-mono">
+      <div className="min-h-dvh flex items-center justify-center text-xs text-slate-500 font-mono">
         Poster voorbereiden…
       </div>
     );
@@ -38,7 +38,7 @@ export default function PosterPage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-6 text-center">
+      <div className="min-h-dvh flex flex-col items-center justify-center gap-4 p-6 text-center">
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Geen bedrijfsprofiel gevonden voor &lsquo;{slug}&rsquo;.
         </p>
@@ -55,7 +55,7 @@ export default function PosterPage() {
   )}`;
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] dark:bg-[#07090E] py-8 px-4 sm:px-6">
+    <div className="min-h-dvh bg-[#F1F5F9] dark:bg-[#07090E] py-8 px-4 sm:px-6">
       {/* Bedieningsbalk — verdwijnt bij printen */}
       <div className="no-print max-w-[210mm] mx-auto mb-6 flex items-center justify-between gap-4">
         <Link

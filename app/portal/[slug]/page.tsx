@@ -105,7 +105,7 @@ export default function ClientPortalPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] flex items-center justify-center text-xs text-slate-500 font-mono">
+      <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] flex items-center justify-center text-xs text-slate-500 font-mono">
         Klantportaal laden…
       </div>
     );
@@ -113,7 +113,7 @@ export default function ClientPortalPage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] flex flex-col items-center justify-center p-6 text-center space-y-4">
+      <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] flex flex-col items-center justify-center p-6 text-center space-y-4">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
           Implementatieportaal niet gevonden
         </h2>
@@ -148,7 +148,7 @@ export default function ClientPortalPage() {
   const isLive = completed === steps.length;
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col">
+    <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col">
       {/* Header */}
       <header className="border-b border-slate-200/80 dark:border-white/[0.07] bg-white/90 dark:bg-[#0C0F17]/90 backdrop-blur-xl px-6 sm:px-10 py-3.5 sticky top-0 z-30 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">

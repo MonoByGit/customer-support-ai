@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, CalendarCheck } from "lucide-react";
 import { HeroBattlefield } from "@/components/landing/HeroBattlefield";
 import { ChannelBattle } from "@/components/landing/ChannelBattle";
+import { DayInPractice } from "@/components/landing/DayInPractice";
 import { PersonalitySection } from "@/components/landing/PersonalitySection";
 import { IndustryTabs } from "@/components/landing/IndustryTabs";
 import { LiveQrSection } from "@/components/landing/LiveQrSection";
@@ -39,7 +40,7 @@ const STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 overflow-x-hidden">
+    <div className="min-h-dvh bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 overflow-x-hidden">
       {/* Zachte ambient belichting in primair Azure */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-[#2196F3]/10 dark:from-[#2196F3]/15 to-transparent blur-3xl pointer-events-none -z-10" />
 
@@ -85,6 +86,8 @@ export default function LandingPage() {
       </header>
 
       <HeroBattlefield />
+
+      <DayInPractice />
 
       {/* Branchestrip */}
       <section className="border-y border-slate-200/80 dark:border-white/[0.07] bg-white/60 dark:bg-[#0C0F17]/60 py-5 px-4">
