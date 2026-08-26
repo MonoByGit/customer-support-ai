@@ -11,80 +11,97 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #06090e;
-  color: #f1f5f9;
+  background-color: #FAFAFA;
+  color: #18181B;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+html.dark body {
+  background-color: #18181B;
+  color: #F4F4F5;
 }
 
 h1, h2, h3, h4, .font-heading {
   font-family: var(--font-heading);
 }
 
-/* Custom Glass & Glow Utilities */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Figma Card & Panel Utilities */
+.figma-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E4E4E7;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+html.dark .figma-card {
+  background-color: #27272A;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
 }
 
-.glass-panel-hover:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(16, 185, 129, 0.35);
-  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.15);
-  transform: translateY(-2px);
+.figma-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgba(10, 207, 131, 0.18);
+  border-color: #0ACF83;
 }
 
-.glow-emerald {
-  box-shadow: 0 0 50px -10px rgba(0, 212, 146, 0.25);
-}
-
-.glow-subtle {
-  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.15);
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #34d399 0%, #00d492 50%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-silver {
-  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+/* Figma Cursors */
+.figma-cursor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
   border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: floatCursor 5s ease-in-out infinite;
+  user-select: none;
+  pointer-events: none;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+.figma-cursor::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -2px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid currentColor;
+  transform: rotate(-35deg);
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+@keyframes floatCursor {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+.animate-float-cursor {
+  animation: floatCursor 4s ease-in-out infinite;
+}
+
+/* Playful Sticker Badge */
+.playful-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1.5px solid currentColor;
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s ease;
+}
+
+.playful-sticker:hover {
+  transform: rotate(0deg) scale(1.04);
 }
 
 /* WhatsApp Realistic Background Wallpaper */
@@ -94,21 +111,29 @@ h1, h2, h3, h4, .font-heading {
   background-size: 18px 18px;
 }
 
-/* Animations */
-@keyframes pulseSubtle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.animate-pulse-subtle {
-  animation: pulseSubtle 6s ease-in-out infinite;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+::-webkit-scrollbar-thumb {
+  background: rgba(160, 160, 160, 0.3);
+  border-radius: 9999px;
 }
 
-.animate-float {
-  animation: floatSlow 4s ease-in-out infinite;
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.5);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
