@@ -8,7 +8,6 @@ import {
   Loader2,
   CheckCircle2,
   Calendar,
-  MessageSquare,
   ExternalLink,
   RotateCcw,
   Clock,
@@ -25,6 +24,7 @@ import {
   DollarSign,
   Cpu,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { BusinessProfile } from "@/lib/schemas";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -204,7 +204,7 @@ export default function AdminPage() {
 
       if (!res.ok) throw new Error("Fout bij opslaan");
 
-      setActionSuccessMsg(`Profiel bijgewerkt.`);
+      setActionSuccessMsg(`Profiel succesvol bijgewerkt.`);
       setTimeout(() => setActionSuccessMsg(""), 3500);
       setSelectedProfileEdit(null);
       fetchSessions();
@@ -213,7 +213,7 @@ export default function AdminPage() {
     }
   };
 
-  // Subtle Apple-style status indicator
+  // Status indicator
   const getLeadStatus = (item: ClientSessionItem) => {
     const hasBooking = item.session.messages.some((m) => m.isBookingCard);
     if (hasBooking || item.messageCount >= 4) {
@@ -222,24 +222,29 @@ export default function AdminPage() {
     if (item.hasStarted && item.messageCount > 0) {
       return { label: "In Gesprek", dot: "bg-amber-500", text: "text-amber-700 dark:text-amber-400" };
     }
-    return { label: "Gereed", dot: "bg-slate-400 dark:bg-slate-500", text: "text-slate-500 dark:text-slate-400" };
+    return { label: "Gereed", dot: "bg-slate-400", text: "text-slate-500 dark:text-slate-400" };
   };
 
   const totalMessagesAllSessions = clientSessions.reduce((acc, s) => acc + s.messageCount, 0);
   const estimatedCost = (totalMessagesAllSessions * 0.0008).toFixed(3);
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col justify-between selection:bg-[#0071E3] selection:text-white transition-colors">
-      {/* Apple Top Navigation Bar */}
-      <header className="border-b border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-[#161618]/80 backdrop-blur-2xl px-6 py-3.5 sticky top-0 z-30 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col justify-between selection:bg-[#2196F3] selection:text-white transition-colors">
+      {/* Top Precision Bar */}
+      <header className="border-b border-slate-200/80 dark:border-white/[0.07] bg-white/90 dark:bg-[#0C0F17]/90 backdrop-blur-xl px-6 sm:px-10 py-4 sticky top-0 z-30 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3.5 group">
           <BrandLogo className="w-8 h-8 shrink-0 drop-shadow-xs" />
           <div>
-            <span className="font-semibold text-sm tracking-tight text-[#1D1D1F] dark:text-white">
-              Verde AI Studio
-            </span>
-            <span className="block text-[11px] text-[#86868B] dark:text-[#86868B]">
-              DeepSeek Flash V4 • Sales & Onboarding
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-sm tracking-tight text-slate-900 dark:text-white">
+                Verde AI Studio
+              </span>
+              <span className="text-[10px] bg-[#2196F3]/10 text-[#2196F3] font-semibold px-2 py-0.5 rounded-md border border-[#2196F3]/20">
+                DeepSeek Flash V4
+              </span>
+            </div>
+            <span className="block text-[11px] text-slate-500 dark:text-slate-400">
+              Sales, Lead Intelligence & Onboarding Portaal
             </span>
           </div>
         </Link>
@@ -249,151 +254,169 @@ export default function AdminPage() {
 
           <Link
             href="/demo/tandarts-demo"
-            className="text-xs font-medium text-[#1D1D1F] dark:text-white bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5"
+            className="text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/[0.06] hover:bg-slate-200/80 dark:hover:bg-white/[0.1] border border-slate-200/80 dark:border-white/[0.08] px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5"
           >
             <span>Tandarts Demo</span>
-            <ChevronRight className="w-3.5 h-3.5 text-[#86868B]" />
+            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           </Link>
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 flex-1 space-y-8">
+      {/* Main Container - Spacious & Breathable */}
+      <main className="max-w-7xl w-full mx-auto px-6 sm:px-10 py-10 flex-1 space-y-10">
         
-        {/* Apple Clean Stat Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="apple-card p-5 rounded-2xl space-y-1">
-            <div className="text-[11px] font-medium text-[#86868B] uppercase tracking-wider">Prospects</div>
-            <div className="text-2xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white">
+        {/* KPI Intelligence Stats Row */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="pro-card p-6 space-y-1.5">
+            <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Prospect Demo's
+            </div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-mono">
               {clientSessions.length}
             </div>
-            <div className="text-[11px] text-[#86868B]">Gegenereerde demo's</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              Klaar voor acquisitie
+            </div>
           </div>
 
-          <div className="apple-card p-5 rounded-2xl space-y-1">
-            <div className="text-[11px] font-medium text-[#86868B] uppercase tracking-wider">Actieve Leads</div>
-            <div className="text-2xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white">
+          <div className="pro-card p-6 space-y-1.5">
+            <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Actieve Leads
+            </div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-mono">
               {clientSessions.filter((s) => s.messageCount >= 1).length}
             </div>
-            <div className="text-[11px] text-[#86868B]">In gesprek of geboekt</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              In gesprek of geboekt
+            </div>
           </div>
 
-          <div className="apple-card p-5 rounded-2xl space-y-1">
-            <div className="text-[11px] font-medium text-[#86868B] uppercase tracking-wider">AI Berichten</div>
-            <div className="text-2xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white">
+          <div className="pro-card p-6 space-y-1.5">
+            <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              AI Berichten
+            </div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-mono">
               {totalMessagesAllSessions}
             </div>
-            <div className="text-[11px] text-[#86868B]">Totaal verwerkt</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              Totaal verwerkt
+            </div>
           </div>
 
-          <div className="apple-card p-5 rounded-2xl space-y-1">
-            <div className="text-[11px] font-medium text-[#86868B] uppercase tracking-wider">Geschatte Kosten</div>
-            <div className="text-2xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white font-mono">
+          <div className="pro-card p-6 space-y-1.5">
+            <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Geschatte Kosten
+            </div>
+            <div className="text-3xl font-bold tracking-tight text-[#2196F3] font-mono">
               € {estimatedCost}
             </div>
-            <div className="text-[11px] text-[#86868B]">DeepSeek & Gemini API</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400">
+              DeepSeek Flash API
+            </div>
           </div>
         </div>
 
-        {/* Apple Segmented Control */}
-        <div className="flex justify-center">
-          <div className="inline-flex bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-full border border-black/[0.04] dark:border-white/[0.04]">
+        {/* Segmented Tab Switcher */}
+        <div className="flex justify-start border-b border-slate-200 dark:border-white/[0.08] pb-4">
+          <div className="inline-flex gap-2">
             <button
               onClick={() => setActiveTab("sessions")}
-              className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
                 activeTab === "sessions"
-                  ? "bg-white dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-white shadow-xs"
-                  : "text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white"
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]"
               }`}
             >
-              Klantdemo's ({clientSessions.length})
+              <Users className="w-4 h-4" />
+              <span>Prospect Demo's ({clientSessions.length})</span>
             </button>
 
             <button
               onClick={() => setActiveTab("generator")}
-              className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
                 activeTab === "generator"
-                  ? "bg-white dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-white shadow-xs"
-                  : "text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white"
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]"
               }`}
             >
-              Nieuwe Demo Aanmaken
+              <Plus className="w-4 h-4" />
+              <span>Nieuwe Klant Scrapen</span>
             </button>
           </div>
         </div>
 
         {/* Success Alert Banner */}
         {actionSuccessMsg && (
-          <div className="apple-card bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/30 rounded-2xl p-4 text-xs font-medium text-emerald-900 dark:text-emerald-200 flex items-center justify-between animate-fade-in">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="pro-card bg-[#2196F3]/5 border border-[#2196F3]/30 p-4 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between animate-fade-in">
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-[#2196F3]" />
               <span>{actionSuccessMsg}</span>
             </div>
-            <button onClick={() => setActionSuccessMsg("")} className="text-[#86868B] hover:text-black dark:hover:text-white">
+            <button onClick={() => setActionSuccessMsg("")} className="text-slate-400 hover:text-slate-600 dark:hover:text-white">
               <X className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* =========================================================================
-            TAB 1: CLIENT SESSIONS LIST
+            TAB 1: PROSPECT DEMOS LIST (Spacious & Clean Layout)
             ========================================================================= */}
         {activeTab === "sessions" && (
           <div className="space-y-6 animate-fade-in">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white">
-                  Prospects & Demo Beheer
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                  Prospect Demo's & Acquisitie Beheer
                 </h2>
-                <p className="text-xs text-[#86868B]">
-                  Overzicht van actieve klantproeven, direct te delen outreach links en handoff pakketten.
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Overzicht van actieve klantproeven, 1-klik WhatsApp outreach teksten en handoff implementatiekits.
                 </p>
               </div>
 
               <button
                 onClick={fetchSessions}
-                className="text-xs font-medium text-[#1D1D1F] dark:text-white bg-white dark:bg-[#161618] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5"
+                className="text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-[#0F131C] hover:bg-slate-50 dark:hover:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] px-4 py-2 rounded-lg transition-all flex items-center gap-1.5 shadow-2xs"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#86868B]" />
+                <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
                 <span>Vernieuwen</span>
               </button>
             </div>
 
-            {/* Grid */}
+            {/* Cards Grid */}
             {isLoadingSessions ? (
-              <div className="py-12 text-center text-xs text-[#86868B] flex items-center justify-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin text-[#1D1D1F] dark:text-white" />
+              <div className="py-16 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin text-[#2196F3]" />
                 <span>Laden...</span>
               </div>
             ) : clientSessions.length === 0 ? (
-              <div className="text-center py-12 apple-card rounded-2xl p-8 space-y-3">
-                <p className="text-xs text-[#86868B]">Nog geen demo's aangemaakt.</p>
+              <div className="text-center py-16 pro-card p-8 space-y-3">
+                <p className="text-xs text-slate-500">Nog geen klantdemo's aangemaakt.</p>
                 <button
                   onClick={() => setActiveTab("generator")}
-                  className="bg-[#1D1D1F] dark:bg-white text-white dark:text-black font-medium px-4 py-2 rounded-xl text-xs"
+                  className="bg-[#2196F3] text-white font-semibold px-4 py-2 rounded-lg text-xs"
                 >
                   Maak eerste demo
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {clientSessions.map((item, idx) => {
                   const leadStatus = getLeadStatus(item);
 
                   return (
                     <div
                       key={idx}
-                      className="apple-card rounded-2xl p-5 flex flex-col justify-between space-y-4"
+                      className="pro-card p-6 flex flex-col justify-between space-y-5"
                     >
-                      <div className="space-y-3">
-                        {/* Top indicators */}
-                        <div className="flex items-center justify-between text-[11px]">
-                          <div className="flex items-center gap-1.5 font-medium">
+                      <div className="space-y-4">
+                        {/* Status bar */}
+                        <div className="flex items-center justify-between text-xs pb-3 border-b border-slate-100 dark:border-white/[0.06]">
+                          <div className="flex items-center gap-1.5 font-semibold">
                             <span className={`w-2 h-2 rounded-full ${leadStatus.dot}`} />
                             <span className={leadStatus.text}>{leadStatus.label}</span>
                           </div>
 
-                          <span className="font-mono text-[#86868B]">
+                          <span className="font-mono text-slate-500 text-[11px]">
                             {item.isExpired ? (
                               "Sessie voltooid"
                             ) : item.hasStarted ? (
@@ -404,101 +427,102 @@ export default function AdminPage() {
                           </span>
                         </div>
 
+                        {/* Title & info */}
                         <div>
-                          <div className="flex items-center justify-between">
-                            <h3 className="font-semibold text-sm text-[#1D1D1F] dark:text-white tracking-tight">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-bold text-base text-slate-900 dark:text-white tracking-tight">
                               {item.profile.businessName}
                             </h3>
                             <button
                               onClick={() => setSelectedProfileEdit(item.profile)}
-                              className="text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white p-1 transition-colors"
+                              className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 transition-colors shrink-0"
                               title="Profiel bewerken"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
                             </button>
                           </div>
-                          <p className="text-xs text-[#86868B] line-clamp-1 mt-0.5">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">
                             {item.profile.tagline || item.profile.address || item.profile.businessName}
                           </p>
                         </div>
 
-                        {/* Subtle metrics bar */}
-                        <div className="bg-black/[0.03] dark:bg-white/[0.04] p-2.5 rounded-xl grid grid-cols-2 gap-2 text-center text-xs">
+                        {/* Metrics bar */}
+                        <div className="bg-slate-50 dark:bg-white/[0.03] p-3 rounded-lg border border-slate-100 dark:border-white/[0.04] grid grid-cols-2 gap-3 text-center text-xs">
                           <div>
-                            <div className="font-semibold text-[#1D1D1F] dark:text-white">
+                            <div className="font-bold text-slate-900 dark:text-white font-mono">
                               {item.messageCount} / {item.maxMessages}
                             </div>
-                            <div className="text-[10px] text-[#86868B]">Berichten</div>
+                            <div className="text-[10px] text-slate-400">Berichten</div>
                           </div>
                           <div>
-                            <div className="font-semibold text-[#1D1D1F] dark:text-white">
+                            <div className="font-bold text-slate-900 dark:text-white font-mono">
                               {item.profile.services.length}
                             </div>
-                            <div className="text-[10px] text-[#86868B]">Diensten</div>
+                            <div className="text-[10px] text-slate-400">Diensten</div>
                           </div>
                         </div>
                       </div>
 
-                      {/* Clean unified action buttons */}
-                      <div className="space-y-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.06]">
-                        {/* Secondary Button Row: Outreach & Portal */}
+                      {/* Actions */}
+                      <div className="space-y-2 pt-3 border-t border-slate-100 dark:border-white/[0.06]">
+                        {/* Row 1: Outreach & Portal */}
                         <div className="grid grid-cols-2 gap-2">
                           <button
                             onClick={() => setSelectedOutreach(item)}
-                            className="bg-white dark:bg-[#1C1C1E] hover:bg-black/[0.03] dark:hover:bg-white/[0.06] text-[#1D1D1F] dark:text-white border border-black/[0.08] dark:border-white/[0.1] text-xs font-medium py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5"
+                            className="bg-white dark:bg-[#121722] hover:bg-slate-50 dark:hover:bg-white/[0.04] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] text-xs font-semibold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-2xs"
                           >
-                            <Send className="w-3 h-3 text-[#86868B]" />
+                            <Send className="w-3 h-3 text-[#2196F3]" />
                             <span>Outreach Kit</span>
                           </button>
 
                           <Link
                             href={`/portal/${item.profile.slug}`}
-                            className="bg-white dark:bg-[#1C1C1E] hover:bg-black/[0.03] dark:hover:bg-white/[0.06] text-[#1D1D1F] dark:text-white border border-black/[0.08] dark:border-white/[0.1] text-xs font-medium py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5"
+                            className="bg-white dark:bg-[#121722] hover:bg-slate-50 dark:hover:bg-white/[0.04] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] text-xs font-semibold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-2xs"
                           >
-                            <Layers className="w-3 h-3 text-[#86868B]" />
+                            <Layers className="w-3 h-3 text-[#2196F3]" />
                             <span>Klant Portaal</span>
                           </Link>
                         </div>
 
-                        {/* Secondary Controls: Timer adjustments */}
+                        {/* Row 2: Timer controls */}
                         <div className="grid grid-cols-2 gap-2">
                           <button
                             onClick={() => handleExtend(item.profile.slug)}
-                            className="bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-[#1D1D1F] dark:text-white text-xs font-medium py-1.5 px-2 rounded-xl transition-all flex items-center justify-center gap-1"
+                            className="bg-slate-100 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.08] text-slate-700 dark:text-slate-300 text-xs font-medium py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1"
                             title="Voeg 10 minuten toe"
                           >
-                            <Plus className="w-3 h-3 text-[#86868B]" />
+                            <Plus className="w-3 h-3" />
                             <span>+10 Min</span>
                           </button>
 
                           <button
                             onClick={() => handleReset(item.profile.slug)}
-                            className="bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-[#1D1D1F] dark:text-white text-xs font-medium py-1.5 px-2 rounded-xl transition-all flex items-center justify-center gap-1"
+                            className="bg-slate-100 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.08] text-slate-700 dark:text-slate-300 text-xs font-medium py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1"
                             title="Reset sessie"
                           >
-                            <RotateCcw className="w-3 h-3 text-[#86868B]" />
+                            <RotateCcw className="w-3 h-3" />
                             <span>Reset</span>
                           </button>
                         </div>
 
-                        {/* Primary Action Button: Open Demo */}
+                        {/* Row 3: Open Demo CTA */}
                         <div className="flex gap-2 pt-1">
                           {item.session.messages && item.session.messages.length > 0 && (
                             <button
                               onClick={() => setSelectedTranscript(item)}
-                              className="bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-[#1D1D1F] dark:text-white text-xs font-medium px-3 py-2 rounded-xl transition-all flex items-center justify-center gap-1"
+                              className="bg-slate-100 hover:bg-slate-200/80 dark:bg-white/[0.05] text-slate-700 dark:text-slate-300 text-xs font-semibold px-3 py-2.5 rounded-lg transition-all flex items-center justify-center"
                               title="Bekijk transcript"
                             >
-                              <Eye className="w-3.5 h-3.5 text-[#86868B]" />
+                              <Eye className="w-3.5 h-3.5" />
                             </button>
                           )}
 
                           <Link
                             href={`/demo/${item.profile.slug}`}
-                            className="flex-1 bg-[#1D1D1F] hover:bg-black text-white dark:bg-white dark:text-black dark:hover:bg-slate-200 text-xs font-medium py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                            className="flex-1 bg-[#2196F3] hover:bg-[#1E88E5] text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-xs"
                           >
                             <span>Open Demo</span>
-                            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                           </Link>
                         </div>
                       </div>
@@ -514,17 +538,17 @@ export default function AdminPage() {
             TAB 2: FAST INGESTION WIZARD
             ========================================================================= */}
         {activeTab === "generator" && (
-          <div className="space-y-6 animate-fade-in max-w-2xl mx-auto">
-            <div className="text-center space-y-1">
-              <h2 className="text-2xl font-semibold tracking-tight text-[#1D1D1F] dark:text-white">
+          <div className="space-y-6 animate-fade-in max-w-3xl mx-auto py-4">
+            <div className="text-center space-y-1.5">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Genereer een Nieuwe Demo
               </h2>
-              <p className="text-[#86868B] text-xs">
-                Voer een website URL in om binnen enkele seconden een gepersonaliseerde WhatsApp AI demo te bouwen.
+              <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
+                Voer een website URL in. DeepSeek Flash leest de diensten en prijzen uit en maakt direct een afgeschermde demo gereed.
               </p>
             </div>
 
-            <div className="apple-card rounded-2xl p-6 sm:p-8 space-y-6">
+            <div className="pro-card p-8 space-y-6">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -532,28 +556,28 @@ export default function AdminPage() {
                 }}
                 className="space-y-4"
               >
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-medium text-[#1D1D1F] dark:text-white">
-                    Website URL
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                    Website URL van het bedrijf
                   </label>
 
-                  <div className="flex flex-col sm:flex-row gap-2.5">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <div className="flex-1 relative">
-                      <Globe className="w-4 h-4 text-[#86868B] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                       <input
                         type="text"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
-                        placeholder="https://tandartspraktijk.nl"
+                        placeholder="https://tandartspraktijk.nl of salon.nl"
                         disabled={status === "scraping" || status === "gemini" || status === "saving"}
-                        className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl pl-10 pr-4 py-2.5 text-[#1D1D1F] dark:text-white placeholder:text-[#86868B] text-xs outline-none focus:border-black dark:focus:border-white transition-all font-mono"
+                        className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 text-xs font-mono outline-none focus:border-[#2196F3] transition-all"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={!url.trim() || status === "scraping" || status === "gemini" || status === "saving"}
-                      className="bg-[#1D1D1F] hover:bg-black text-white dark:bg-white dark:text-black dark:hover:bg-slate-200 disabled:opacity-50 px-5 py-2.5 rounded-xl font-medium text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all shrink-0"
+                      className="bg-[#2196F3] hover:bg-[#1E88E5] text-white disabled:opacity-50 px-6 py-3 rounded-lg font-semibold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all shrink-0"
                     >
                       {status === "scraping" || status === "gemini" || status === "saving" ? (
                         <>
@@ -572,9 +596,9 @@ export default function AdminPage() {
               </form>
 
               {/* Presets */}
-              <div className="pt-4 border-t border-black/[0.06] dark:border-white/[0.06] space-y-2">
-                <span className="text-[11px] text-[#86868B] font-medium block">Snelle voorbeelden:</span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="pt-4 border-t border-slate-100 dark:border-white/[0.06] space-y-2">
+                <span className="text-xs text-slate-500 font-semibold block">Snelle voorbeelden:</span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {presets.map((preset, idx) => (
                     <button
                       key={idx}
@@ -583,10 +607,10 @@ export default function AdminPage() {
                         setUrl(preset.url);
                         handleStartIngest(preset.url);
                       }}
-                      className="text-left bg-black/[0.02] hover:bg-black/[0.05] dark:bg-white/[0.03] dark:hover:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.06] p-3 rounded-xl transition-all text-xs"
+                      className="text-left bg-slate-50 hover:bg-slate-100 dark:bg-white/[0.03] dark:hover:bg-white/[0.06] border border-slate-200/80 dark:border-white/[0.06] p-3.5 rounded-lg transition-all text-xs space-y-0.5"
                     >
-                      <div className="font-medium text-[#1D1D1F] dark:text-white truncate">{preset.name}</div>
-                      <div className="text-[10px] text-[#86868B] truncate">{preset.desc}</div>
+                      <div className="font-semibold text-slate-900 dark:text-white truncate">{preset.name}</div>
+                      <div className="text-[11px] text-slate-400 truncate">{preset.desc}</div>
                     </button>
                   ))}
                 </div>
@@ -594,22 +618,22 @@ export default function AdminPage() {
 
               {/* Success */}
               {status === "done" && resultProfile && (
-                <div className="apple-card bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-4 text-xs space-y-3 animate-fade-in">
-                  <div className="flex items-center gap-2 font-medium text-emerald-900 dark:text-emerald-200">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    <span>Demo gereed voor {resultProfile.businessName}</span>
+                <div className="pro-card bg-[#2196F3]/5 border border-[#2196F3]/30 p-5 rounded-xl text-xs space-y-3 animate-fade-in">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                    <CheckCircle2 className="w-4 h-4 text-[#2196F3]" />
+                    <span>Demo gereed voor {resultProfile.businessName}!</span>
                   </div>
                   <div className="flex gap-2">
                     <Link
                       href={`/demo/${resultProfile.slug}`}
-                      className="bg-[#1D1D1F] text-white dark:bg-white dark:text-black px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 shadow-xs"
+                      className="bg-[#2196F3] text-white px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xs"
                     >
-                      <span>Open Demo</span>
-                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                      <span>Open Klantdemo</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                     </Link>
                     <button
                       onClick={() => setActiveTab("sessions")}
-                      className="bg-white dark:bg-[#161618] text-[#1D1D1F] dark:text-white border border-black/[0.08] dark:border-white/[0.1] px-4 py-2 rounded-xl text-xs font-medium"
+                      className="bg-white dark:bg-[#0F131C] text-slate-800 dark:text-white border border-slate-200 dark:border-white/10 px-4 py-2 rounded-lg text-xs font-semibold"
                     >
                       Bekijk in Overzicht
                     </button>
@@ -626,52 +650,52 @@ export default function AdminPage() {
           MODAL 1: OUTREACH TOOLKIT
           ========================================================================= */}
       {selectedOutreach && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="apple-card rounded-2xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
-            <div className="p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="pro-card rounded-2xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
+            <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-sm text-[#1D1D1F] dark:text-white">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                   Outreach: {selectedOutreach.profile.businessName}
                 </h3>
-                <span className="text-xs text-[#86868B]">
-                  Gepersonaliseerde outreach tekst om met 1 klik te versturen.
+                <span className="text-xs text-slate-500">
+                  Gepersonaliseerde outreach tekst om met 1 klik te kopiëren.
                 </span>
               </div>
               <button
                 onClick={() => setSelectedOutreach(null)}
-                className="p-1.5 rounded-full hover:bg-black/[0.05] dark:hover:bg-white/[0.1] text-[#86868B]"
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.08] text-slate-400"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="p-5 overflow-y-auto space-y-4 text-xs">
+            <div className="p-6 overflow-y-auto space-y-4 text-xs">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-[#1D1D1F] dark:text-white">
-                    WhatsApp Bericht
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">
+                    WhatsApp Bericht (Hoogste Respons)
                   </span>
                   <button
                     onClick={() => {
                       const text = `Goedendag! Ik zag dat veel potentiële klanten buiten kantoortijden op uw website (${selectedOutreach.profile.websiteUrl || selectedOutreach.profile.businessName}) kijken en afhaken op formulieren.\n\nIk heb alvast een interactief WhatsApp AI prototype klaargezet voor ${selectedOutreach.profile.businessName} met uw eigen behandelingen en Google Agenda koppeling. U kunt het hier vrijblijvend testen:\n\n${typeof window !== "undefined" ? window.location.origin : ""}/demo/${selectedOutreach.profile.slug}\n\nWat vindt u van dit concept voor uw praktijk?`;
                       handleCopy(text, "whatsapp");
                     }}
-                    className="bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] text-[#1D1D1F] dark:text-white px-3 py-1.5 rounded-lg font-medium flex items-center gap-1 transition-all"
+                    className="bg-[#2196F3]/10 hover:bg-[#2196F3]/20 text-[#2196F3] border border-[#2196F3]/30 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1 transition-all"
                   >
-                    {copiedText === "whatsapp" ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedText === "whatsapp" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedText === "whatsapp" ? "Gekopieerd!" : "Kopieer"}</span>
                   </button>
                 </div>
-                <div className="p-3.5 bg-black/[0.02] dark:bg-white/[0.03] rounded-xl border border-black/[0.06] dark:border-white/[0.08] font-mono text-[11px] leading-relaxed text-[#1D1D1F] dark:text-[#F5F5F7] whitespace-pre-wrap">
+                <div className="p-4 bg-slate-50 dark:bg-white/[0.03] rounded-lg border border-slate-200/80 dark:border-white/[0.08] font-mono text-[11px] leading-relaxed text-slate-800 dark:text-slate-200 whitespace-pre-wrap">
                   {`Goedendag! Ik zag dat veel potentiële klanten buiten kantoortijden op uw website (${selectedOutreach.profile.websiteUrl || selectedOutreach.profile.businessName}) kijken en afhaken op formulieren.\n\nIk heb alvast een interactief WhatsApp AI prototype klaargezet voor ${selectedOutreach.profile.businessName} met uw eigen behandelingen en Google Agenda koppeling. U kunt het hier vrijblijvend testen:\n\n${typeof window !== "undefined" ? window.location.origin : ""}/demo/${selectedOutreach.profile.slug}\n\nWat vindt u van dit concept voor uw praktijk?`}
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/[0.06] dark:border-white/[0.08] flex justify-end">
+            <div className="p-4 bg-slate-50 dark:bg-white/[0.02] border-t border-slate-100 dark:border-white/[0.08] flex justify-end">
               <button
                 onClick={() => setSelectedOutreach(null)}
-                className="bg-black/[0.05] dark:bg-white/[0.08] text-[#1D1D1F] dark:text-white text-xs font-medium px-4 py-2 rounded-xl"
+                className="bg-slate-200 dark:bg-white/[0.08] text-slate-800 dark:text-white text-xs font-semibold px-4 py-2 rounded-lg"
               >
                 Sluiten
               </button>
@@ -684,84 +708,84 @@ export default function AdminPage() {
           MODAL 2: IN-DASHBOARD PROFILE EDITOR
           ========================================================================= */}
       {selectedProfileEdit && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="apple-card rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
-            <div className="p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="pro-card rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
+            <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-sm text-[#1D1D1F] dark:text-white">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                   Bewerk: {selectedProfileEdit.businessName}
                 </h3>
-                <span className="text-xs text-[#86868B]">
-                  Pas gegevens en instructies aan voor de AI.
+                <span className="text-xs text-slate-500">
+                  Pas gegevens en instructies aan voor DeepSeek Flash.
                 </span>
               </div>
               <button
                 onClick={() => setSelectedProfileEdit(null)}
-                className="p-1.5 rounded-full hover:bg-black/[0.05] dark:hover:bg-white/[0.1] text-[#86868B]"
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.08] text-slate-400"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveProfileEdit} className="p-5 overflow-y-auto space-y-4 text-xs">
+            <form onSubmit={handleSaveProfileEdit} className="p-6 overflow-y-auto space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-medium text-[#1D1D1F] dark:text-white">Bedrijfsnaam</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Bedrijfsnaam</label>
                 <input
                   type="text"
                   value={selectedProfileEdit.businessName}
                   onChange={(e) =>
                     setSelectedProfileEdit({ ...selectedProfileEdit, businessName: e.target.value })
                   }
-                  className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl p-2.5 text-[#1D1D1F] dark:text-white"
+                  className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg p-2.5 text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-medium text-[#1D1D1F] dark:text-white">Tagline</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Tagline</label>
                 <input
                   type="text"
                   value={selectedProfileEdit.tagline || ""}
                   onChange={(e) =>
                     setSelectedProfileEdit({ ...selectedProfileEdit, tagline: e.target.value })
                   }
-                  className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl p-2.5 text-[#1D1D1F] dark:text-white"
+                  className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg p-2.5 text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-medium text-[#1D1D1F] dark:text-white">Telefoon</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Telefoon</label>
                   <input
                     type="text"
                     value={selectedProfileEdit.phone || ""}
                     onChange={(e) =>
                       setSelectedProfileEdit({ ...selectedProfileEdit, phone: e.target.value })
                     }
-                    className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl p-2.5 text-[#1D1D1F] dark:text-white"
+                    className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg p-2.5 text-slate-900 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-medium text-[#1D1D1F] dark:text-white">Openingstijden</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Openingstijden</label>
                   <input
                     type="text"
                     value={selectedProfileEdit.openingHours || ""}
                     onChange={(e) =>
                       setSelectedProfileEdit({ ...selectedProfileEdit, openingHours: e.target.value })
                     }
-                    className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl p-2.5 text-[#1D1D1F] dark:text-white"
+                    className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg p-2.5 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-medium text-[#1D1D1F] dark:text-white">Tone of Voice</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Tone of Voice</label>
                 <select
                   value={selectedProfileEdit.toneOfVoice}
                   onChange={(e) =>
                     setSelectedProfileEdit({ ...selectedProfileEdit, toneOfVoice: e.target.value })
                   }
-                  className="w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] rounded-xl p-2.5 text-[#1D1D1F] dark:text-white"
+                  className="w-full bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] rounded-lg p-2.5 text-slate-900 dark:text-white"
                 >
                   <option value="Warm, empathisch, professioneel en behulpzaam">
                     Warm, empathisch & professioneel
@@ -775,17 +799,17 @@ export default function AdminPage() {
                 </select>
               </div>
 
-              <div className="pt-4 flex justify-end gap-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+              <div className="pt-4 flex justify-end gap-2 border-t border-slate-100 dark:border-white/[0.08]">
                 <button
                   type="button"
                   onClick={() => setSelectedProfileEdit(null)}
-                  className="bg-black/[0.04] dark:bg-white/[0.08] text-[#1D1D1F] dark:text-white px-4 py-2 rounded-xl font-medium"
+                  className="bg-slate-100 dark:bg-white/[0.08] text-slate-800 dark:text-white px-4 py-2 rounded-lg font-semibold"
                 >
                   Annuleren
                 </button>
                 <button
                   type="submit"
-                  className="bg-[#1D1D1F] hover:bg-black text-white dark:bg-white dark:text-black font-medium px-5 py-2 rounded-xl shadow-xs"
+                  className="bg-[#2196F3] hover:bg-[#1E88E5] text-white font-semibold px-5 py-2 rounded-lg shadow-xs"
                 >
                   Opslaan
                 </button>
@@ -799,20 +823,20 @@ export default function AdminPage() {
           MODAL 3: CHAT TRANSCRIPT
           ========================================================================= */}
       {selectedTranscript && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="apple-card rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
-            <div className="p-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="pro-card rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
+            <div className="p-5 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-sm text-[#1D1D1F] dark:text-white">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                   Transcript: {selectedTranscript.profile.businessName}
                 </h3>
-                <span className="text-[11px] text-[#86868B]">
-                  {selectedTranscript.session.messages.length} berichten
+                <span className="text-xs text-slate-500 font-mono">
+                  {selectedTranscript.session.messages.length} berichten gewisseld
                 </span>
               </div>
               <button
                 onClick={() => setSelectedTranscript(null)}
-                className="p-1.5 rounded-full hover:bg-black/[0.05] dark:hover:bg-white/[0.1] text-[#86868B]"
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.08] text-slate-400"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -825,7 +849,7 @@ export default function AdminPage() {
                   className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-xs ${
+                    className={`max-w-[85%] p-3 rounded-xl text-xs ${
                       m.sender === "user"
                         ? "bg-[#DCF8C6] text-[#111B21] rounded-tr-xs"
                         : "bg-white text-slate-900 rounded-tl-xs shadow-2xs"
@@ -840,10 +864,10 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="p-3 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/[0.06] dark:border-white/[0.08] flex justify-end">
+            <div className="p-3 bg-slate-50 dark:bg-white/[0.02] border-t border-slate-100 dark:border-white/[0.08] flex justify-end">
               <button
                 onClick={() => setSelectedTranscript(null)}
-                className="bg-black/[0.05] dark:bg-white/[0.08] text-[#1D1D1F] dark:text-white text-xs font-medium px-4 py-2 rounded-xl"
+                className="bg-slate-200 dark:bg-white/[0.08] text-slate-800 dark:text-white text-xs font-semibold px-4 py-2 rounded-lg"
               >
                 Sluiten
               </button>
@@ -853,8 +877,8 @@ export default function AdminPage() {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#161618] py-5 px-6 text-center text-xs text-[#86868B]">
-        Verde AI Studio • Apple Human Interface Guidelines Design
+      <footer className="border-t border-slate-200/80 dark:border-white/[0.07] bg-white dark:bg-[#0C0F17] py-6 px-6 sm:px-10 text-center text-xs text-slate-500">
+        Verde AI Studio • DeepSeek Flash V4 Architecture
       </footer>
     </div>
   );
