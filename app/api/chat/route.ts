@@ -1,44 +1,105 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
-import { executeChatTurn } from "@/lib/gemini";
+import { processCustomerMessage, ChatMessage } from "@/lib/gemini";
+import { getSession, saveSession } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { slug, messages, currentMessage } = body;
+    const { profileSlug, message, history } = body;
 
-    if (!slug) {
-      return NextResponse.json({ error: "Missing business slug parameter." }, { status: 400 });
+    if (!profileSlug || !message) {
+      return NextResponse.json(
+        { error: "profileSlug en message zijn verplicht." },
+        { status: 400 }
+      );
     }
 
-    if (!currentMessage || typeof currentMessage !== "string") {
-      return NextResponse.json({ error: "Invalid or missing current message." }, { status: 400 });
-    }
-
-    const profile = getProfileBySlug(slug);
+    const profile = getProfileBySlug(profileSlug);
     if (!profile) {
-      return NextResponse.json({ error: `Business profile not found for slug '${slug}'.` }, { status: 404 });
+      return NextResponse.json(
+        { error: `Geen bedrijfsprofiel gevonden voor '${profileSlug}'` },
+        { status: 404 }
+      );
     }
 
-    const chatHistory = Array.isArray(messages)
-      ? messages.map((m: any) => ({
-          role: m.role as "user" | "assistant" | "system",
-          content: m.content as string,
-        }))
-      : [];
+    // Retrieve or initialize session state
+    const session = getSession(profileSlug);
 
-    const result = await executeChatTurn(profile, chatHistory, currentMessage);
+    // If session hasn't started yet, start it now on first user message!
+    if (!session.startTime) {
+      session.startTime = Date.now();
+    }
+
+    // Check expiration: 10 minutes or max message limit
+    const elapsedMinutes = (Date.now() - session.startTime) / (1000 * 60);
+    if (elapsedMinutes >= session.maxDurationMinutes || session.messageCount >= session.maxMessages) {
+      session.isExpired = true;
+      saveSession(session);
+      return NextResponse.json(
+        {
+          error: "Sessie limiet bereikt",
+          isExpired: true,
+          reply: "Uw 10-minuten demo sessie is voltooid! Wilt u Verde AI live activeren voor uw praktijk of een verlenging aanvragen?",
+        },
+        { status: 403 }
+      );
+    }
+
+    // Increment message count
+    session.messageCount += 1;
+
+    // Record user message in server transcript
+    session.messages.push({
+      id: `usr_${Date.now()}`,
+      sender: "user",
+      text: message,
+      timestamp: new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" }),
+    });
+
+    const formattedHistory: ChatMessage[] = (history || []).map((h: any) => ({
+      role: h.sender === "user" ? "user" : "model",
+      content: h.text,
+    }));
+
+    const result = await processCustomerMessage(profile, formattedHistory, message);
+
+    // Record agent message in server transcript
+    session.messages.push({
+      id: `agt_${Date.now()}`,
+      sender: "agent",
+      text: result.reply,
+      timestamp: new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" }),
+      quickReplies: result.quickReplies,
+      isBookingCard: result.bookingConfirmed,
+      bookingDetails: result.bookingDetails,
+    });
+
+    saveSession(session);
+
+    const remainingSeconds = Math.max(
+      0,
+      Math.round(session.maxDurationMinutes * 60 - (Date.now() - session.startTime) / 1000)
+    );
 
     return NextResponse.json({
       success: true,
-      reply: result.text,
-      bookingData: result.bookingData || null,
-      proposedSlots: result.proposedSlots || null,
+      reply: result.reply,
+      quickReplies: result.quickReplies,
+      bookingConfirmed: result.bookingConfirmed,
+      bookingDetails: result.bookingDetails,
+      session: {
+        startTime: session.startTime,
+        remainingSeconds,
+        messageCount: session.messageCount,
+        maxMessages: session.maxMessages,
+        isExpired: session.isExpired,
+      },
     });
   } catch (error: any) {
-    console.error("[api/chat] Error handling chat message:", error);
+    console.error("Error in chat API route:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to process chat message." },
+      { error: error.message || "Interne serverfout bij het verwerken van het chatbericht." },
       { status: 500 }
     );
   }
