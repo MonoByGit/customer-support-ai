@@ -23,26 +23,25 @@ import { RoiCalculator } from "@/components/landing/RoiCalculator";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { FloatingWhatsAppWidget } from "@/components/landing/FloatingWhatsAppWidget";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#090D11] text-slate-900 dark:text-[#F1F5F9] selection:bg-[#00D492] selection:text-black overflow-x-hidden transition-colors duration-200">
+    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] selection:bg-[#2196F3] selection:text-white overflow-x-hidden transition-colors duration-200">
       
-      {/* Subtle Ambient Radial Lighting */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-emerald-500/10 dark:from-emerald-500/15 to-transparent blur-3xl pointer-events-none -z-10" />
+      {/* Subtle Ambient Radial Lighting in Primary #2196F3 */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-[#2196F3]/10 dark:from-[#2196F3]/15 to-transparent blur-3xl pointer-events-none -z-10" />
 
       {/* Header */}
-      <header className="border-b border-slate-200 dark:border-white/[0.08] bg-white/80 dark:bg-[#090D11]/80 backdrop-blur-xl sticky top-0 z-40 px-4 sm:px-8 py-3.5 transition-colors">
+      <header className="border-b border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-[#161618]/80 backdrop-blur-2xl sticky top-0 z-40 px-4 sm:px-8 py-3.5 transition-colors">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00D492] to-[#075E54] flex items-center justify-center shadow-sm">
-              <MessageSquare className="w-5 h-5 text-white" />
-            </div>
+            <BrandLogo className="w-8 h-8 shrink-0 drop-shadow-xs" />
             <div>
-              <span className="font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
+              <span className="font-semibold text-base sm:text-lg tracking-tight text-[#1D1D1F] dark:text-white">
                 Verde AI
               </span>
-              <span className="hidden sm:inline-block ml-2 text-[10px] bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-mono font-bold px-2 py-0.5 rounded-full border border-emerald-500/20 uppercase tracking-wider">
+              <span className="hidden sm:inline-block ml-2 text-[10px] bg-[#2196F3]/10 text-[#2196F3] font-medium px-2 py-0.5 rounded-full border border-[#2196F3]/20 uppercase tracking-wider">
                 WHATSAPP BOEKINGSENGINE
               </span>
             </div>
@@ -60,7 +59,7 @@ export default function LandingPage() {
 
             <Link
               href="/demo/tandarts-demo"
-              className="bg-[#00D492] hover:bg-[#00be82] active:scale-95 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+              className="bg-[#2196F3] hover:bg-[#1E88E5] active:scale-95 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-xs transition-all flex items-center gap-1.5"
             >
               <span>Live Demo</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -75,14 +74,14 @@ export default function LandingPage() {
           
           {/* Left Column: Authoritative B2B Value Proposition */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-400 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Meta WhatsApp Cloud API & Google Agenda Integratie</span>
+            <div className="inline-flex items-center gap-2 bg-[#2196F3]/10 border border-[#2196F3]/25 text-[#2196F3] px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#2196F3]" />
+              <span>DeepSeek Flash V4 & Google Agenda Integratie</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#1D1D1F] dark:text-white leading-[1.08]">
               Zet websitebezoekers om in{" "}
-              <span className="text-emerald-600 dark:text-[#00D492]">
+              <span className="text-[#2196F3]">
                 bevestigde afspraken
               </span>{" "}
               via WhatsApp.

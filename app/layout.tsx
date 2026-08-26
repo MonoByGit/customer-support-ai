@@ -4,9 +4,10 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Verde • WhatsApp AI Boekingsengine & Live Demo Platform",
-  description: "Zet websitebezoekers autonoom om in bevestigde agenda-afspraken via WhatsApp met Gemini Flash en Google Calendar.",
+  description: "Zet websitebezoekers autonoom om in bevestigde agenda-afspraken via WhatsApp met DeepSeek Flash en Google Calendar.",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>",
+    icon: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 
@@ -23,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl" suppressHydrationWarning>
-      <body className="antialiased bg-slate-50 dark:bg-[#06090e] text-slate-900 dark:text-slate-100 selection:bg-[#00D492] selection:text-black transition-colors duration-200">
+      <body className="antialiased bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] selection:bg-[#2196F3] selection:text-white transition-colors duration-200">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

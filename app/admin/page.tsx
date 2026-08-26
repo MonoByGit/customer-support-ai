@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { BusinessProfile } from "@/lib/schemas";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 interface ClientSessionItem {
   profile: BusinessProfile;
@@ -232,15 +233,13 @@ export default function AdminPage() {
       {/* Apple Top Navigation Bar */}
       <header className="border-b border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-[#161618]/80 backdrop-blur-2xl px-6 py-3.5 sticky top-0 z-30 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-lg bg-[#1D1D1F] dark:bg-white text-white dark:text-black flex items-center justify-center font-medium shadow-xs">
-            <MessageSquare className="w-4 h-4 fill-current" />
-          </div>
+          <BrandLogo className="w-8 h-8 shrink-0 drop-shadow-xs" />
           <div>
             <span className="font-semibold text-sm tracking-tight text-[#1D1D1F] dark:text-white">
               Verde AI Studio
             </span>
             <span className="block text-[11px] text-[#86868B] dark:text-[#86868B]">
-              Sales & Lead Intelligence
+              DeepSeek Flash V4 • Sales & Onboarding
             </span>
           </div>
         </Link>

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { BusinessProfile } from "@/lib/schemas";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export default function ClientPortalPage() {
   const params = useParams();
@@ -84,22 +85,20 @@ export default function ClientPortalPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#090D11] text-slate-900 dark:text-[#F1F5F9] flex flex-col justify-between selection:bg-[#00D492] selection:text-black transition-colors">
       {/* Top Header */}
-      <header className="border-b border-slate-200 dark:border-white/[0.08] bg-white/80 dark:bg-[#090D11]/80 backdrop-blur-xl px-6 py-3.5 sticky top-0 z-30 flex items-center justify-between">
+      <header className="border-b border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-[#161618]/80 backdrop-blur-2xl px-6 py-3.5 sticky top-0 z-30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00D492] to-[#075E54] flex items-center justify-center shadow-sm">
-            <MessageSquare className="w-5 h-5 text-white" />
-          </div>
+          <BrandLogo className="w-8 h-8 shrink-0 drop-shadow-xs" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-base tracking-tight text-slate-900 dark:text-white">
+              <span className="font-semibold text-sm tracking-tight text-[#1D1D1F] dark:text-white">
                 {profile.businessName}
               </span>
-              <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="text-[10px] bg-[#2196F3]/10 text-[#2196F3] font-medium px-2 py-0.5 rounded-full border border-[#2196F3]/20">
                 Professional Pakket • Actief
               </span>
             </div>
-            <span className="text-[11px] text-slate-500 dark:text-slate-400">
-              Verde WhatsApp AI Implementatie & Onboarding Portaal
+            <span className="text-[11px] text-[#86868B]">
+              Verde AI Implementatie & Onboarding Portaal
             </span>
           </div>
         </div>
