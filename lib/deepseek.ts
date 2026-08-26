@@ -1,5 +1,6 @@
 import { BusinessProfile } from "./schemas";
 import { checkFreeSlots, createAppointment, AvailableSlot } from "./calendar";
+import { readEnv } from "./env";
 
 /**
  * Actuele datum/tijd in Europe/Amsterdam, in natuurlijk Nederlands.
@@ -35,8 +36,8 @@ export interface DeepSeekMessage {
  * Extract structured BusinessProfile from raw scraped website content using DeepSeek Flash
  */
 export async function extractBusinessProfileWithDeepSeek(input: string | any): Promise<BusinessProfile> {
-  const apiKey = process.env.DEEPSEEK_API_KEY || "";
-  const modelName = process.env.DEEPSEEK_MODEL || "deepseek-chat";
+  const apiKey = readEnv("DEEPSEEK_API_KEY") || "";
+  const modelName = readEnv("DEEPSEEK_MODEL") || "deepseek-chat";
 
   const scrapedText = typeof input === "string" 
     ? input 
@@ -151,8 +152,8 @@ export async function processCustomerMessageWithDeepSeek(
   };
   proposedSlots?: AvailableSlot[];
 }> {
-  const apiKey = process.env.DEEPSEEK_API_KEY || "";
-  const modelName = process.env.DEEPSEEK_MODEL || "deepseek-chat";
+  const apiKey = readEnv("DEEPSEEK_API_KEY") || "";
+  const modelName = readEnv("DEEPSEEK_MODEL") || "deepseek-chat";
 
   const systemPrompt = `
 Je bent de virtuele receptionist en praktijkassistent van "${profile.businessName}" via WhatsApp.
@@ -522,7 +523,7 @@ export async function executeChatTurn(
   conversationHistory: ChatMessage[],
   incomingMessage: string
 ) {
-  if (process.env.DEEPSEEK_API_KEY) {
+  if (readEnv("DEEPSEEK_API_KEY")) {
     try {
       return await processCustomerMessageWithDeepSeek(profile, conversationHistory, incomingMessage);
     } catch (err) {

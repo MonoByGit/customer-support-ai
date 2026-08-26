@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
+import { readEnv } from "@/lib/env";
 import { executeChatTurn } from "@/lib/deepseek";
 
-const VERIFY_TOKEN = process.env.META_WEBHOOK_VERIFY_TOKEN || "whatsapp_ai_verify_token_2026";
+const VERIFY_TOKEN = readEnv("META_WEBHOOK_VERIFY_TOKEN") || "whatsapp_ai_verify_token_2026";
 
 /**
  * 1. Meta Webhook Verification Handshake (GET)
@@ -61,7 +62,7 @@ export async function POST(req: NextRequest) {
     console.log(`[webhook] Received WhatsApp message from ${fromPhoneNumber}: "${userText}"`);
 
     // Bepaal het doelprofiel (standaard het referentieprofiel; later te routeren op phone_number_id)
-    const profile = getProfileBySlug(process.env.DEFAULT_PROFILE_SLUG || "tandartspraktijk-amsterdam");
+    const profile = getProfileBySlug(readEnv("DEFAULT_PROFILE_SLUG") || "tandartspraktijk-amsterdam");
     if (!profile) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
@@ -74,8 +75,8 @@ export async function POST(req: NextRequest) {
     );
 
     // If Meta Access Token is configured, send reply directly back to WhatsApp
-    const accessToken = process.env.META_WHATSAPP_ACCESS_TOKEN;
-    const phoneNumberId = process.env.META_PHONE_NUMBER_ID;
+    const accessToken = readEnv("META_WHATSAPP_ACCESS_TOKEN");
+    const phoneNumberId = readEnv("META_PHONE_NUMBER_ID");
 
     if (accessToken && phoneNumberId) {
       await sendWhatsAppCloudMessage({

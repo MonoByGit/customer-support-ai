@@ -36,7 +36,7 @@ import {
 } from "@/lib/leads";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 
-type IntegrationState = "live" | "sandbox" | "niet-gekoppeld";
+type IntegrationState = "live" | "sandbox" | "placeholder" | "niet-gekoppeld";
 
 interface Integration {
   id: string;
@@ -966,6 +966,7 @@ function Kpi({
 function StateChip({ state }: { state: IntegrationState }) {
   const map: Record<IntegrationState, { label: string; cls: string }> = {
     live: { label: "Live", cls: "bg-[#2196F3]/10 text-[#1565C0] dark:text-[#64B5F6] border-[#2196F3]/30" },
+    placeholder: { label: "Sleutel invullen", cls: "bg-[#FF9100]/10 text-[#B35F00] dark:text-[#FF9100] border-[#FF9100]/40" },
     sandbox: { label: "Sandbox", cls: "bg-[#FF9100]/10 text-[#B35F00] dark:text-[#FF9100] border-[#FF9100]/30" },
     "niet-gekoppeld": { label: "Niet gekoppeld", cls: "bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-400/30" },
   };

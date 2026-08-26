@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { readEnv } from "./env";
 import { BusinessProfile, BusinessProfileSchema } from "./schemas";
 
 /**
@@ -10,7 +11,7 @@ import { BusinessProfile, BusinessProfileSchema } from "./schemas";
  * Zet DATA_DIR op het mountpad van een Railway Volume (bijv. /data) en de profielen
  * overleven deploys. De meegeleverde voorbeeldprofielen worden dan eenmalig geseed.
  */
-const DATA_ROOT = process.env.DATA_DIR || path.join(process.cwd(), "data");
+const DATA_ROOT = readEnv("DATA_DIR") || path.join(process.cwd(), "data");
 const PROFILES_DIR = path.join(DATA_ROOT, "profiles");
 const SEED_PROFILES_DIR = path.join(process.cwd(), "data", "profiles");
 

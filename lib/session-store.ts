@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { readEnv } from "./env";
 
 export interface ClientSession {
   slug: string;
@@ -27,7 +28,7 @@ export interface ClientSession {
   lastActive: number;
 }
 
-const DATA_ROOT = process.env.DATA_DIR || path.join(process.cwd(), "data");
+const DATA_ROOT = readEnv("DATA_DIR") || path.join(process.cwd(), "data");
 const SESSIONS_DIR = path.join(DATA_ROOT, "sessions");
 
 function ensureSessionsDir() {

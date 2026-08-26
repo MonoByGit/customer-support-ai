@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+import { readEnv, hasEnv } from "./env";
 import { BookingConfirmation, ConfirmBookingInput } from "./schemas";
 import { formatDutchDateTime, createGoogleCalendarWebUrl } from "./calendar-utils";
 
@@ -24,15 +25,13 @@ const mockBookings: MockEvent[] = [];
 
 function isGoogleConfigured(): boolean {
   return Boolean(
-    process.env.GOOGLE_CLIENT_EMAIL &&
-    process.env.GOOGLE_PRIVATE_KEY &&
-    process.env.GOOGLE_CALENDAR_ID
+    hasEnv("GOOGLE_CLIENT_EMAIL", "GOOGLE_PRIVATE_KEY", "GOOGLE_CALENDAR_ID")
   );
 }
 
 function getGoogleCalendarClient() {
-  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-  let privateKey = process.env.GOOGLE_PRIVATE_KEY || "";
+  const clientEmail = readEnv("GOOGLE_CLIENT_EMAIL");
+  let privateKey = readEnv("GOOGLE_PRIVATE_KEY") || "";
 
   // Handle escaped newlines in environment variable
   privateKey = privateKey.replace(/\\n/g, "\n");
@@ -132,7 +131,7 @@ async function queryGoogleCalendarSlots(
   preferredTimeOfDay?: "morning" | "afternoon" | "any"
 ): Promise<AvailableSlot[]> {
   const calendar = getGoogleCalendarClient();
-  const calendarId = process.env.GOOGLE_CALENDAR_ID!;
+  const calendarId = readEnv("GOOGLE_CALENDAR_ID")!;
 
   const timeMin = new Date(baseDate);
   timeMin.setHours(8, 0, 0, 0);
@@ -203,7 +202,7 @@ export async function createAppointment(
   if (isGoogleConfigured()) {
     try {
       const calendar = getGoogleCalendarClient();
-      const calendarId = process.env.GOOGLE_CALENDAR_ID!;
+      const calendarId = readEnv("GOOGLE_CALENDAR_ID")!;
 
       const eventRes = await calendar.events.insert({
         calendarId,
