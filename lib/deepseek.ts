@@ -151,6 +151,7 @@ export async function processCustomerMessageWithDeepSeek(
     calendarEventId?: string;
   };
   proposedSlots?: AvailableSlot[];
+  tokensUsed: number;
 }> {
   const apiKey = readEnv("DEEPSEEK_API_KEY") || "";
   const modelName = readEnv("DEEPSEEK_MODEL") || "deepseek-chat";
@@ -317,6 +318,14 @@ AGENDA-TOOLS
   let bookingDetails: any = null;
   let proposedSlots: AvailableSlot[] = [];
 
+  // Elke beurt kan meerdere API-calls kosten (tool call plus opvolging).
+  // We tellen ze allemaal, anders onderschat de sessielimiet het verbruik.
+  let tokensUsed = 0;
+  const countTokens = (payload: any) => {
+    const total = payload?.usage?.total_tokens;
+    if (typeof total === "number") tokensUsed += total;
+  };
+
   try {
     const response = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
@@ -339,6 +348,7 @@ AGENDA-TOOLS
     }
 
     const data = await response.json();
+    countTokens(data);
     const choice = data.choices?.[0];
     const message = choice?.message;
 
@@ -374,6 +384,7 @@ AGENDA-TOOLS
         });
 
         const followUpData = await followUpRes.json();
+        countTokens(followUpData);
         const finalReply = followUpData.choices?.[0]?.message?.content || "";
 
         const quickReplies: string[] = proposedSlots.slice(0, 3).map((s) => s.formatted);
@@ -383,6 +394,7 @@ AGENDA-TOOLS
           quickReplies,
           proposedSlots,
           bookingConfirmed: false,
+          tokensUsed,
         };
       } else if (toolCall.function.name === "confirm_booking") {
         const confirmation = await createAppointment(
@@ -433,12 +445,14 @@ AGENDA-TOOLS
         });
 
         const followUpData = await followUpRes.json();
+        countTokens(followUpData);
         const finalReply = followUpData.choices?.[0]?.message?.content || "";
 
         return {
           reply: finalReply,
           bookingConfirmed: true,
           bookingDetails,
+          tokensUsed,
         };
       }
     }
@@ -461,6 +475,7 @@ AGENDA-TOOLS
       reply: replyText,
       quickReplies: quickReplies.length > 0 ? quickReplies : undefined,
       bookingConfirmed: false,
+      tokensUsed,
     };
   } catch (err: any) {
     console.error("[deepseek] Error calling DeepSeek API:", err);
@@ -491,6 +506,7 @@ export async function processCustomerMessageFallback(
     calendarEventId?: string;
   };
   proposedSlots?: AvailableSlot[];
+  tokensUsed: number;
 }> {
   const text = incomingMessage.toLowerCase();
   const firstService = profile.services[0];
@@ -525,6 +541,7 @@ export async function processCustomerMessageFallback(
           clientPhone: phoneMatch[1].trim(),
           calendarEventId: confirmation.bookingId,
         },
+        tokensUsed: 0,
       };
     }
   }
@@ -538,6 +555,7 @@ export async function processCustomerMessageFallback(
     return {
       reply: `Natuurlijk, ik zet onze tarieven even voor u op een rij:\n\n${lines}\n\nZal ik meteen kijken wanneer u terecht kunt?`,
       quickReplies: ["Ja graag, plan een afspraak", "Ik heb nog een vraag"],
+      tokensUsed: 0,
     };
   }
 
@@ -546,6 +564,7 @@ export async function processCustomerMessageFallback(
     return {
       reply: `Wij zitten aan ${profile.address || "onze vestiging"} en zijn geopend op ${profile.openingHours || "werkdagen van 08:30 tot 17:30"}. Wilt u dat ik een moment voor u reserveer?`,
       quickReplies: ["Ja, plan een afspraak", "Bel mij liever terug"],
+      tokensUsed: 0,
     };
   }
 
@@ -563,6 +582,7 @@ export async function processCustomerMessageFallback(
       .join("\n")}\n\nWelk moment schikt u het beste? Laat u ook even uw naam en telefoonnummer achter?`,
     quickReplies: slots.slice(0, 2).map((s) => s.formatted),
     proposedSlots: slots,
+    tokensUsed: 0,
   };
 }
 

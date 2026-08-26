@@ -24,7 +24,9 @@ export async function GET(req: NextRequest) {
         startTime: null,
         maxDurationMinutes: 10,
         messageCount: 0,
-        maxMessages: 30,
+        maxMessages: 15,
+        tokensUsed: 0,
+        maxTokens: 40000,
         isExpired: false,
         messages: [],
         lastActive: Date.now(),
@@ -43,6 +45,8 @@ export async function GET(req: NextRequest) {
         hasStarted: session.startTime !== null,
         messageCount: session.messageCount,
         maxMessages: session.maxMessages,
+        tokensUsed: session.tokensUsed || 0,
+        maxTokens: session.maxTokens || 40000,
         isExpired: session.isExpired,
       };
     });
@@ -64,7 +68,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === "extend") {
-      const updated = extendSession(slug, extraMinutes || 10, extraMessages || 10);
+      const updated = extendSession(slug, extraMinutes || 10, extraMessages || 10, body.extraTokens);
       return NextResponse.json({ success: true, session: updated });
     }
 

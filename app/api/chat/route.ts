@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
 import { executeChatTurn, ChatMessage } from "@/lib/deepseek";
-import { getSession, saveSession } from "@/lib/session-store";
+import { getSession, saveSession, expiryReason } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,16 +31,31 @@ export async function POST(req: NextRequest) {
       session.startTime = Date.now();
     }
 
-    // Check expiration: 10 minutes or max message limit
+    // Drie plafonds bewaken de sessie: tijd, aantal berichten en tokenverbruik.
+    // Het tokenplafond is het plafond dat de rekening bepaalt.
     const elapsedMinutes = (Date.now() - session.startTime) / (1000 * 60);
-    if (elapsedMinutes >= session.maxDurationMinutes || session.messageCount >= session.maxMessages) {
+    if (
+      elapsedMinutes >= session.maxDurationMinutes ||
+      session.messageCount >= session.maxMessages ||
+      session.tokensUsed >= session.maxTokens
+    ) {
       session.isExpired = true;
       saveSession(session);
+
+      const reason = expiryReason(session);
+      const because =
+        reason === "tijd"
+          ? "De testperiode van tien minuten zit erop."
+          : reason === "berichten"
+          ? "U heeft het maximale aantal testberichten gebruikt."
+          : "Het testbudget voor deze sessie is op.";
+
       return NextResponse.json(
         {
-          error: "Sessie limiet bereikt",
+          error: "Sessielimiet bereikt",
           isExpired: true,
-          reply: "Deze interactieve testsessie is voltooid. Wilt u Verde AI activeren voor uw eigen praktijk, of de sessie verlengen?",
+          reason,
+          reply: `${because} Genoeg gezien? Dan zetten we deze assistent met uw eigen agenda live. Wilt u eerst verder testen, dan verlengen wij de sessie graag.`,
         },
         { status: 403 }
       );
@@ -63,6 +78,7 @@ export async function POST(req: NextRequest) {
     }));
 
     const result = await executeChatTurn(profile, formattedHistory, message);
+    session.tokensUsed += result.tokensUsed || 0;
 
     // Record agent message in server transcript
     session.messages.push({
@@ -94,6 +110,8 @@ export async function POST(req: NextRequest) {
         remainingSeconds,
         messageCount: session.messageCount,
         maxMessages: session.maxMessages,
+        tokensUsed: session.tokensUsed,
+        maxTokens: session.maxTokens,
         isExpired: session.isExpired,
       },
     });

@@ -57,6 +57,13 @@ interface LeadAlert {
 
 const POLL_INTERVAL_MS = 15000;
 
+/**
+ * Geschatte gemengde prijs per 1.000 DeepSeek-tokens in euro. Bewust één
+ * constante: DeepSeek rekent input en output apart en past tarieven aan, dus
+ * dit is een indicatie voor het dashboard, geen factuur.
+ */
+const EUR_PER_1K_TOKENS = 0.0006;
+
 const STAGE_FILTERS: Array<{ id: LeadStage | "alle"; label: string }> = [
   { id: "alle", label: "Alle" },
   { id: "geconverteerd", label: "Geconverteerd" },
@@ -219,7 +226,7 @@ export default function AdminPage() {
       });
       const data = await res.json();
       if (data.success) {
-        flash("Sessie verlengd met 10 minuten en 10 berichten.");
+        flash("Sessie verlengd: 10 minuten, 10 berichten en een nieuw tokenbudget.");
         fetchSessions(true);
       }
     } catch (e) {
@@ -292,6 +299,7 @@ export default function AdminPage() {
       else if (s === "gesprek") talking++;
     }
     const messages = clientSessions.reduce((acc, s) => acc + s.messageCount, 0);
+    const tokens = clientSessions.reduce((acc, s) => acc + (s.tokensUsed || 0), 0);
     const engaged = converted + hot + talking;
     return {
       converted,
@@ -299,8 +307,9 @@ export default function AdminPage() {
       talking,
       messages,
       total: clientSessions.length,
+      tokens,
       conversionRate: engaged > 0 ? Math.round((converted / engaged) * 100) : 0,
-      estimatedCost: (messages * 0.0008).toFixed(3),
+      estimatedCost: ((tokens / 1000) * EUR_PER_1K_TOKENS).toFixed(3),
     };
   }, [clientSessions]);
 
@@ -417,7 +426,12 @@ export default function AdminPage() {
           <Kpi label="Hot leads" value={stats.hot} sub="Koopsignaal afgegeven" accent="#FF9100" />
           <Kpi label="In gesprek" value={stats.talking} sub="Actief aan het testen" />
           <Kpi label="Geconverteerd" value={stats.converted} sub={`${stats.conversionRate}% van de actieven`} accent="#2196F3" />
-          <Kpi label="AI-verbruik" value={`€ ${stats.estimatedCost}`} sub={`${stats.messages} berichten`} mono />
+          <Kpi
+            label="AI-verbruik"
+            value={`€ ${stats.estimatedCost}`}
+            sub={`${stats.tokens.toLocaleString("nl-NL")} tokens · ${stats.messages} berichten`}
+            mono
+          />
         </div>
 
         {/* Koppelingen */}
@@ -609,19 +623,49 @@ export default function AdminPage() {
                           </div>
                         )}
 
-                        <div className="bg-slate-50 dark:bg-white/[0.03] p-3 rounded-lg border border-slate-100 dark:border-white/[0.04] grid grid-cols-2 gap-3 text-center text-xs">
-                          <div>
-                            <div className="font-bold text-slate-900 dark:text-white font-mono">
-                              {item.messageCount} / {item.maxMessages}
+                        <div className="bg-slate-50 dark:bg-white/[0.03] p-3 rounded-lg border border-slate-100 dark:border-white/[0.04] space-y-2.5">
+                          <div className="grid grid-cols-3 gap-3 text-center text-xs">
+                            <div>
+                              <div className="font-bold text-slate-900 dark:text-white font-mono">
+                                {item.messageCount} / {item.maxMessages}
+                              </div>
+                              <div className="text-[10px] text-slate-400">Berichten</div>
                             </div>
-                            <div className="text-[10px] text-slate-400">Berichten</div>
-                          </div>
-                          <div>
-                            <div className="font-bold text-slate-900 dark:text-white font-mono">
-                              {item.profile.services.length}
+                            <div>
+                              <div className="font-bold text-slate-900 dark:text-white font-mono">
+                                {Math.round((item.tokensUsed || 0) / 100) / 10}k
+                              </div>
+                              <div className="text-[10px] text-slate-400">Tokens</div>
                             </div>
-                            <div className="text-[10px] text-slate-400">Diensten</div>
+                            <div>
+                              <div className="font-bold text-slate-900 dark:text-white font-mono">
+                                {item.profile.services.length}
+                              </div>
+                              <div className="text-[10px] text-slate-400">Diensten</div>
+                            </div>
                           </div>
+
+                          {(() => {
+                            const pct = Math.min(
+                              100,
+                              Math.round(((item.tokensUsed || 0) / (item.maxTokens || 40000)) * 100)
+                            );
+                            return (
+                              <div>
+                                <div className="h-1 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                                  <div
+                                    className={`h-full rounded-full transition-all ${
+                                      pct >= 80 ? "bg-[#FF9100]" : "bg-[#2196F3]"
+                                    }`}
+                                    style={{ width: `${pct}%` }}
+                                  />
+                                </div>
+                                <div className="text-[10px] text-slate-400 mt-1">
+                                  {pct}% van het tokenbudget gebruikt
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
                       </div>
 

@@ -11,6 +11,8 @@ export interface ClientSessionItem {
     maxDurationMinutes: number;
     messageCount: number;
     maxMessages: number;
+    tokensUsed: number;
+    maxTokens: number;
     isExpired: boolean;
     lastActive?: number;
     messages: Array<{
@@ -25,6 +27,8 @@ export interface ClientSessionItem {
   hasStarted: boolean;
   messageCount: number;
   maxMessages: number;
+  tokensUsed: number;
+  maxTokens: number;
   isExpired: boolean;
 }
 
