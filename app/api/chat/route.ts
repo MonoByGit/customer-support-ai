@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
 import { processCustomerMessage, ChatMessage } from "@/lib/gemini";
+import { processCustomerMessageWithDeepSeek } from "@/lib/deepseek";
 import { getSession, saveSession } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
@@ -62,7 +63,21 @@ export async function POST(req: NextRequest) {
       content: h.text,
     }));
 
-    const result = await processCustomerMessage(profile, formattedHistory, message);
+    let result: any;
+
+    // Route to DeepSeek if DEEPSEEK_API_KEY is present, otherwise fallback to Gemini
+    if (process.env.DEEPSEEK_API_KEY) {
+      try {
+        console.log(`[chat] Routing message to DeepSeek API (${process.env.DEEPSEEK_MODEL || "deepseek-chat"})...`);
+        result = await processCustomerMessageWithDeepSeek(profile, formattedHistory, message);
+      } catch (deepseekErr) {
+        console.warn("[chat] DeepSeek failed, falling back to Gemini:", deepseekErr);
+        result = await processCustomerMessage(profile, formattedHistory, message);
+      }
+    } else {
+      console.log(`[chat] Routing message to Gemini Flash API...`);
+      result = await processCustomerMessage(profile, formattedHistory, message);
+    }
 
     // Record agent message in server transcript
     session.messages.push({
@@ -88,6 +103,7 @@ export async function POST(req: NextRequest) {
       quickReplies: result.quickReplies,
       bookingConfirmed: result.bookingConfirmed,
       bookingDetails: result.bookingDetails,
+      proposedSlots: result.proposedSlots,
       session: {
         startTime: session.startTime,
         remainingSeconds,

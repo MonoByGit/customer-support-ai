@@ -22,6 +22,7 @@ import { IndustryTabs } from "@/components/landing/IndustryTabs";
 import { RoiCalculator } from "@/components/landing/RoiCalculator";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
+import { FloatingWhatsAppWidget } from "@/components/landing/FloatingWhatsAppWidget";
 
 export default function LandingPage() {
   return (
@@ -278,6 +279,9 @@ export default function LandingPage() {
         </div>
         <p>© 2026 Verde AI. Alle rechten voorbehouden.</p>
       </footer>
+
+      {/* Floating Sales WhatsApp Trigger */}
+      <FloatingWhatsAppWidget />
     </div>
   );
 }
