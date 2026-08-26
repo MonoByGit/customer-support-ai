@@ -7,18 +7,26 @@ import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
 import { CalendarInviteModal } from "./CalendarInviteModal";
 import { BusinessInfoModal } from "./BusinessInfoModal";
+import { EmbedModal } from "./EmbedModal";
 import { playIncomingChime, playOutgoingChime } from "./sound";
 
 interface ChatWindowProps {
   profile: BusinessProfile;
+  presetScenarioPrompt?: string;
+  onClearPresetScenario?: () => void;
 }
 
-export const ChatWindow: React.FC<ChatWindowProps> = ({ profile }) => {
+export const ChatWindow: React.FC<ChatWindowProps> = ({
+  profile,
+  presetScenarioPrompt,
+  onClearPresetScenario,
+}) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [activeBooking, setActiveBooking] = useState<BookingConfirmation | null>(null);
   const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
+  const [isEmbedOpen, setIsEmbedOpen] = useState<boolean>(false);
   const [copiedNotification, setCopiedNotification] = useState<boolean>(false);
 
   const getCurrentTimeString = () => {
@@ -45,6 +53,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ profile }) => {
   useEffect(() => {
     initChat();
   }, [initChat]);
+
+  // Handle external scenario trigger
+  useEffect(() => {
+    if (presetScenarioPrompt && presetScenarioPrompt.trim()) {
+      handleSendMessage(presetScenarioPrompt);
+      if (onClearPresetScenario) onClearPresetScenario();
+    }
+  }, [presetScenarioPrompt]);
 
   // 2. Handle sending user message
   const handleSendMessage = async (content: string) => {
@@ -86,7 +102,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ profile }) => {
         throw new Error(data.error || "Fout bij verzenden van bericht.");
       }
 
-      // Realistic typing delay of 1.2 seconds for human WhatsApp feel
+      // Realistic typing delay of 1.1 seconds for human WhatsApp feel
       setTimeout(() => {
         setIsTyping(false);
 
@@ -172,6 +188,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ profile }) => {
         onResetChat={initChat}
         onShare={handleShare}
         onOpenInfo={() => setIsInfoOpen(true)}
+        onOpenEmbed={() => setIsEmbedOpen(true)}
       />
 
       {/* Messages Feed */}
@@ -203,6 +220,13 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ profile }) => {
         onSelectService={(serviceTitle) => {
           handleSendMessage(`Ik wil graag een afspraak voor ${serviceTitle}`);
         }}
+      />
+
+      {/* Embed & Widget Modal */}
+      <EmbedModal
+        profile={profile}
+        isOpen={isEmbedOpen}
+        onClose={() => setIsEmbedOpen(false)}
       />
     </div>
   );

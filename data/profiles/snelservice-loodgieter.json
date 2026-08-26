@@ -1,0 +1,58 @@
+{
+  "businessName": "Snelservice Loodgieter & Installatie",
+  "slug": "snelservice-loodgieter",
+  "industry": "trades",
+  "tagline": "24/7 storingsdienst, lekkageherstel en CV-ketel onderhoud in regio Utrecht & Amsterdam.",
+  "phone": "+31 30 890 1234",
+  "email": "spoed@snelservice-loodgieter.nl",
+  "address": "Reactorweg 29, 3542 AD Utrecht",
+  "openingHours": "Maandag t/m Zondag: 24/7 Bereikbaar voor spoedgevallen | Reguliere klussen: Ma-Vr 08:00 - 18:00",
+  "websiteUrl": "https://snelservice-loodgieter.nl",
+  "services": [
+    {
+      "id": "spoed-lekkage",
+      "title": "Spoed Lekkage & Leidingbreuk",
+      "durationMinutes": 60,
+      "price": "Vanaf €95,00",
+      "description": "Binnen 45 minuten ter plaatse bij acute waterlekkage, gaslek of gesprongen leiding."
+    },
+    {
+      "id": "cv-onderhoud",
+      "title": "CV-Ketel Onderhoud & Inspectie",
+      "durationMinutes": 45,
+      "price": "€89,00",
+      "description": "Periodieke inspectie, reiniging van de brander en veiligheidsmeting voor optimaal rendement."
+    },
+    {
+      "id": "ontstopping",
+      "title": "Afvoer & Riool Ontstopping",
+      "durationMinutes": 45,
+      "price": "€110,00",
+      "description": "Mechanische ontstopping van toilet, gootsteen of doucheputje inclusief camera-inspectie."
+    },
+    {
+      "id": "sanitair-installatie",
+      "title": "Sanitair & Kraan Installatie",
+      "durationMinutes": 60,
+      "price": "Op aanvraag",
+      "description": "Montage van nieuw toilet, wastafel, regendouche of thermostatische mengkraan."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Hoe snel kan er een monteur bij mij zijn?",
+      "answer": "Bij spoedgevallen (water- of gaslekkage) is onze storingsdienst binnen 45 minuten op locatie."
+    },
+    {
+      "question": "Rekenen jullie voorrijkosten?",
+      "answer": "Binnen ons standaard werkgebied rekenen wij overdag geen voorrijkosten, alleen het gewerkte tarief en materialen."
+    },
+    {
+      "question": "Kan ik per pin betalen bij de monteur?",
+      "answer": "Ja, al onze monteurs hebben een mobiel pinapparaat bij zich. Betalen per factuur is ook mogelijk voor zakelijke klanten."
+    }
+  ],
+  "toneOfVoice": "Direct, deskundig, vlot en geruststellend bij spoedgevallen.",
+  "customGreeting": "Hallo! Welkom bij Snelservice Loodgieter. 🔧 Heb je met spoed een monteur nodig voor een lekkage of wil je een reguliere onderhoudsafspraak inplannen?",
+  "avatarUrl": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=150&auto=format&fit=crop&q=80"
+}

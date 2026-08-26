@@ -1,0 +1,58 @@
+{
+  "businessName": "Salon Elegance Amsterdam",
+  "slug": "salon-elegance",
+  "industry": "salon",
+  "tagline": "Exclusieve haarverzorging, styling en kleurspecialisten in Amsterdam Oud-Zuid.",
+  "phone": "+31 20 678 9012",
+  "email": "afspraken@salon-elegance.nl",
+  "address": "Willemsparkweg 114, 1071 HR Amsterdam",
+  "openingHours": "Dinsdag t/m Zaterdag: 09:30 - 18:00 (Donderdag koopavond tot 20:00)",
+  "websiteUrl": "https://salon-elegance-amsterdam.nl",
+  "services": [
+    {
+      "id": "knippen-dames",
+      "title": "Dames Knippen & Föhnen",
+      "durationMinutes": 45,
+      "price": "€58,50",
+      "description": "Wassen met verzorgende hoofdmassage, precisie knippen en professioneel in model föhnen."
+    },
+    {
+      "id": "balayage",
+      "title": "Balayage & Glossing Behandeling",
+      "durationMinutes": 90,
+      "price": "Vanaf €145,00",
+      "description": "Natuurlijke sunkissed highlights op maat inclusief toner, bonding treatment en styling."
+    },
+    {
+      "id": "knippen-heren",
+      "title": "Heren Knippen & Styling",
+      "durationMinutes": 30,
+      "price": "€39,00",
+      "description": "Wassen, knippen, stylen en contouren bijwerken met kwalitatieve stylingproducten."
+    },
+    {
+      "id": "keratine",
+      "title": "Keratine Herstelbehandeling",
+      "durationMinutes": 75,
+      "price": "€180,00",
+      "description": "Diepvoedende anti-frizz behandeling die het haar zijdezacht en glanzend maakt tot 4 maanden."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Moet ik van tevoren een afspraak maken of kan ik zo binnenlopen?",
+      "answer": "We werken voornamelijk op afspraak om rust en persoonlijke aandacht te garanderen, maar als er een plekje vrij is helpen we je direct!"
+    },
+    {
+      "question": "Welke merken haarproducten gebruiken jullie?",
+      "answer": "Wij werken uitsluitend met biologische en dierproefvrije premium merken zoals Kevin Murphy en Olaplex."
+    },
+    {
+      "question": "Kan ik gratis parkeren bij de salon?",
+      "answer": "In de straat geldt betaald parkeren. Op 4 minuten loopafstand is Parkeergarage Museumkwartier."
+    }
+  ],
+  "toneOfVoice": "Stijlvol, gastvrij, warm en enthousiast. Gebruikt een vleugje glamour in de communicatie.",
+  "customGreeting": "Hey! Welkom bij Salon Elegance. ✨ Ik ben je persoonlijke salon-assistent. Zin in een frisse look of een ontspannende behandeling? Laat me weten wat je wensen zijn!",
+  "avatarUrl": "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=150&auto=format&fit=crop&q=80"
+}
