@@ -94,6 +94,9 @@ export async function GET() {
     success: true,
     checkedAt: new Date().toISOString(),
     dataDir: readEnv("DATA_DIR") || path.join(process.cwd(), "data"),
+    // Bewust wél naar de client: dit adres moet de klant in Google Agenda uitnodigen.
+    // De bijbehorende private key blijft uiteraard server-side.
+    calendarServiceAccount: readEnv("GOOGLE_CLIENT_EMAIL") || null,
     liveCount: integrations.filter((i) => i.state === "live").length,
     pendingCount: integrations.filter((i) => i.state === "placeholder").length,
     total: integrations.length,

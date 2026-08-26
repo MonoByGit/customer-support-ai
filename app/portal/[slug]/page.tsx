@@ -42,9 +42,17 @@ export default function ClientPortalPage() {
   const [activePlatform, setActivePlatform] = useState<Platform>("wordpress");
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [origin, setOrigin] = useState<string>("");
+  const [serviceAccount, setServiceAccount] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") setOrigin(window.location.origin);
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/status")
+      .then((r) => r.json())
+      .then((d) => d.success && setServiceAccount(d.calendarServiceAccount))
+      .catch(() => setServiceAccount(null));
   }, []);
 
   useEffect(() => {
@@ -286,21 +294,28 @@ export default function ClientPortalPage() {
             <WizardStep n="3">
               <div className="space-y-2">
                 <span>Voeg het Verde AI-serviceaccount toe:</span>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <input
-                    readOnly
-                    value="verde-bot@verde-ai-engine.iam.gserviceaccount.com"
-                    aria-label="Verde AI serviceaccount"
-                    className="flex-1 bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 font-mono text-[11px] text-slate-900 dark:text-white outline-none"
-                  />
-                  <button
-                    onClick={() => handleCopy("verde-bot@verde-ai-engine.iam.gserviceaccount.com", "service-email")}
-                    className="bg-[#2196F3] hover:bg-[#1E88E5] text-white font-semibold px-3 py-2 rounded-lg text-[11px] flex items-center justify-center gap-1.5 transition-all shrink-0 shadow-xs"
-                  >
-                    {copiedSection === "service-email" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copiedSection === "service-email" ? "Gekopieerd" : "Kopieer"}</span>
-                  </button>
-                </div>
+                {serviceAccount ? (
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      readOnly
+                      value={serviceAccount}
+                      aria-label="Verde AI serviceaccount"
+                      className="flex-1 bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 font-mono text-[11px] text-slate-900 dark:text-white outline-none"
+                    />
+                    <button
+                      onClick={() => handleCopy(serviceAccount, "service-email")}
+                      className="bg-[#2196F3] hover:bg-[#1E88E5] text-white font-semibold px-3 py-2 rounded-lg text-[11px] flex items-center justify-center gap-1.5 transition-all shrink-0 shadow-xs"
+                    >
+                      {copiedSection === "service-email" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedSection === "service-email" ? "Gekopieerd" : "Kopieer"}</span>
+                    </button>
+                  </div>
+                ) : (
+                  <p className="bg-[#FF9100]/[0.07] border border-[#FF9100]/30 rounded-lg px-3 py-2.5 text-[11px] text-[#B35F00] dark:text-[#FF9100] leading-relaxed">
+                    Het serviceaccount is nog niet geconfigureerd. Zodra de agendakoppeling
+                    is ingesteld verschijnt hier het adres dat u moet uitnodigen.
+                  </p>
+                )}
               </div>
             </WizardStep>
             <WizardStep n="4">
