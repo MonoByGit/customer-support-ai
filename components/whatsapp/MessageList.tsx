@@ -66,19 +66,19 @@ export const MessageList: React.FC<MessageListProps> = ({
               {/* Timestamp & Delivery Double Checkmarks inside bubble */}
               <div
                 className={`flex items-center justify-end gap-1 px-3 pb-1.5 text-[10.5px] leading-none select-none ${
-                  isUser ? "text-emerald-800/80" : "text-[#667781]"
+                  isUser ? "text-slate-500" : "text-[#667781]"
                 }`}
               >
                 <span>{msg.timestamp}</span>
                 {isUser && (
-                  <CheckCheck className="w-3.5 h-3.5 text-[#53BDEB] stroke-[2.5]" />
+                  <CheckCheck className="w-3.5 h-3.5 text-[#2196F3] stroke-[2.5]" />
                 )}
               </div>
 
               {/* Real WhatsApp Cloud API Interactive Quick Reply Buttons */}
               {msg.proposedSlots && msg.proposedSlots.length > 0 && (
                 <div className="border-t border-[#E9EDEF] divide-y divide-[#E9EDEF] bg-[#F7F8FA] rounded-b-2xl overflow-hidden">
-                  <div className="px-3 py-1.5 text-[11px] font-semibold text-[#00A884] uppercase tracking-wider flex items-center gap-1">
+                  <div className="px-3 py-1.5 text-[11px] font-semibold text-[#2196F3] uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3" />
                     <span>Kies een tijdstip (WhatsApp Interactive Button):</span>
                   </div>
@@ -87,13 +87,13 @@ export const MessageList: React.FC<MessageListProps> = ({
                     <button
                       key={slot.iso}
                       onClick={() => onSelectSlot(slot.iso, slot.formatted)}
-                      className="w-full text-left px-3.5 py-2.5 hover:bg-[#EBF7F4] active:bg-[#D8F0EA] transition-colors flex items-center justify-between text-xs font-medium text-[#00A884] group/btn"
+                      className="w-full text-left px-3.5 py-2.5 hover:bg-blue-50 active:bg-blue-100 transition-colors flex items-center justify-between text-xs font-medium text-[#2196F3] group/btn"
                     >
                       <div className="flex items-center gap-2 min-w-0">
-                        <Clock className="w-3.5 h-3.5 text-[#00A884] shrink-0" />
+                        <Clock className="w-3.5 h-3.5 text-[#2196F3] shrink-0" />
                         <span className="truncate">{slot.formatted}</span>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-[#00A884] group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-[#2196F3] group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -101,14 +101,14 @@ export const MessageList: React.FC<MessageListProps> = ({
 
               {/* Booking Success Confirmation Widget Card */}
               {msg.bookingData && (
-                <div className="border-t border-[#E9EDEF] bg-gradient-to-br from-[#075E54] to-[#128C7E] text-white rounded-b-2xl p-3.5">
+                <div className="border-t border-[#E9EDEF] bg-gradient-to-br from-[#0D47A1] to-[#1565C0] text-white rounded-b-2xl p-3.5">
                   <div
                     onClick={() => onOpenBookingModal(msg.bookingData)}
                     className="cursor-pointer space-y-2 hover:opacity-95 transition-opacity"
                   >
                     <div className="flex items-center justify-between pb-1.5 border-b border-white/20">
                       <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-[#25D366]" /> Afspraak Bevestigd!
+                        <Calendar className="w-3.5 h-3.5 text-[#FF9100]" /> Afspraak Bevestigd!
                       </span>
                       <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono">
                         {msg.bookingData.bookingId}
@@ -119,12 +119,12 @@ export const MessageList: React.FC<MessageListProps> = ({
                       <p className="font-semibold text-[13.5px] text-white">
                         {msg.bookingData.serviceTitle}
                       </p>
-                      <p className="text-emerald-100">Klant: {msg.bookingData.customerName}</p>
-                      <p className="text-emerald-100">Telefoon: {msg.bookingData.customerPhone}</p>
+                      <p className="text-blue-100">Klant: {msg.bookingData.customerName}</p>
+                      <p className="text-blue-100">Telefoon: {msg.bookingData.customerPhone}</p>
                     </div>
 
                     <div className="pt-1">
-                      <div className="text-center bg-white text-[#075E54] text-xs font-bold py-1.5 rounded-lg shadow-sm">
+                      <div className="text-center bg-white text-[#0D47A1] text-xs font-bold py-1.5 rounded-lg shadow-sm">
                         Bekijk Google Agenda Link & .ics →
                       </div>
                     </div>
@@ -140,9 +140,9 @@ export const MessageList: React.FC<MessageListProps> = ({
       {isTyping && (
         <div className="flex items-start w-full">
           <div className="bg-white rounded-2xl rounded-tl-xs px-4 py-3 shadow-[0_1px_0.5px_rgba(11,20,26,0.13)] flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce [animation-delay:-0.3s]" />
-            <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce [animation-delay:-0.15s]" />
-            <span className="w-2 h-2 rounded-full bg-[#00A884] animate-bounce" />
+            <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.3s]" />
+            <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce [animation-delay:-0.15s]" />
+            <span className="w-2 h-2 rounded-full bg-[#2196F3] animate-bounce" />
           </div>
         </div>
       )}

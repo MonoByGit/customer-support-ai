@@ -36,12 +36,12 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
       {/* Sidebar Top Header */}
       <div className="bg-[#F0F2F5] px-4 py-2.5 flex items-center justify-between border-b border-[#E9EDEF]">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-full bg-[#00A884] text-white flex items-center justify-center font-bold text-sm shadow-inner">
+          <div className="w-10 h-10 rounded-full bg-[#2196F3] text-white flex items-center justify-center font-bold text-sm shadow-inner">
             AI
           </div>
           <div>
             <div className="font-semibold text-xs text-[#111B21]">WhatsApp Web</div>
-            <div className="text-[10px] text-gray-500 font-medium">Demo Simulator</div>
+            <div className="text-[10px] text-gray-500 font-medium">Simulator</div>
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
             onClick={() => setFilterType("all")}
             className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all ${
               filterType === "all"
-                ? "bg-[#00A884] text-white"
+                ? "bg-[#2196F3] text-white"
                 : "bg-[#F0F2F5] text-[#54656F] hover:bg-gray-200"
             }`}
           >
@@ -88,7 +88,7 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
             onClick={() => setFilterType("unread")}
             className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all ${
               filterType === "unread"
-                ? "bg-[#00A884] text-white"
+                ? "bg-[#2196F3] text-white"
                 : "bg-[#F0F2F5] text-[#54656F] hover:bg-gray-200"
             }`}
           >
@@ -115,7 +115,7 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
             >
               {/* Avatar */}
               <div className="relative shrink-0">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-emerald-100 flex items-center justify-center border border-gray-200">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border border-gray-200">
                   {p.avatarUrl ? (
                     <img
                       src={p.avatarUrl}
@@ -123,13 +123,13 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-emerald-800 font-bold text-base">
+                    <span className="text-[#0D47A1] font-bold text-base">
                       {p.businessName.charAt(0)}
                     </span>
                   )}
                 </div>
                 {isActive && (
-                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#25D366] border-2 border-white rounded-full" />
+                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#2196F3] border-2 border-white rounded-full" />
                 )}
               </div>
 
@@ -140,7 +140,7 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
                     <span className="font-medium text-[13.5px] text-[#111B21] truncate">
                       {p.businessName}
                     </span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366] stroke-white shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#2196F3] fill-[#2196F3] stroke-white shrink-0" />
                   </div>
                   <span className="text-[11px] text-[#667781] shrink-0 font-normal">
                     12:30
@@ -150,12 +150,12 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
                 <div className="flex items-center justify-between mt-0.5">
                   <p className="text-xs text-[#667781] truncate pr-2 flex items-center gap-1">
                     {isActive ? (
-                      <CheckCheck className="w-3.5 h-3.5 text-[#53BDEB] shrink-0" />
+                      <CheckCheck className="w-3.5 h-3.5 text-[#2196F3] shrink-0" />
                     ) : null}
                     <span className="truncate">{snippet}</span>
                   </p>
 
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 shrink-0">
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-blue-100 text-[#0D47A1] shrink-0 font-semibold">
                     {p.industry}
                   </span>
                 </div>
@@ -167,10 +167,10 @@ export const WhatsAppSidebar: React.FC<WhatsAppSidebarProps> = ({
 
       {/* Sidebar Footer Link */}
       <div className="p-3 bg-[#F0F2F5] border-t border-[#E9EDEF] flex items-center justify-between text-xs text-gray-600">
-        <span className="text-[11px]">Demo Assistenten</span>
+        <span className="text-[11px]">Assistenten</span>
         <Link
           href="/admin"
-          className="text-[#00A884] hover:underline font-semibold flex items-center gap-1"
+          className="text-[#2196F3] hover:underline font-semibold flex items-center gap-1"
         >
           <Sparkles className="w-3 h-3" />
           <span>Website Ingesten</span>

@@ -75,9 +75,9 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-[#06090e] text-slate-900 dark:text-slate-100 flex flex-col justify-between overflow-x-hidden selection:bg-[#00A884] transition-colors duration-200">
+    <main className="min-h-screen bg-[#F8FAFC] dark:bg-[#07090E] text-slate-900 dark:text-slate-100 flex flex-col justify-between overflow-x-hidden selection:bg-[#2196F3] selection:text-white transition-colors duration-200">
       {/* Top Professional Navigation Bar */}
-      <header className="w-full bg-white/80 dark:bg-[#0b1017]/90 backdrop-blur-xl border-b border-slate-200 dark:border-white/[0.08] px-4 sm:px-6 py-3 flex items-center justify-between z-30 shrink-0">
+      <header className="w-full bg-white/90 dark:bg-[#0C0F17]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.07] px-6 sm:px-10 py-3.5 flex items-center justify-between z-30 shrink-0">
         <div className="flex items-center gap-3">
           <Link
             href="/"
@@ -88,11 +88,11 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
           </Link>
           <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">/</span>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#25D366] animate-ping" />
+            <div className="w-2 h-2 rounded-full bg-[#2196F3] animate-ping" />
             <span className="font-bold text-slate-900 dark:text-white text-sm truncate max-w-[150px] sm:max-w-xs">
               {profile.businessName}
             </span>
-            <span className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[10px] font-mono border border-emerald-500/25 uppercase font-semibold">
+            <span className="bg-[#2196F3]/10 text-[#2196F3] px-2 py-0.5 rounded-md text-[10px] font-mono border border-[#2196F3]/20 uppercase font-semibold">
               {profile.industry}
             </span>
           </div>
@@ -102,12 +102,12 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
 
-          <div className="flex items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-white/[0.08]">
+          <div className="flex items-center bg-slate-100 dark:bg-white/[0.04] p-1 rounded-lg border border-slate-200/80 dark:border-white/[0.08]">
             <button
               onClick={() => setViewMode("mobile")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 viewMode === "mobile"
-                  ? "bg-[#00D492] text-slate-950 shadow-xs"
+                  ? "bg-[#2196F3] text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
@@ -117,9 +117,9 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
 
             <button
               onClick={() => setViewMode("desktop")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 viewMode === "desktop"
-                  ? "bg-[#00D492] text-slate-950 shadow-xs"
+                  ? "bg-[#2196F3] text-white shadow-xs"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
@@ -131,19 +131,19 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
 
           <Link
             href="/admin"
-            className="bg-white hover:bg-slate-100 dark:bg-white/10 dark:hover:bg-white/15 text-slate-900 dark:text-white border border-slate-200 dark:border-white/20 px-3.5 py-1.5 rounded-xl font-semibold transition-colors flex items-center gap-1.5 text-xs hidden md:flex"
+            className="bg-white hover:bg-slate-100 dark:bg-white/10 dark:hover:bg-white/15 text-slate-900 dark:text-white border border-slate-200 dark:border-white/20 px-3.5 py-1.5 rounded-lg font-semibold transition-colors flex items-center gap-1.5 text-xs hidden md:flex"
           >
-            <PlusCircle className="w-3.5 h-3.5 text-emerald-500" />
+            <PlusCircle className="w-3.5 h-3.5 text-[#2196F3]" />
             <span>Nieuw Bedrijf Scrapen</span>
           </Link>
         </div>
       </header>
 
       {/* Floating Demo Control & Test Toolbar */}
-      <div className="w-full bg-slate-100/90 dark:bg-[#0d141e]/90 border-b border-slate-200 dark:border-white/[0.06] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs shrink-0 z-20 transition-colors">
+      <div className="w-full bg-slate-100/90 dark:bg-[#0d141e]/90 border-b border-slate-200/80 dark:border-white/[0.06] px-6 sm:px-10 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs shrink-0 z-20 transition-colors">
         {/* Left: 1-Click Scenario Triggers */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-          <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] shrink-0 pr-1">
+          <div className="flex items-center gap-1 text-[#2196F3] font-bold text-[11px] shrink-0 pr-1">
             <Zap className="w-3.5 h-3.5" />
             <span>1-Klik Test:</span>
           </div>
@@ -151,7 +151,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             <button
               key={idx}
               onClick={() => setScenarioPrompt(sc.prompt)}
-              className="bg-white dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-500/20 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200 dark:border-white/[0.08] hover:border-emerald-500/40 px-3 py-1 rounded-lg text-[11.5px] whitespace-nowrap transition-all shadow-2xs shrink-0 font-medium"
+              className="bg-white dark:bg-slate-800/80 hover:bg-blue-50 dark:hover:bg-blue-500/20 text-slate-700 dark:text-slate-300 hover:text-[#2196F3] dark:hover:text-[#2196F3] border border-slate-200/80 dark:border-white/[0.08] hover:border-[#2196F3]/40 px-3 py-1 rounded-lg text-[11.5px] whitespace-nowrap transition-all shadow-2xs shrink-0 font-medium"
             >
               {sc.label}
             </button>
@@ -164,7 +164,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             onClick={() => setSoundEnabled((prev) => !prev)}
             className={`p-1.5 px-2.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 transition-all ${
               soundEnabled
-                ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300"
+                ? "bg-blue-50 dark:bg-blue-500/10 border-blue-300 dark:border-blue-500/30 text-[#2196F3] dark:text-[#2196F3]"
                 : "bg-white dark:bg-slate-800/60 border-slate-200 dark:border-white/[0.06] text-slate-500 dark:text-slate-400"
             }`}
             title={soundEnabled ? "Geluidseffecten ingeschakeld" : "Geluidseffecten gedempt"}
@@ -178,7 +178,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             className="p-1.5 px-2.5 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] text-xs font-medium flex items-center gap-1.5 transition-all shadow-2xs"
             title="Website Embed Code & wa.me link"
           >
-            <Code2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <Code2 className="w-3.5 h-3.5 text-[#2196F3]" />
             <span>Embed Widget</span>
           </button>
 
@@ -196,7 +196,7 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
             className="p-1.5 px-2.5 rounded-lg bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] text-xs font-medium flex items-center gap-1.5 transition-all shadow-2xs"
             title="Kopieer demo link"
           >
-            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />}
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-[#2196F3]" /> : <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />}
             <span>{copiedLink ? "Gekopieerd!" : "Deel"}</span>
           </button>
         </div>
@@ -206,18 +206,18 @@ export const DemoPageClient: React.FC<DemoPageClientProps> = ({
       <div className="flex-1 flex items-center justify-center p-2 sm:p-6 md:p-8 relative">
         {/* Subtle background ambient radial lighting */}
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-3xl" />
+          <div className="w-[600px] h-[600px] bg-[#2196F3]/5 rounded-full blur-3xl" />
         </div>
 
         {viewMode === "mobile" ? (
           /* ====================================================================
-             FLAWLESS IPHONE SMARTPHONE FRAME (ZERO NESTED BORDER CLASHING)
+             FLAWLESS IPHONE SMARTPHONE FRAME
              ==================================================================== */
           <div className="relative w-full max-w-[400px] h-[calc(100vh-140px)] max-h-[820px] bg-black rounded-[48px] p-2.5 border-[10px] border-slate-800 shadow-[0_25px_90px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.95)] flex flex-col animate-scale-up">
             {/* Screen Inner Glass Container */}
             <div className="relative flex-1 w-full h-full bg-[#EFEAE2] rounded-[38px] overflow-hidden flex flex-col">
               {/* iPhone iOS Status Bar & Dynamic Island */}
-              <div className="bg-[#075E54] text-white px-6 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold select-none shrink-0 z-30">
+              <div className="bg-[#0A192F] text-white px-6 pt-3 pb-1 flex items-center justify-between text-[11px] font-semibold select-none shrink-0 z-30">
                 <span className="font-mono">09:41</span>
                 {/* Dynamic Island pill */}
                 <div className="w-24 h-4 bg-black rounded-full shadow-inner" />

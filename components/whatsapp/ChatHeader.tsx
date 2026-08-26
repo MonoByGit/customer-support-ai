@@ -22,13 +22,13 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
   onOpenInfo,
 }) => {
   return (
-    <div className="bg-[#075E54] text-white px-3 sm:px-4 py-2.5 flex items-center justify-between shadow-xs select-none sticky top-0 z-20 shrink-0 border-b border-[#054C44]">
+    <div className="bg-[#0D47A1] text-white px-3 sm:px-4 py-2.5 flex items-center justify-between shadow-xs select-none sticky top-0 z-20 shrink-0 border-b border-[#0A387E]">
       {/* Left: iOS Back Arrow + Avatar + Info */}
       <div className="flex items-center gap-2 min-w-0">
         {/* iOS Back Button */}
         <div
           onClick={onOpenInfo}
-          className="flex items-center text-emerald-200 hover:text-white cursor-pointer -ml-1 pr-1 group transition-colors"
+          className="flex items-center text-blue-200 hover:text-white cursor-pointer -ml-1 pr-1 group transition-colors"
           title="Terug naar overzicht"
         >
           <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
@@ -56,7 +56,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
               </span>
             )}
           </div>
-          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] border-2 border-[#075E54] rounded-full" />
+          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#2196F3] border-2 border-[#0D47A1] rounded-full" />
         </div>
 
         {/* Business Name & Status */}
@@ -68,11 +68,11 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             <h2 className="font-semibold text-white text-[14.5px] sm:text-[15px] leading-tight group-hover:underline truncate max-w-[160px] sm:max-w-[210px]">
               {profile.businessName}
             </h2>
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366] stroke-white shrink-0" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#2196F3] fill-[#2196F3] stroke-white shrink-0" />
           </div>
-          <p className="text-[11.5px] text-emerald-100/90 font-normal leading-tight mt-0.5 truncate">
+          <p className="text-[11.5px] text-blue-100/90 font-normal leading-tight mt-0.5 truncate">
             {isTyping ? (
-              <span className="text-emerald-200 font-medium italic animate-pulse">
+              <span className="text-blue-200 font-medium italic animate-pulse">
                 aan het typen...
               </span>
             ) : (
@@ -83,10 +83,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
       </div>
 
       {/* Right: Authentic WhatsApp Video & Audio Call Icons */}
-      <div className="flex items-center gap-2 sm:gap-3 text-emerald-100 shrink-0">
+      <div className="flex items-center gap-2 sm:gap-3 text-blue-100 shrink-0">
         <button
           onClick={() => alert(`Simulatie: WhatsApp Videogesprek met ${profile.businessName}`)}
-          className="p-1.5 rounded-full hover:bg-white/10 text-emerald-100 transition-colors"
+          className="p-1.5 rounded-full hover:bg-white/10 text-blue-100 transition-colors"
           title="Videogesprek starten"
         >
           <Video className="w-5 h-5" />
@@ -94,7 +94,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
 
         <button
           onClick={() => alert(`Simulatie: WhatsApp Spraakoproep naar ${profile.phone || profile.businessName}`)}
-          className="p-1.5 rounded-full hover:bg-white/10 text-emerald-100 transition-colors"
+          className="p-1.5 rounded-full hover:bg-white/10 text-blue-100 transition-colors"
           title="Bellen via WhatsApp"
         >
           <Phone className="w-4 h-4" />
@@ -102,7 +102,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
 
         <button
           onClick={onOpenInfo}
-          className="p-1.5 rounded-full hover:bg-white/10 text-emerald-100 transition-colors"
+          className="p-1.5 rounded-full hover:bg-white/10 text-blue-100 transition-colors"
           title="Bedrijfsinformatie bekijken"
         >
           <Info className="w-4 h-4" />

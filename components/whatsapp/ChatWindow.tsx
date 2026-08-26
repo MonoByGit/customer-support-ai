@@ -329,7 +329,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         <div className="bg-white border-t border-slate-200 p-4 shrink-0 shadow-lg text-center space-y-3 z-20 animate-fade-in">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-slate-900">
-              <Lock className="w-3.5 h-3.5 text-emerald-600" />
+              <Lock className="w-3.5 h-3.5 text-[#2196F3]" />
               <span>10-Minuten Demo Voltooid voor {profile.businessName}</span>
             </div>
             <p className="text-xs text-slate-600 max-w-md mx-auto">
@@ -346,14 +346,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 Vraag Verlenging Aan
               </button>
             ) : (
-              <span className="bg-emerald-50 text-emerald-800 text-xs font-semibold px-3 py-1.5 rounded-xl border border-emerald-200">
+              <span className="bg-blue-50 text-[#0D47A1] text-xs font-semibold px-3 py-1.5 rounded-xl border border-blue-200">
                 ✓ Verlenging Aangevraagd
               </span>
             )}
 
             <Link
               href="/admin"
-              className="bg-[#00D492] hover:bg-[#00be82] text-slate-950 text-xs font-bold px-4 py-2 rounded-xl shadow-xs transition-all flex items-center gap-1"
+              className="bg-[#2196F3] hover:bg-[#1E88E5] text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-xs transition-all flex items-center gap-1"
             >
               <span>Activeer Verde AI voor Uw Bedrijf</span>
               <ArrowRight className="w-3.5 h-3.5" />

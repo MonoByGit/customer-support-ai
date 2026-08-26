@@ -48,7 +48,7 @@ export const ThemeToggle: React.FC = () => {
         onClick={() => setTheme("system")}
         className={`p-1.5 rounded-lg transition-all ${
           theme === "system"
-            ? "bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-xs"
+            ? "bg-white dark:bg-slate-800 text-[#2196F3] dark:text-[#2196F3] shadow-xs"
             : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white"
         }`}
         title="Systeem voorkeur volgen"

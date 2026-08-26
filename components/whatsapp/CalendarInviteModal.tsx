@@ -32,7 +32,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ["#25D366", "#128C7E", "#075E54", "#34B7F1", "#F3BA2F"],
+          colors: ["#2196F3", "#1E88E5", "#0D47A1", "#FF9100", "#00E5FF"],
         });
       } catch (err) {
         console.warn("Confetti effect skipped:", err);
@@ -83,7 +83,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-100 transform transition-all animate-scale-up">
         {/* Header Banner */}
-        <div className="bg-gradient-to-br from-[#075E54] to-[#128C7E] text-white p-5 relative">
+        <div className="bg-gradient-to-br from-[#0D47A1] to-[#1565C0] text-white p-5 relative">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-white/80 hover:text-white bg-black/10 hover:bg-black/20 p-1.5 rounded-full transition-colors"
@@ -93,16 +93,16 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
 
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center border border-white/30 shadow-inner">
-              <CheckCircle2 className="w-7 h-7 text-[#25D366]" />
+              <CheckCircle2 className="w-7 h-7 text-[#2196F3]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-lg text-white">Afspraak Bevestigd!</h3>
-                <span className="text-[10px] bg-emerald-400/30 font-mono text-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300/30">
+                <span className="text-[10px] bg-blue-400/30 font-mono text-blue-100 px-2 py-0.5 rounded-full border border-blue-300/30">
                   {booking.bookingId}
                 </span>
               </div>
-              <p className="text-xs text-emerald-100/90 mt-0.5">
+              <p className="text-xs text-blue-100/90 mt-0.5">
                 Automatisch ingepland via de WhatsApp AI Engine
               </p>
             </div>
@@ -111,20 +111,20 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
 
         {/* Content Body */}
         <div className="p-5 space-y-4 text-[#111B21]">
-          <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-xl p-3.5 space-y-2">
+          <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3.5 space-y-2">
             <div className="flex items-start gap-3">
-              <Calendar className="w-4 h-4 text-emerald-700 mt-0.5 shrink-0" />
+              <Calendar className="w-4 h-4 text-[#2196F3] mt-0.5 shrink-0" />
               <div>
-                <div className="text-xs text-emerald-800/80 font-medium">Datum & Tijdstip</div>
-                <div className="text-sm font-bold text-emerald-950">{formattedTime}</div>
+                <div className="text-xs text-blue-800/80 font-medium">Datum & Tijdstip</div>
+                <div className="text-sm font-bold text-[#0D47A1]">{formattedTime}</div>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 pt-2 border-t border-emerald-200/60">
-              <Clock className="w-4 h-4 text-emerald-700 mt-0.5 shrink-0" />
+            <div className="flex items-start gap-3 pt-2 border-t border-blue-200/60">
+              <Clock className="w-4 h-4 text-[#2196F3] mt-0.5 shrink-0" />
               <div>
-                <div className="text-xs text-emerald-800/80 font-medium">Geboekte Dienst</div>
-                <div className="text-sm font-semibold text-emerald-950">
+                <div className="text-xs text-blue-800/80 font-medium">Geboekte Dienst</div>
+                <div className="text-sm font-semibold text-[#0D47A1]">
                   {booking.serviceTitle}
                 </div>
               </div>
@@ -161,7 +161,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
                 href={booking.calendarLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#00A884] hover:bg-[#069677] text-white py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all"
+                className="w-full bg-[#2196F3] hover:bg-[#1E88E5] text-white py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all"
               >
                 <ExternalLink className="w-4 h-4" />
                 <span>Toevoegen aan Google Agenda</span>
@@ -183,7 +183,7 @@ export const CalendarInviteModal: React.FC<CalendarInviteModalProps> = ({
           <span>{booking.isMock ? "Sandbox Demo Modus" : "Google Calendar Gesynchroniseerd"}</span>
           <button
             onClick={onClose}
-            className="text-[#075E54] hover:underline font-semibold"
+            className="text-[#2196F3] hover:underline font-semibold"
           >
             Sluiten & Verder Chatten
           </button>
