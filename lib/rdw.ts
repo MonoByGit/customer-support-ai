@@ -14,7 +14,7 @@ export interface RdwVoertuig {
 }
 
 const KENTEKEN_PATTERN =
-  /\b([A-Z]{2}-?\d{2}-?\d{2}|\d{2}-?[A-Z]{2}-?\d{2}|\d{2}-?\d{2}-?[A-Z]{2}|[A-Z]{2}-?\d{2}-?[A-Z]{2}|[A-Z]{2}-?[A-Z]{2}-?\d{2}|\d{2}-?[A-Z]{2}-?[A-Z]{2}|\d{1}-?[A-Z]{3}-?\d{2}|[A-Z]{1}-?\d{3}-?[A-Z]{2}|[A-Z]{3}-?\d{2}-?[A-Z]{1}|[A-Z]{1}-?\d{2}-?[A-Z]{3}|\d{1}-?[A-Z]{2}-?\d{3}|\d{3}-?[A-Z]{2}-?\d{1})\b/i;
+  /\b([A-Z]{2}-?\d{2}-?\d{2}|\d{2}-?[A-Z]{2}-?\d{2}|\d{2}-?\d{2}-?[A-Z]{2}|[A-Z]{2}-?\d{2}-?[A-Z]{2}|[A-Z]{2}-?[A-Z]{2}-?\d{2}|\d{2}-?[A-Z]{2}-?[A-Z]{2}|\d{1}-?[A-Z]{3}-?\d{2}|[A-Z]{1}-?\d{3}-?[A-Z]{2}|[A-Z]{3}-?\d{2}-?[A-Z]{1}|[A-Z]{1}-?\d{2}-?[A-Z]{3}|\d{1}-?[A-Z]{2}-?\d{3}|\d{3}-?[A-Z]{2}-?\d{1}|\d{2}-?[A-Z]{3}-?\d{1}|[A-Z]{2}-?\d{3}-?[A-Z]{1})\b/i;
 
 export function vindKenteken(tekst: string): string | null {
   const m = tekst.toUpperCase().match(KENTEKEN_PATTERN);
