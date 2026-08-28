@@ -245,6 +245,7 @@ AGENDA-TOOLS
 - Roep 'check_availability' aan zodra iemand naar beschikbaarheid vraagt of
   duidelijk toe is aan een moment. Wacht niet tot er expliciet om gevraagd wordt.
 - Roep 'confirm_booking' aan zodra tijdslot, naam en telefoonnummer bekend zijn.
+- IJZEREN REGEL: zeg NOOIT dat een afspraak vaststaat, genoteerd is of 'erin staat' zonder dat je in diezelfde beurt confirm_booking hebt aangeroepen. Een bevestiging bestaat alleen via die tool — anders bevestig je iets dat niet bestaat.
 - Noem nooit een tijd die niet uit 'check_availability' is gekomen.
 `;
 
@@ -505,6 +506,65 @@ AGENDA-TOOLS
 
       console.error("[deepseek] DSML-markup in antwoord onderschept (geen uitvoerbare boeking):", replyText.slice(0, 200));
       replyText = "Een klein moment — ik leg dit voor u vast en kom er direct op terug.";
+    }
+
+    // Vangnet tegen loze bevestigingen: claimt het model een afspraak zonder dat
+    // confirm_booking is aangeroepen, dan dwingen we de echte boeking alsnog af.
+    // Lukt dat niet, dan mag de claim de klant nooit bereiken.
+    const CLAIM_RE = /staat genoteerd|staat vast|staat (het )?erin|afspraak staat|zet ik (hem |het )?vast|(heb|is) .{0,24}(ingepland|genoteerd|vastgelegd)/i;
+    if (!bookingConfirmed && CLAIM_RE.test(replyText)) {
+      console.warn("[deepseek] Bevestigings-claim zonder boeking gedetecteerd — boeking afdwingen.");
+      try {
+        const forceMessages: DeepSeekMessage[] = [
+          ...messages,
+          { role: "assistant", content: replyText },
+          {
+            role: "user",
+            content:
+              "[SYSTEEM: Je bevestigde zojuist een afspraak in woorden zonder confirm_booking aan te roepen. Roep NU confirm_booking aan met de in dit gesprek besproken gegevens. Verzin niets: gebruik de besproken dienst, het besproken tijdslot en het bekende telefoonnummer van de klant.]",
+          },
+        ];
+        const forceRes = await fetch("https://api.deepseek.com/chat/completions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify({
+            model: modelName,
+            messages: forceMessages,
+            tools,
+            tool_choice: { type: "function", function: { name: "confirm_booking" } },
+          }),
+        });
+        const forceData = await forceRes.json();
+        countTokens(forceData);
+        const forceCall = forceData.choices?.[0]?.message?.tool_calls?.[0];
+        if (forceCall?.function?.name === "confirm_booking") {
+          const fargs = JSON.parse(forceCall.function.arguments || "{}");
+          const confirmation = await createAppointment(
+            {
+              customerName: fargs.clientName,
+              customerPhone: fargs.clientPhone,
+              serviceTitle: fargs.serviceTitle,
+              slotIsoString: fargs.slotIsoString || new Date().toISOString(),
+              notes: fargs.notes,
+            },
+            profile.businessName
+          );
+          bookingConfirmed = true;
+          bookingDetails = {
+            service: fargs.serviceTitle,
+            slot: fargs.slotIsoString,
+            clientName: fargs.clientName,
+            clientPhone: fargs.clientPhone,
+            calendarEventId: confirmation.bookingId,
+          };
+        }
+      } catch (e) {
+        console.error("[deepseek] Afdwingen van boeking mislukt:", e);
+      }
+      if (!bookingConfirmed) {
+        replyText =
+          "Ik wil hem graag goed voor u vastleggen — kunt u het gewenste moment nog één keer bevestigen? Dan zet ik hem meteen in de agenda.";
+      }
     }
 
     // Extract quick replies if any times were mentioned
