@@ -47,6 +47,14 @@ const PER_BRANCHE: Record<string, IntakeSituatie[]> = {
     { id: "bea-zwanger", titel: "Zwangerschap", vraag: "Zijn er behandelingen die u niet doet bij zwangerschap, en wat adviseert u dan?" },
     { id: "bea-mannen", titel: "Voor wie", vraag: "Zijn alle behandelingen voor iedereen — ook voor mannen en tieners?" },
   ],
+  trades: [
+    { id: "tra-spoed", titel: "Spoed en storing", vraag: "Wat is bij u écht spoed (lekkage, geen verwarming, gaslucht) en hoe snel kunt u er dan zijn?" },
+    { id: "tra-voorrij", titel: "Voorrijkosten", vraag: "Rekent u voorrijkosten, en zijn die anders in de avond of het weekend?" },
+    { id: "tra-offerte", titel: "Offerte", vraag: "Wanneer maakt u eerst een offerte en wanneer gaat u direct aan de slag?" },
+    { id: "tra-regio", titel: "Werkgebied", vraag: "In welke plaatsen of straal rondom uw vestiging werkt u?" },
+    { id: "tra-garantie", titel: "Garantie", vraag: "Welke garantie geeft u op uw werk en op materialen?" },
+    { id: "tra-foto", titel: "Foto vooraf", vraag: "Helpt het u als klanten vooraf een foto van het probleem sturen, en waar let u dan op?" },
+  ],
   salon: [
     { id: "sal-kleur", titel: "Kleuren", vraag: "Wat moet een klant weten voor een kleurbehandeling — plakt u een test, hoe lang duurt het?" },
     { id: "sal-zonder", titel: "Zonder afspraak", vraag: "Kunnen klanten binnenlopen zonder afspraak, of werkt u alleen op afspraak?" },
