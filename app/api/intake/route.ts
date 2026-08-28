@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
         reply: klaar
           ? "Dat was de laatste vraag. Hieronder staat alles wat we samen hebben ingevuld — kijk het rustig na en geef akkoord, dan is dit vanaf nu wat ik namens u vertel."
           : `Dank u. ${huidige!.vraag}`,
+        totaal: alle.length,
         situatieId: huidige?.id || null,
         situatieTitel: huidige?.titel || null,
         updates: laatste && vorigeId ? { situatie: { id: vorigeId, antwoord: laatste.tekst } } : null,
@@ -102,6 +103,7 @@ Antwoord UITSLUITEND met geldige JSON:
     const vorigeId = (behandeld as string[])[behandeld.length - 1];
     return NextResponse.json({
       success: true,
+      totaal: alle.length,
       reply:
         parsed.reply ||
         (klaar
