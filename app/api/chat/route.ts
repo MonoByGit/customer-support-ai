@@ -6,7 +6,7 @@ import { getSession, saveSession, expiryReason } from "@/lib/session-store";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { profileSlug, message, history } = body;
+    const { profileSlug, message, history, sessionId } = body;
 
     if (!profileSlug || !message) {
       return NextResponse.json(
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Retrieve or initialize session state
-    const session = getSession(profileSlug);
+    const session = getSession(profileSlug, typeof sessionId === "string" ? sessionId : undefined);
 
     // If session hasn't started yet, start it now on first user message!
     if (!session.startTime) {
