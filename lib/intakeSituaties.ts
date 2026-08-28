@@ -19,6 +19,7 @@ const ALGEMEEN: IntakeSituatie[] = [
   { id: "alg-teLaat", titel: "Te laat komen", vraag: "Wat zegt u als iemand laat is voor zijn afspraak — hoeveel speling geeft u?" },
   { id: "alg-wachttijd", titel: "Wachttijd", vraag: "Hoe snel kunnen nieuwe klanten gemiddeld bij u terecht?" },
   { id: "alg-bereikbaar", titel: "Buiten openingstijden", vraag: "Wat mag Verdi beloven over wanneer u terugbelt of reageert op berichten buiten openingstijden?" },
+  { id: "alg-eigen", titel: "Eigen inbreng", vraag: "Tot slot het belangrijkste: is er iets dat uw klanten vaak vragen, of iets dat Verdi écht over uw zaak moet weten, dat nog niet voorbijkwam? Vertel het in uw eigen woorden — alles is welkom." },
 ];
 
 const PER_BRANCHE: Record<string, IntakeSituatie[]> = {
