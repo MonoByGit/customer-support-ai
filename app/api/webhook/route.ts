@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProfileBySlug } from "@/lib/storage";
+import { getProfileBySlug, getAllProfiles } from "@/lib/storage";
 import { readEnv } from "@/lib/env";
 import { executeChatTurn } from "@/lib/deepseek";
 
@@ -61,8 +61,15 @@ export async function POST(req: NextRequest) {
 
     console.log(`[webhook] Received WhatsApp message from ${fromPhoneNumber}: "${userText}"`);
 
-    // Bepaal het doelprofiel (standaard het referentieprofiel; later te routeren op phone_number_id)
-    const profile = getProfileBySlug(readEnv("DEFAULT_PROFILE_SLUG") || "tandartspraktijk-amsterdam");
+    // Routering: elk klantbedrijf heeft straks een eigen WhatsApp-nummer. Meta stuurt
+    // bij elk bericht het phone_number_id mee; een profiel met dat id in het veld
+    // metaPhoneNumberId wint. Zonder match: het standaardprofiel (testopstelling).
+    const inkomendNummerId = change?.metadata?.phone_number_id as string | undefined;
+    const { getAllProfiles } = await import("@/lib/storage");
+    const opNummer = inkomendNummerId
+      ? getAllProfiles().find((p: any) => p.metaPhoneNumberId === inkomendNummerId)
+      : undefined;
+    const profile = opNummer || getProfileBySlug(readEnv("DEFAULT_PROFILE_SLUG") || "tandartspraktijk-amsterdam");
     if (!profile) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
