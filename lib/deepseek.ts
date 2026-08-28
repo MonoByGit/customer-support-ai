@@ -457,7 +457,55 @@ AGENDA-TOOLS
       }
     }
 
-    const replyText = message?.content || "";
+    let replyText = message?.content || "";
+
+    // DeepSeek lekt een tool-aanroep soms als DSML-markup in de tekst in plaats
+    // van in tool_calls (vaak met zelfverzonnen parameternamen). Onderschep dat:
+    // voer de bedoelde boeking alsnog uit en laat nooit markup naar een klant gaan.
+    if (/DSML|<\uFF5C/.test(replyText)) {
+      const naam = replyText.match(/invoke name="([a-z_]+)"/)?.[1];
+      const params: Record<string, string> = {};
+      const paramRe = /parameter name="([a-zA-Z]+)"[^>]*>([^<]*)</g;
+      let pm: RegExpExecArray | null;
+      while ((pm = paramRe.exec(replyText)) !== null) params[pm[1]] = pm[2].trim();
+
+      if (naam === "confirm_booking" && (params.slot || params.slotIsoString)) {
+        const slotIso = params.slot || params.slotIsoString;
+        const confirmation = await createAppointment(
+          {
+            customerName: params.customerName || params.clientName || "Onbekend",
+            customerPhone: params.phoneNumber || params.clientPhone || "",
+            serviceTitle: params.serviceTitle || params.service || "Afspraak",
+            slotIsoString: slotIso,
+            notes: params.notes,
+          },
+          profile.businessName
+        );
+        const wanneer = new Date(slotIso).toLocaleString("nl-NL", {
+          timeZone: "Europe/Amsterdam",
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        return {
+          reply: `Helemaal goed, de afspraak staat: ${wanneer}. Tot dan!`,
+          bookingConfirmed: true,
+          bookingDetails: {
+            service: params.serviceTitle || params.service || "Afspraak",
+            slot: slotIso,
+            clientName: params.customerName || params.clientName || "Onbekend",
+            clientPhone: params.phoneNumber || params.clientPhone || "",
+            calendarEventId: confirmation.bookingId,
+          },
+          tokensUsed,
+        };
+      }
+
+      console.error("[deepseek] DSML-markup in antwoord onderschept (geen uitvoerbare boeking):", replyText.slice(0, 200));
+      replyText = "Een klein moment — ik leg dit voor u vast en kom er direct op terug.";
+    }
 
     // Extract quick replies if any times were mentioned
     const quickReplies: string[] = [];

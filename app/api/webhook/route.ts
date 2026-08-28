@@ -147,6 +147,10 @@ ${userText}`;
       }
     }
 
+    // Het model moet het echte WhatsApp-nummer van de klant kennen voor boekingen,
+    // in plaats van ernaar te vragen of iets te verzinnen.
+    modelBericht = `[WhatsApp-gesprek; het nummer van de klant is +${fromPhoneNumber}. Niet naar vragen; gebruik dit bij een boeking.]\n${modelBericht}`;
+
     const history: ChatMessage[] = session.messages
       .filter((m) => m.sender === "user" || m.sender === "agent")
       .slice(-12)
@@ -183,7 +187,7 @@ ${userText}`;
         accessToken,
         phoneNumberId,
         recipientPhone: fromPhoneNumber,
-        text: chatResult.reply,
+        text: veiligVoorKlant(chatResult.reply),
         proposedSlots: chatResult.proposedSlots,
       });
     }
@@ -204,6 +208,13 @@ ${userText}`;
 /**
  * Send real Interactive WhatsApp Message back via Meta Graph API
  */
+function veiligVoorKlant(tekst: string): string {
+  if (!tekst || /DSML|<\uFF5C/.test(tekst)) {
+    return "Een klein moment — ik leg dit voor u vast en kom er direct op terug.";
+  }
+  return tekst;
+}
+
 async function sendWhatsAppCloudMessage({
   accessToken,
   phoneNumberId,
