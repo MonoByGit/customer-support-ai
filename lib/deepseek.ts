@@ -50,7 +50,7 @@ Analyseer de onderstaande website-inhoud en structureer alle bedrijfsinformatie 
 {
   "businessName": "string",
   "slug": "url-friendly-slug-lowercase",
-  "industry": "dental" | "salon" | "trades" | "general",
+  "industry": "dental" | "salon" | "trades" | "garage" | "beauty" | "general",
   "tagline": "string",
   "phone": "string",
   "email": "string",

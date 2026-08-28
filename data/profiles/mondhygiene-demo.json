@@ -1,0 +1,58 @@
+{
+  "businessName": "Mondzorgpraktijk Lumen",
+  "slug": "mondhygiene-demo",
+  "industry": "dental",
+  "tagline": "Preventieve mondzorg en professionele gebitsreiniging in Amsterdam-Zuid.",
+  "phone": "+31 20 344 5678",
+  "email": "info@mondhygiene-demo.nl",
+  "address": "Van Baerlestraat 102, 1071 BB Amsterdam",
+  "openingHours": "Maandag t/m Vrijdag: 08:30 - 17:00 | Zaterdag & Zondag: Gesloten",
+  "websiteUrl": "https://mondzorgpraktijklumen.nl",
+  "services": [
+    {
+      "id": "eerste-consult",
+      "title": "Eerste Consult Mondhygiëne",
+      "durationMinutes": 45,
+      "price": "Vanaf €98,00",
+      "description": "Uitgebreide intake, tandvleesmeting en persoonlijk verzorgingsadvies bij uw eerste bezoek."
+    },
+    {
+      "id": "reiniging-30",
+      "title": "Gebitsreiniging (30 min)",
+      "durationMinutes": 30,
+      "price": "€68,00",
+      "description": "Reguliere reiniging voor het verwijderen van tandplak en het fris houden van uw gebit."
+    },
+    {
+      "id": "reiniging-45",
+      "title": "Uitgebreide Reiniging (45 min)",
+      "durationMinutes": 45,
+      "price": "€98,00",
+      "description": "Grondige verwijdering van tandsteen en verkleuringen, inclusief polijsten en fluoridebehandeling."
+    },
+    {
+      "id": "nazorg",
+      "title": "Nazorg & Controle",
+      "durationMinutes": 20,
+      "price": "€48,00",
+      "description": "Korte controleafspraak om de genezing van uw tandvlees te volgen na een behandeling."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Wordt de behandeling vergoed door mijn zorgverzekering?",
+      "answer": "Mondhygiëne wordt meestal gedeeltelijk vergoed vanuit uw aanvullende verzekering. Wij declareren voor de meeste verzekeraars direct, zodat u zelf niets hoeft voor te schieten."
+    },
+    {
+      "question": "Heb ik een verwijzing van mijn tandarts nodig?",
+      "answer": "Nee, een verwijzing is niet nodig. U kunt rechtstreeks bij ons een afspraak inplannen voor mondhygiëne."
+    },
+    {
+      "question": "Mijn tandvlees bloedt weleens, kan ik dan toch komen?",
+      "answer": "Zeker, bloedend tandvlees is juist een reden om langs te komen en niet om te wachten. Wij kijken graag met u mee en verzorgen het rustig verder."
+    }
+  ],
+  "toneOfVoice": "Rustig, geruststellend en professioneel. Patiënten zien soms op tegen de behandeling, dus vang eerst de zorgen op voordat er iets wordt ingepland.",
+  "customGreeting": "Welkom bij Mondzorgpraktijk Lumen. Ik ben de digitale assistent en help u graag verder. Wilt u een afspraak inplannen voor een reiniging of controle, of heeft u eerst een vraag?",
+  "avatarUrl": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=150&auto=format&fit=crop&q=80"
+}
