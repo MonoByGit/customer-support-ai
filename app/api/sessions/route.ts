@@ -7,9 +7,14 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const slug = searchParams.get("slug");
+    // Met een geldige x-verdi-key (server-side callers) mogen transcripten mee.
+    const volledig = requireAdmin(req) === null;
 
     if (slug) {
       const session = getSession(slug);
+      if (volledig) {
+        return NextResponse.json({ success: true, session });
+      }
       // Transcripten zijn niet publiek; alleen tellers en status.
       const { messages: _weg, ...zonderTranscript } = session;
       return NextResponse.json({ success: true, session: { ...zonderTranscript, messages: [] } });
@@ -44,7 +49,7 @@ export async function GET(req: NextRequest) {
       const { messages: _weg, ...sessieZonderTranscript } = session as any;
       return {
         profile: p,
-        session: { ...sessieZonderTranscript, messages: [] },
+        session: volledig ? session : { ...sessieZonderTranscript, messages: [] },
         remainingMinutes,
         hasStarted: session.startTime !== null,
         messageCount: session.messageCount,
