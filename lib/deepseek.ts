@@ -207,7 +207,7 @@ opsomming, geen samenvattingsblok.
 ================================================================================
 HOE JE SCHRIJFT
 ================================================================================
-- WhatsApp is spreektaal. Twee, hooguit drie korte zinnen per bericht.
+- WhatsApp is spreektaal. Eén of twee kórte zinnen per bericht, maximaal 45 woorden totaal. Nooit meerdere alinea's. Eén onderwerp per bericht — de rest komt vanzelf in een volgende beurt.
 - Geen opsommingen, geen vetgedrukte kopjes, geen markdown, geen kaders. Merk
   je dat je een lijstje aan het maken bent, schrijf het dan als gewone zin.
 - Hooguit één emoji, en meestal geen. Nooit een emoji in een bericht dat over
@@ -564,6 +564,39 @@ AGENDA-TOOLS
       if (!bookingConfirmed) {
         replyText =
           "Ik wil hem graag goed voor u vastleggen — kunt u het gewenste moment nog één keer bevestigen? Dan zet ik hem meteen in de agenda.";
+      }
+    }
+
+    // Leesbaarheid: WhatsApp-berichten horen kort. Loopt het antwoord uit de hand,
+    // dan één goedkope inkort-pas — zelfde inhoud en warmte, geen tekstmuur.
+    const aantalWoorden = replyText.trim().split(/\s+/).length;
+    if (aantalWoorden > 55) {
+      try {
+        const kortRes = await fetch("https://api.deepseek.com/chat/completions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify({
+            model: modelName,
+            messages: [
+              {
+                role: "system",
+                content:
+                  "Herschrijf het WhatsApp-bericht van de gebruiker tot maximaal twee korte zinnen (maximaal 40 woorden totaal). Behoud de inhoud, de warmte en eventuele tijden of bedragen exact. Geen opsommingen, geen alinea's. Antwoord uitsluitend met de herschreven tekst.",
+              },
+              { role: "user", content: replyText },
+            ],
+            temperature: 0.2,
+            max_tokens: 120,
+          }),
+        });
+        const kortData = await kortRes.json();
+        countTokens(kortData);
+        const korter = kortData.choices?.[0]?.message?.content?.trim();
+        if (korter && korter.split(/\s+/).length < aantalWoorden) {
+          replyText = korter;
+        }
+      } catch (e) {
+        console.error("[deepseek] inkort-pas mislukt, origineel behouden:", e);
       }
     }
 
