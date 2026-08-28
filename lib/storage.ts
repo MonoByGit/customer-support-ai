@@ -108,6 +108,18 @@ export function saveProfile(profile: BusinessProfile): BusinessProfile {
   return valid;
 }
 
+/** Verwijdert een profiel op basis van de exacte slug. Retourneert false als er niets bestond. */
+export function deleteProfile(rawSlug: string): boolean {
+  ensureStorageDir();
+  const slug = resolveSlug(rawSlug);
+  const filePath = path.join(PROFILES_DIR, `${slug}.json`);
+  if (!fs.existsSync(filePath)) {
+    return false;
+  }
+  fs.unlinkSync(filePath);
+  return true;
+}
+
 export function slugify(text: string): string {
   return text
     .toString()

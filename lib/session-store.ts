@@ -4,6 +4,8 @@ import { readEnv } from "./env";
 
 export interface ClientSession {
   slug: string;
+  /** Bezoeker-id: elke bezoeker een eigen sessie-emmer, niet één per demo. */
+  visitorId?: string;
   businessName: string;
   startTime: number | null; // null if not started yet
   maxDurationMinutes: number; // default 10 minutes
@@ -65,9 +67,18 @@ function ensureSessionsDir() {
   }
 }
 
-export function getSession(slug: string): ClientSession {
+const VISITOR_ID_PATTERN = /^[a-zA-Z0-9_-]{6,64}$/;
+
+function sessionFileName(slug: string, visitorId?: string): string {
+  if (visitorId && VISITOR_ID_PATTERN.test(visitorId)) {
+    return `${slug}__${visitorId}.json`;
+  }
+  return `${slug}.json`;
+}
+
+export function getSession(slug: string, visitorId?: string): ClientSession {
   ensureSessionsDir();
-  const filePath = path.join(SESSIONS_DIR, `${slug}.json`);
+  const filePath = path.join(SESSIONS_DIR, sessionFileName(slug, visitorId));
 
   if (fs.existsSync(filePath)) {
     try {
@@ -84,6 +95,7 @@ export function getSession(slug: string): ClientSession {
   // Default new session
   return {
     slug,
+    visitorId: visitorId && VISITOR_ID_PATTERN.test(visitorId) ? visitorId : undefined,
     businessName: slug,
     startTime: null,
     maxDurationMinutes: DEFAULT_MAX_MINUTES,
@@ -99,7 +111,7 @@ export function getSession(slug: string): ClientSession {
 
 export function saveSession(session: ClientSession): void {
   ensureSessionsDir();
-  const filePath = path.join(SESSIONS_DIR, `${session.slug}.json`);
+  const filePath = path.join(SESSIONS_DIR, sessionFileName(session.slug, session.visitorId));
   session.lastActive = Date.now();
 
   // Check if expired based on duration or message limit

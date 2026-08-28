@@ -1,0 +1,58 @@
+{
+  "businessName": "Salon Noor",
+  "slug": "schoonheidssalon-demo",
+  "industry": "beauty",
+  "tagline": "Persoonlijke huidverzorging en beautybehandelingen in een warme, verzorgde salon.",
+  "phone": "+31 20 233 4455",
+  "email": "info@schoonheidssalon-demo.nl",
+  "address": "Ferdinand Bolstraat 47, 1072 LB Amsterdam",
+  "openingHours": "Dinsdag t/m Zaterdag: 09:00 - 18:00 (Donderdag koopavond tot 20:00) | Zondag & Maandag: Gesloten",
+  "websiteUrl": "https://salonnoor.nl",
+  "services": [
+    {
+      "id": "gezicht-classic",
+      "title": "Gezichtsbehandeling Classic",
+      "durationMinutes": 60,
+      "price": "€69,00",
+      "description": "Reinigende gezichtsbehandeling op maat van uw huidtype, inclusief masker en dagverzorging."
+    },
+    {
+      "id": "gezicht-deluxe",
+      "title": "Gezichtsbehandeling Deluxe incl. Massage",
+      "durationMinutes": 90,
+      "price": "€98,00",
+      "description": "Uitgebreide verwenbehandeling met gezichtsmassage, masker en huidanalyse voor optimaal resultaat."
+    },
+    {
+      "id": "wenkbrauwen",
+      "title": "Wenkbrauwen Epileren & Verven",
+      "durationMinutes": 30,
+      "price": "€32,00",
+      "description": "Wenkbrauwen in model brengen en verven voor een verzorgde, natuurlijke uitstraling."
+    },
+    {
+      "id": "huidadvies-intake",
+      "title": "Huidadvies-intake Nieuwe Klant",
+      "durationMinutes": 30,
+      "price": "Gratis bij eerste behandeling",
+      "description": "Persoonlijke huidanalyse en advies, gratis wanneer u meteen een eerste behandeling boekt."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Ik heb een gevoelige huid, kan ik toch bij jullie terecht?",
+      "answer": "Zeker, wij werken met hypoallergene producten en doen bij elke nieuwe klant eerst een intake, zodat we de behandeling precies afstemmen op uw huid."
+    },
+    {
+      "question": "Wat zijn de annuleringsvoorwaarden?",
+      "answer": "Afzeggen of verzetten kan kosteloos tot 24 uur van tevoren, gewoon via WhatsApp of telefonisch."
+    },
+    {
+      "question": "Hebben jullie cadeaubonnen?",
+      "answer": "Ja, cadeaubonnen zijn verkrijgbaar voor elk bedrag en zijn een populair cadeau voor een verwendag."
+    }
+  ],
+  "toneOfVoice": "Warm, persoonlijk en verzorgd. De klant moet zich welkom en gezien voelen.",
+  "customGreeting": "Hoi! Welkom bij Salon Noor. ✨ Ik ben je persoonlijke assistent. Waar mag ik je mee helpen, een behandeling inplannen of heb je eerst een vraag?",
+  "avatarUrl": "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=150&auto=format&fit=crop&q=80"
+}

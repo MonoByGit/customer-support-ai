@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/admin-auth";
 import { listAllSessions, getSession, extendSession, resetSession, saveSession } from "@/lib/session-store";
 import { getAllProfiles } from "@/lib/storage";
 
@@ -6,10 +7,17 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const slug = searchParams.get("slug");
+    // Met een geldige x-verdi-key (server-side callers) mogen transcripten mee.
+    const volledig = requireAdmin(req) === null;
 
     if (slug) {
       const session = getSession(slug);
-      return NextResponse.json({ success: true, session });
+      if (volledig) {
+        return NextResponse.json({ success: true, session });
+      }
+      // Transcripten zijn niet publiek; alleen tellers en status.
+      const { messages: _weg, ...zonderTranscript } = session;
+      return NextResponse.json({ success: true, session: { ...zonderTranscript, messages: [] } });
     }
 
     // Return all profiles merged with their session status
@@ -38,9 +46,10 @@ export async function GET(req: NextRequest) {
         remainingMinutes = Math.max(0, Math.round(session.maxDurationMinutes - elapsed));
       }
 
+      const { messages: _weg, ...sessieZonderTranscript } = session as any;
       return {
         profile: p,
-        session,
+        session: volledig ? session : { ...sessieZonderTranscript, messages: [] },
         remainingMinutes,
         hasStarted: session.startTime !== null,
         messageCount: session.messageCount,
@@ -59,6 +68,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const authError = requireAdmin(req);
+  if (authError) return authError;
+
   try {
     const body = await req.json();
     const { slug, action, extraMinutes, extraMessages } = body;

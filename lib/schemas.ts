@@ -20,7 +20,7 @@ export type FAQItem = z.infer<typeof FAQItemSchema>;
 export const BusinessProfileSchema = z.object({
   businessName: z.string().describe("Official business name"),
   slug: z.string().describe("URL-friendly slug (lowercase, hyphens only)"),
-  industry: z.enum(["dental", "salon", "trades", "general"]).default("general"),
+  industry: z.enum(["dental", "salon", "trades", "garage", "beauty", "general"]).default("general"),
   tagline: z.string().optional().describe("Short tagline or value proposition"),
   phone: z.string().optional().describe("Phone number of the business"),
   email: z.string().optional().describe("Email address of the business"),

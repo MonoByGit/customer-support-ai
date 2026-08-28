@@ -1,0 +1,69 @@
+{
+  "businessName": "Autobedrijf De Waal",
+  "slug": "garage-demo",
+  "industry": "garage",
+  "tagline": "Onderhoud, APK en reparatie voor alle merken, dichtbij en zonder gedoe.",
+  "phone": "+31 30 456 7890",
+  "email": "info@garage-demo.nl",
+  "address": "Nijverheidsweg 18, 3542 AS Utrecht",
+  "openingHours": "Maandag t/m Vrijdag: 08:00 - 17:30 | Zaterdag: 09:00 - 13:00 | Zondag: Gesloten",
+  "websiteUrl": "https://autobedrijfdewaal.nl",
+  "services": [
+    {
+      "id": "apk",
+      "title": "APK-keuring",
+      "durationMinutes": 45,
+      "price": "€49,50",
+      "description": "Officiële APK-keuring inclusief afmelding bij de RDW, klaar terwijl u wacht."
+    },
+    {
+      "id": "kleine-beurt",
+      "title": "Kleine Beurt",
+      "durationMinutes": 90,
+      "price": "Vanaf €189,00",
+      "description": "Olie en filters verversen plus een algehele controle van de belangrijkste onderdelen."
+    },
+    {
+      "id": "grote-beurt",
+      "title": "Grote Beurt",
+      "durationMinutes": 180,
+      "price": "Vanaf €349,00",
+      "description": "Uitgebreid onderhoud volgens fabrieksschema, inclusief remmen, vloeistoffen en diagnose."
+    },
+    {
+      "id": "diagnose-storing",
+      "title": "Diagnose Storing/Geluid",
+      "durationMinutes": 60,
+      "price": "€75,00",
+      "description": "Onderzoek naar een storingslampje, geluid of klacht. Wordt verrekend zodra u de reparatie laat uitvoeren."
+    },
+    {
+      "id": "banden-wisselen",
+      "title": "Banden Wisselen",
+      "durationMinutes": 30,
+      "price": "€39,00",
+      "description": "Zomer- of winterbanden wisselen inclusief spanningscontrole."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Kan ik een leenauto krijgen tijdens de beurt?",
+      "answer": "Ja, een leenauto of onze haal-en-brengservice is mogelijk, op aanvraag en afhankelijk van beschikbaarheid. Geef het aan bij het maken van de afspraak."
+    },
+    {
+      "question": "Sturen jullie een herinnering als de APK bijna verloopt?",
+      "answer": "Zeker, u ontvangt van ons gratis een herinnering ruim voordat de APK verloopt, zodat u het nooit hoeft bij te houden."
+    },
+    {
+      "question": "Kan ik wachten terwijl mijn auto in de werkplaats staat?",
+      "answer": "Uiteraard, neem plaats in onze wachtruimte met koffie. Bij langere klussen laten we het u vooraf weten."
+    },
+    {
+      "question": "Werken jullie aan alle automerken?",
+      "answer": "Ja, wij zijn een universele garage en helpen alle merken en modellen, niet alleen specifieke merkdealers."
+    }
+  ],
+  "toneOfVoice": "Nuchter, betrouwbaar en zonder verkooppraat. Denkt praktisch mee met de klant.",
+  "customGreeting": "Hallo, welkom bij Autobedrijf De Waal. Ik ben de digitale assistent. Wilt u een APK, beurt of reparatie inplannen, of heeft u eerst een vraag over uw auto?",
+  "avatarUrl": "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=150&auto=format&fit=crop&q=80"
+}

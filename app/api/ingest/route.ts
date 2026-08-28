@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/admin-auth";
 import { scrapeWebsite } from "@/lib/scraper";
 import { extractBusinessProfileWithDeepSeek } from "@/lib/deepseek";
 import { saveProfile } from "@/lib/storage";
 
 export async function POST(req: NextRequest) {
+  const authError = requireAdmin(req);
+  if (authError) return authError;
+
   try {
     const body = await req.json();
     const { url } = body;
