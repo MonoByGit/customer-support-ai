@@ -1,7 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 import { getProfileBySlug, getAllProfiles } from "@/lib/storage";
 import { readEnv } from "@/lib/env";
-import { executeChatTurn } from "@/lib/deepseek";
+import { executeChatTurn, ChatMessage } from "@/lib/deepseek";
+import { getSession, saveSession } from "@/lib/session-store";
+import { addUsage } from "@/lib/budget";
+import { vindKenteken, haalVoertuigOp, voertuigContext } from "@/lib/rdw";
+
+/**
+ * Foto-dossier: media van WhatsApp downloaden (twee stappen via de Graph API)
+ * en opslaan in DATA_DIR/media/<slug>/ zodat het dossier hem kan tonen.
+ */
+async function bewaarWhatsAppFoto(mediaId: string, slug: string, accessToken: string): Promise<string | null> {
+  try {
+    const metaRes = await fetch(`https://graph.facebook.com/v20.0/${mediaId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const meta = await metaRes.json();
+    if (!meta?.url) return null;
+    const fileRes = await fetch(meta.url, { headers: { Authorization: `Bearer ${accessToken}` } });
+    if (!fileRes.ok) return null;
+    const buffer = Buffer.from(await fileRes.arrayBuffer());
+    const ext = (meta.mime_type || "image/jpeg").split("/")[1].split(";")[0] || "jpg";
+    const dir = path.join(readEnv("DATA_DIR") || path.join(process.cwd(), "data"), "media", slug);
+    fs.mkdirSync(dir, { recursive: true });
+    const naam = `${Date.now()}-${mediaId}.${ext}`;
+    fs.writeFileSync(path.join(dir, naam), buffer);
+    return naam;
+  } catch (e) {
+    console.error("[webhook] foto opslaan mislukt:", e);
+    return null;
+  }
+}
 
 const VERIFY_TOKEN = readEnv("META_WEBHOOK_VERIFY_TOKEN") || "whatsapp_ai_verify_token_2026";
 
@@ -55,7 +86,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (!userText.trim()) {
+    const isFoto = message.type === "image" && message.image?.id;
+    if (!userText.trim() && !isFoto) {
       return NextResponse.json({ status: "ignored_non_text" });
     }
 
@@ -74,12 +106,73 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
 
-    // Execute DeepSeek Flash turn with Google Calendar tools
-    const chatResult = await executeChatTurn(
-      profile,
-      [],
-      userText
-    );
+    // Gespreksgeheugen: één sessie per klantnummer per bedrijf. Zo onthoudt Verdi
+    // het gesprek over beurten heen en voeden echte WhatsApp-gesprekken het
+    // dashboard en de signalen. Geen sessielimieten hier: echte klanten kap je niet af.
+    const session = getSession(profile.slug, fromPhoneNumber);
+    if (!session.startTime) session.startTime = Date.now();
+    const tijdstempel = () =>
+      new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+
+    const accessTokenVooraf = readEnv("META_WHATSAPP_ACCESS_TOKEN") || "";
+    let modelBericht = userText;
+
+    if (isFoto) {
+      const bestand = await bewaarWhatsAppFoto(message.image.id, profile.slug, accessTokenVooraf);
+      session.messages.push({
+        id: `sys_${Date.now()}`,
+        sender: "system",
+        text: `Dossier: foto ontvangen${bestand ? ` (${bestand})` : ""}.`,
+        timestamp: tijdstempel(),
+      });
+      userText = "[foto meegestuurd]";
+      modelBericht =
+        "[De klant stuurde zojuist een foto mee voor het dossier. Bevestig kort en warm dat de foto in het dossier zit en vraag wat er te zien is of waarbij u kunt helpen.]";
+    } else {
+      // RDW: kenteken in een WhatsApp-bericht → voertuiggegevens in dossier en context.
+      const kenteken = vindKenteken(userText);
+      if (kenteken && !(session as any).rdw) {
+        const voertuig = await haalVoertuigOp(kenteken);
+        if (voertuig) {
+          (session as any).rdw = voertuig;
+          session.messages.push({
+            id: `sys_${Date.now()}`,
+            sender: "system",
+            text: `Dossier: ${voertuig.merk} ${voertuig.handelsbenaming}, eerste toelating ${voertuig.eersteToelating}${voertuig.apkVervaldatum ? `, APK verloopt ${voertuig.apkVervaldatum}` : ""} (kenteken ${voertuig.kenteken}, via RDW).`,
+            timestamp: tijdstempel(),
+          });
+          modelBericht = `${voertuigContext(voertuig)}
+${userText}`;
+        }
+      }
+    }
+
+    const history: ChatMessage[] = session.messages
+      .filter((m) => m.sender === "user" || m.sender === "agent")
+      .slice(-12)
+      .map((m) => ({ role: m.sender === "user" ? ("user" as const) : ("model" as const), content: m.text }));
+
+    session.messageCount += 1;
+    session.messages.push({
+      id: `usr_${Date.now()}`,
+      sender: "user",
+      text: userText,
+      timestamp: tijdstempel(),
+    });
+
+    const chatResult = await executeChatTurn(profile, history, modelBericht);
+
+    session.messages.push({
+      id: `agt_${Date.now()}`,
+      sender: "agent",
+      text: chatResult.reply,
+      timestamp: tijdstempel(),
+      isBookingCard: chatResult.bookingConfirmed,
+      bookingDetails: chatResult.bookingDetails,
+    });
+    session.tokensUsed += chatResult.tokensUsed || 0;
+    addUsage(profile.slug, chatResult.tokensUsed || 0);
+    saveSession(session);
 
     // If Meta Access Token is configured, send reply directly back to WhatsApp
     const accessToken = readEnv("META_WHATSAPP_ACCESS_TOKEN");
