@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
-import { executeChatTurn, ChatMessage } from "@/lib/deepseek";
+import { executeChatTurn, processCustomerMessageFallback, ChatMessage } from "@/lib/deepseek";
+import { addUsage, slugExhausted, globalExhausted } from "@/lib/budget";
 import { getSession, saveSession, expiryReason } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
@@ -77,8 +78,25 @@ export async function POST(req: NextRequest) {
       content: h.text,
     }));
 
-    const result = await executeChatTurn(profile, formattedHistory, message);
+    // Dagbudget per demo-slug: één misbruikte link kan niet de hele dag doorbranden.
+    if (slugExhausted(profileSlug)) {
+      return NextResponse.json(
+        {
+          error: "Dagbudget bereikt",
+          isExpired: true,
+          reply:
+            "Deze demo heeft vandaag veel belangstelling gehad en neemt even pauze. Morgen staat Verdi hier weer voor u klaar — of plan direct een gesprek, dan zetten we hem live voor uw eigen zaak.",
+        },
+        { status: 403 }
+      );
+    }
+
+    // Globaal dagplafond: demo's blijven werken op de vangnet-receptionist, zonder LLM-kosten.
+    const result = globalExhausted()
+      ? await processCustomerMessageFallback(profile, formattedHistory, message)
+      : await executeChatTurn(profile, formattedHistory, message);
     session.tokensUsed += result.tokensUsed || 0;
+    addUsage(profileSlug, result.tokensUsed || 0);
 
     // Record agent message in server transcript
     session.messages.push({
