@@ -1,36 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteProfile, getAllProfiles, getProfileBySlug, saveProfile } from "@/lib/storage";
 import { BusinessProfileSchema } from "@/lib/schemas";
-import { readEnv } from "@/lib/env";
+import { requireAdmin } from "@/lib/admin-auth";
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-
-/**
- * Poortwachter voor alle schrijfacties (PUT/PATCH/DELETE).
- *
- * Zonder ENGINE_ADMIN_KEY in de omgeving is schrijven altijd uitgeschakeld —
- * nooit een "open" API per ongeluk, ook niet tijdelijk. De sleutel wordt
- * meegestuurd via de header `x-verdi-key`.
- */
-function requireAdmin(req: NextRequest): NextResponse | null {
-  const adminKey = readEnv("ENGINE_ADMIN_KEY");
-  if (!adminKey) {
-    return NextResponse.json(
-      { error: "Schrijf-API is niet geconfigureerd: ENGINE_ADMIN_KEY ontbreekt in de omgeving." },
-      { status: 503 }
-    );
-  }
-
-  const provided = req.headers.get("x-verdi-key");
-  if (!provided || provided !== adminKey) {
-    return NextResponse.json(
-      { error: "Ongeldige of ontbrekende x-verdi-key header." },
-      { status: 401 }
-    );
-  }
-
-  return null;
-}
 
 function validateSlugAndName(body: any): NextResponse | null {
   if (typeof body?.slug !== "string" || !SLUG_PATTERN.test(body.slug)) {
