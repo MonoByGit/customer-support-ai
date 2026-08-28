@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProfileBySlug } from "@/lib/storage";
 import { executeChatTurn, processCustomerMessageFallback, ChatMessage } from "@/lib/deepseek";
 import { addUsage, slugExhausted, globalExhausted } from "@/lib/budget";
+import { vindKenteken, haalVoertuigOp, voertuigContext } from "@/lib/rdw";
 import { getSession, saveSession, expiryReason } from "@/lib/session-store";
 
 export async function POST(req: NextRequest) {
@@ -91,10 +92,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // RDW: kenteken in het bericht → voertuiggegevens als context voor het model
+    // en als dossierregel in het transcript (foto-dossier v1).
+    let modelBericht = message;
+    const kenteken = vindKenteken(message);
+    if (kenteken && !(session as any).rdw) {
+      const voertuig = await haalVoertuigOp(kenteken);
+      if (voertuig) {
+        (session as any).rdw = voertuig;
+        session.messages.push({
+          id: `sys_${Date.now()}`,
+          sender: "system",
+          text: `Dossier: ${voertuig.merk} ${voertuig.handelsbenaming}, eerste toelating ${voertuig.eersteToelating}${voertuig.apkVervaldatum ? `, APK verloopt ${voertuig.apkVervaldatum}` : ""} (kenteken ${voertuig.kenteken}, via RDW).`,
+          timestamp: new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" }),
+        });
+        modelBericht = `${voertuigContext(voertuig)}
+${message}`;
+      }
+    }
+
     // Globaal dagplafond: demo's blijven werken op de vangnet-receptionist, zonder LLM-kosten.
     const result = globalExhausted()
-      ? await processCustomerMessageFallback(profile, formattedHistory, message)
-      : await executeChatTurn(profile, formattedHistory, message);
+      ? await processCustomerMessageFallback(profile, formattedHistory, modelBericht)
+      : await executeChatTurn(profile, formattedHistory, modelBericht);
     session.tokensUsed += result.tokensUsed || 0;
     addUsage(profileSlug, result.tokensUsed || 0);
 
