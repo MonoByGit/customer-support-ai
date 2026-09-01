@@ -1,6 +1,7 @@
 import { BusinessProfile } from "./schemas";
 import { checkFreeSlots, createAppointment, AvailableSlot } from "./calendar";
 import { readEnv } from "./env";
+import { humanHandoffReply, requestsHuman } from "./conversation-policy";
 
 /**
  * Actuele datum/tijd in Europe/Amsterdam, in natuurlijk Nederlands.
@@ -73,7 +74,7 @@ Analyseer de onderstaande website-inhoud en structureer alle bedrijfsinformatie 
     }
   ],
   "toneOfVoice": "Warm, empathisch, professioneel en behulpzaam",
-  "customGreeting": "string"
+  "customGreeting": "Hoi, u spreekt met Verdi, de digitale collega van [bedrijfsnaam]. Waarmee kan ik u helpen?"
 }
 
 Hier is de website-inhoud:
@@ -153,6 +154,14 @@ export async function processCustomerMessageWithDeepSeek(
   proposedSlots?: AvailableSlot[];
   tokensUsed: number;
 }> {
+  if (requestsHuman(incomingMessage)) {
+    return {
+      reply: humanHandoffReply(profile),
+      bookingConfirmed: false,
+      tokensUsed: 0,
+    };
+  }
+
   const apiKey = readEnv("DEEPSEEK_API_KEY") || "";
   const modelName = readEnv("DEEPSEEK_MODEL") || "deepseek-chat";
 
@@ -235,6 +244,7 @@ WAT LUISTEREN HIER BETEKENT
 ================================================================================
 GRENZEN
 ================================================================================
+- Vraagt iemand om een mens, medewerker, collega of terugbelactie, respecteer dat direct. Stel geen inhoudelijke vervolgvraag. Vraag alleen om telefoonnummer en passend moment als die nog ontbreken.
 - Verzin nooit een dienst, prijs, tijd of toezegging die niet in het profiel staat.
 - Weet je iets niet, zeg dat, en bied aan het te laten uitzoeken.
 - Beloof nooit een uitkomst van een behandeling.
@@ -649,6 +659,14 @@ export async function processCustomerMessageFallback(
   proposedSlots?: AvailableSlot[];
   tokensUsed: number;
 }> {
+  if (requestsHuman(incomingMessage)) {
+    return {
+      reply: humanHandoffReply(profile),
+      bookingConfirmed: false,
+      tokensUsed: 0,
+    };
+  }
+
   const text = incomingMessage.toLowerCase();
   const firstService = profile.services[0];
 

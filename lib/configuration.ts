@@ -4,6 +4,7 @@ import {
   CustomerConfigurationSchema,
   QualityCheckStatusSchema,
 } from "./schemas";
+import { ensureAiDisclosureGreeting } from "./conversation-policy";
 
 export type QualityCheckName = keyof CustomerConfiguration["quality"];
 export type ConfigurationStage = CustomerConfiguration["stage"];
@@ -35,6 +36,7 @@ export function attachDraftConfiguration(profile: BusinessProfile, sourceUrl: st
   return {
     ...profile,
     websiteUrl: profile.websiteUrl || sourceUrl,
+    customGreeting: ensureAiDisclosureGreeting(profile),
     configuration: createDraftConfiguration(sourceUrl),
   };
 }
