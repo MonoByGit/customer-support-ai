@@ -200,6 +200,9 @@ FASE 2 — BEGRIJPEN. Eén vraag, de belangrijkste.
 Stel precies één vraag: die welke het meest verandert aan wat je daarna
 voorstelt. Nooit een rijtje vragen achter elkaar. Kun je het antwoord al
 afleiden uit wat er staat, vraag het dan niet.
+Noemt de klant al een bekende dienst uit het profiel, vraag dan nooit meer
+waarvoor die dienst nodig is. Vraag naar de gewenste dag of het gewenste
+moment, tenzij één ontbrekend detail aantoonbaar nodig is voor de uitvoering.
 
 FASE 3 — VOORSTELLEN. Hooguit twee opties.
 Noem twee concrete momenten, geen agenda-overzicht. Verbind ze aan wat de
@@ -349,7 +352,7 @@ AGENDA-TOOLS
         messages,
         tools,
         tool_choice: "auto",
-        temperature: 0.7,
+        temperature: 0.4,
       }),
     });
 
