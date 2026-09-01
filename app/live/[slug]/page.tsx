@@ -5,11 +5,12 @@ import { getProfileBySlug, getAllProfiles } from "@/lib/storage";
 import { SimulatorClient } from "@/components/whatsapp/SimulatorClient";
 
 interface SimulatorPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: SimulatorPageProps) {
-  const profile = getProfileBySlug(params.slug);
+  const { slug } = await params;
+  const profile = getProfileBySlug(slug);
   if (!profile) return { title: "Simulator niet gevonden" };
   return {
     title: `${profile.businessName} — Live WhatsApp Simulator`,
@@ -17,8 +18,9 @@ export async function generateMetadata({ params }: SimulatorPageProps) {
   };
 }
 
-export default function SimulatorPage({ params }: SimulatorPageProps) {
-  const profile = getProfileBySlug(params.slug);
+export default async function SimulatorPage({ params }: SimulatorPageProps) {
+  const { slug } = await params;
+  const profile = getProfileBySlug(slug);
   const allProfiles = getAllProfiles();
 
   if (!profile) {
@@ -28,7 +30,7 @@ export default function SimulatorPage({ params }: SimulatorPageProps) {
           <MessageSquare className="w-7 h-7" />
         </div>
         <h1 className="text-2xl font-bold mb-2 tracking-tight">
-          Geen configuratie gevonden voor &lsquo;{params.slug}&rsquo;
+          Geen configuratie gevonden voor &lsquo;{slug}&rsquo;
         </h1>
         <p className="text-slate-500 dark:text-slate-400 max-w-md mb-7 text-sm leading-relaxed">
           Er staat nog geen bedrijfsprofiel onder deze link. Start een AI Bedrijfsscan om er binnen

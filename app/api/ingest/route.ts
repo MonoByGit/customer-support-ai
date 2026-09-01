@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { scrapeWebsite } from "@/lib/scraper";
 import { extractBusinessProfileWithDeepSeek } from "@/lib/deepseek";
 import { saveProfile } from "@/lib/storage";
+import { attachDraftConfiguration } from "@/lib/configuration";
 
 export async function POST(req: NextRequest) {
   const authError = requireAdmin(req);
@@ -25,13 +26,19 @@ export async function POST(req: NextRequest) {
     console.log(`[api/ingest] Extracting business profile via DeepSeek Flash AI...`);
     const profile = await extractBusinessProfileWithDeepSeek(scrapedData);
 
-    console.log(`[api/ingest] Saving generated profile: ${profile.slug}`);
-    const saved = saveProfile(profile);
+    const configuredProfile = attachDraftConfiguration(profile, scrapedData.url);
+    console.log(`[api/ingest] Saving generated draft configuration: ${profile.slug}`);
+    const saved = saveProfile(configuredProfile);
 
     return NextResponse.json({
       success: true,
       slug: saved.slug,
       simulatorUrl: `/live/${saved.slug}`,
+      lab: {
+        stage: saved.configuration?.stage,
+        revision: saved.configuration?.revision,
+        testOnly: saved.configuration?.release.testOnly,
+      },
       profile: saved,
     });
   } catch (error: any) {

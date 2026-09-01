@@ -17,6 +17,51 @@ export const FAQItemSchema = z.object({
 
 export type FAQItem = z.infer<typeof FAQItemSchema>;
 
+export const QualityCheckStatusSchema = z.enum(["pending", "passed", "failed"]);
+
+export const CustomerConfigurationSchema = z.object({
+  schemaVersion: z.literal(1).default(1),
+  revision: z.number().int().positive().default(1),
+  stage: z.enum(["draft", "testing", "approved", "active", "archived"]).default("draft"),
+  source: z.object({
+    url: z.string().url(),
+    ingestedAt: z.string().datetime(),
+  }),
+  channels: z.object({
+    whatsapp: z.object({
+      enabled: z.boolean().default(true),
+      aiDisclosure: z.boolean().default(true),
+      humanHandoff: z.boolean().default(true),
+      style: z.string().default("Warm, persoonlijk en bondig"),
+    }),
+    voice: z.object({
+      enabled: z.boolean().default(true),
+      aiDisclosure: z.boolean().default(true),
+      humanHandoff: z.boolean().default(true),
+      voice: z.enum(["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]).default("marin"),
+      tempo: z.enum(["rustig", "natuurlijk", "levendig"]).default("natuurlijk"),
+      language: z.enum(["volgt", "nl", "en", "de", "fr", "es"]).default("volgt"),
+      accent: z.enum(["algemeen-nederlands", "amsterdams-licht", "rotterdams-licht", "brabants-licht", "vlaams-licht", "neutraal-internationaal"]).default("algemeen-nederlands"),
+      character: z.enum(["warm-collega", "nuchter-vakmens", "kalme-balie", "energiek-gastvrij", "zakelijk-direct"]).default("warm-collega"),
+    }),
+  }),
+  quality: z.object({
+    sourceReviewed: QualityCheckStatusSchema.default("pending"),
+    profileReviewed: QualityCheckStatusSchema.default("pending"),
+    whatsappTested: QualityCheckStatusSchema.default("pending"),
+    voiceTested: QualityCheckStatusSchema.default("pending"),
+  }),
+  release: z.object({
+    testOnly: z.boolean().default(true),
+    testedAt: z.string().datetime().optional(),
+    approvedAt: z.string().datetime().optional(),
+    activatedAt: z.string().datetime().optional(),
+  }),
+  updatedAt: z.string().datetime(),
+});
+
+export type CustomerConfiguration = z.infer<typeof CustomerConfigurationSchema>;
+
 export const BusinessProfileSchema = z.object({
   businessName: z.string().describe("Official business name"),
   slug: z.string().describe("URL-friendly slug (lowercase, hyphens only)"),
@@ -32,6 +77,7 @@ export const BusinessProfileSchema = z.object({
   toneOfVoice: z.string().default("Vriendelijk, professioneel, behulpzaam en to-the-point").describe("Tone of voice guidance for the WhatsApp receptionist"),
   customGreeting: z.string().optional().describe("Opening welcome message sent automatically to new WhatsApp chats"),
   avatarUrl: z.string().optional().describe("Avatar/Logo image URL if extracted or placeholder"),
+  configuration: CustomerConfigurationSchema.optional().describe("Versioned lab and release configuration shared by WhatsApp and voice"),
 });
 
 export type BusinessProfile = z.infer<typeof BusinessProfileSchema>;
